@@ -93,9 +93,12 @@ const GeneralStats = () => {
 
   return (
     <div>
-      <Grid container className='p-3' s={7}>
-        <h1>general stats</h1>
-
+      <Grid
+        container
+        className='p-3'
+        s={7}
+        style={{ backgroundColor: "white" }}
+      >
         {isLoading ? <h2>Loading</h2> : <Table info={tableInfo} />}
       </Grid>
       <Button onClick={() => console.log(data)}> click</Button>

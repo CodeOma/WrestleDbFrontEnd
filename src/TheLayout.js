@@ -7,8 +7,11 @@ import Editor from "./components/Editor/Editor";
 import Home from "./pages/Home";
 import Create from "./pages/Create";
 import CreateNew from "./components/Create/CreateNew";
+import EditorNew from "./components/Create/Editor2";
+
 import View from "./components/View/View";
 
+import Manage from "./pages/manage/Manage.jsx";
 import Database from "./pages/Database";
 import WrestlerDB from "./pages/WrestlerDatabase";
 import WrestlerProfile from "./pages/wrestler/wrestlerProfile";
@@ -53,11 +56,14 @@ const TheLayout = () => {
               <SearchPage />
             </Route>
             {/* MATCHES */}
-            <Route exact path='/match/edit'>
+            <Route exact path='/match/edi'>
               <Editor />
             </Route>
             <Route exact path='/match/create'>
               <CreateNew />
+            </Route>
+            <Route exact path='/match/edit'>
+              <EditorNew />
             </Route>
 
             {/* </Route> */}
@@ -71,6 +77,7 @@ const TheLayout = () => {
             </Route>
             <PrivateRoute exact path='/testprivate' component={CreateNew} />
 
+            <PrivateRoute exact path='/manage' component={Manage} />
             {/* </Switch> */}
           </AuthProvider>
         </div>

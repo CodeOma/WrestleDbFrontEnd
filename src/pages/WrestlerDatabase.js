@@ -12,7 +12,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import axios from "axios";
-import Checkbox, { CheckboxDef } from "../components/WebComps/Checkbox";
+import Checkbox, { CheckboxDef } from "../components/components/Checkbox";
 import {
   getMatchByWrestler,
   getMatchByTeam,

@@ -11,16 +11,15 @@ import Signup from "./pages/user/Signup";
 import ForgotPassword from "./pages/user/ForgotPassword";
 import WrestlerDB from "./pages/WrestlerDatabase";
 import WrestlerProfile from "./pages/wrestler/wrestlerProfile";
-import Auto from "./components/WebComps/Auto";
+// import Auto from "./components/components/Auto";
 import { AuthProvider } from "./context/AuthContext";
 import SearchPage from "./pages/searchPage";
-import AppBar from "./components/WebComps/Appbar/Appbar";
 import GeneralStats from "./pages/rankingtables/GeneralStats";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Layout from "./TheLayout";
 import TechniqueDatabase from "./pages/TechniqueDatabase";
 import SignIn from "./pages/user/SignIn";
-
+// import Profile from "./pages/user/Profile";
 function App() {
   return (
     <AuthProvider>
@@ -38,6 +37,10 @@ function App() {
           </Route>
           <Route exact path='/404' name='Page 404' />
           <Route exact path='/500' name='Page 500' />
+          {/* <Route exact path='/profile' name='Profile'>
+            <Profile />
+          </Route> */}
+
           <Layout />
         </Switch>
       </Router>

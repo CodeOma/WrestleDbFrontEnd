@@ -62,7 +62,6 @@ export default function SignUp() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(email, password);
     if (password !== passwordConfirm) {
       return setError("Passwords do not match");
     }
@@ -70,7 +69,7 @@ export default function SignUp() {
     try {
       setError("");
       setLoading(true);
-      await signup(email, password);
+      await signup(email, password, firstName, lastName);
       history.push("/");
     } catch {
       setError("Failed to create an account");

@@ -7,13 +7,13 @@ import {
   Card,
   Button,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import VideoModal from "../components/components/VideoModal";
 
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import axios from "axios";
-import Checkbox, { CheckboxDef } from "../components/WebComps/Checkbox";
+import Checkbox, { CheckboxDef } from "../components/components/Checkbox";
 import {
   getMatchByWrestler,
   getMatchByTeam,
@@ -310,15 +310,10 @@ const Database = () => {
                     className='p-2'
                     style={{ width: "33%", height: "330px" }}
                   >
-                    <Link href={`/match/view/${match._id}`}>
-                      <img
-                        style={{ width: "100%" }}
-                        src={`https://img.youtube.com/vi/${youtubeVideoId(
-                          match.url
-                        )}/0.jpg`}
-                        alt='picture'
-                      ></img>
-                    </Link>
+                    <VideoModal
+                      type='img'
+                      link={`${match.url}?t=${match.videoTime}`}
+                    />{" "}
                     <p>
                       {match.result.winner} {match.result.victoryType}{" "}
                       {match.result.loser}{" "}

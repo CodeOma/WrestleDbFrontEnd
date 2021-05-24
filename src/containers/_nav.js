@@ -6,29 +6,7 @@ export const nav = [
     _tag: "CSidebarNavTitle",
     _children: ["Database"],
   },
-  {
-    _tag: "CSidebarNavDropdown",
-    name: "Matches",
-    route: "/base",
-    icon: "cil-puzzle",
-    _children: [
-      {
-        _tag: "CSidebarNavItem",
-        name: "Breadcrumb",
-        to: "/base/breadcrumbs",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Tabs",
-        to: "/base/tabs",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Tooltips",
-        to: "/base/tooltips",
-      },
-    ],
-  },
+
   {
     _tag: "CSidebarNavItem",
     name: "Techniques",
@@ -75,6 +53,12 @@ export const manageOptions = [
     route: "/managematches",
     icon: "cil-star",
     _children: [
+      {
+        _tag: "CSidebarNavItem",
+        name: "Management",
+        to: "/manage",
+        icon: "cil-drop",
+      },
       {
         _tag: "CSidebarNavItem",
         name: "View Match",

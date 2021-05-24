@@ -17,11 +17,13 @@ import {
   titleCase,
   tournamentFormatter,
 } from "../../helpers/formatting";
-import { createWrestler, createTournament } from "../../controllers/controller";
+import { userCreateTournament } from "../../controllers/manage/tournament";
+import { userCreateWrestler } from "../../controllers/manage/wrestler";
 import {
-  AutocompleteWrestler,
-  AutocompleteTournament,
-} from "../../controllers/search";
+  userAutocompleteWrestler,
+  userAutocompleteTournament,
+  // AutocompleteTags,
+} from "../../controllers/manage/usersearch";
 const filter = createFilterOptions();
 
 export default function FreeSoloCreateOptionDialog({
@@ -81,13 +83,14 @@ export default function FreeSoloCreateOptionDialog({
         if (query.length > 0) {
           const fetch =
             database === "tournament"
-              ? await AutocompleteTournament(query)
-              : await AutocompleteWrestler(query);
+              ? await userAutocompleteTournament(query)
+              : await userAutocompleteWrestler(query);
 
           if (fetch.length > 0) {
             setOptions(fetch);
           }
         }
+        console.log(options);
       } catch (e) {
         console.log(e);
       }
@@ -133,16 +136,18 @@ export default function FreeSoloCreateOptionDialog({
               title: newValue.inputValue,
               id: "",
             });
-          } else {
+          } else if (name && newValue && state) {
             setValue(newValue);
             console.log(name, newValue, state);
             console.log(newWrestler);
             if (dialog.title === "Add a Wrestler") {
-              fn({
-                ...state,
-                [name]: newValue.title || "",
-                [`${name}Id`]: newValue.id || "",
-              });
+              if (name && newValue.title) {
+                fn({
+                  ...state,
+                  [name]: newValue.title || "",
+                  [`${name}Id`]: newValue.id || "",
+                });
+              }
             }
             if (dialog.title === "Create Tournament") {
               fn({ ...state, [name]: newTournament.name });
@@ -164,14 +169,21 @@ export default function FreeSoloCreateOptionDialog({
         id='free-solo-dialog-demo'
         options={options}
         getOptionLabel={option => {
-          // e.g value selected with enter, right from the input
-          if (typeof option === "string") {
-            return option;
+          try {
+            // e.g value selected with enter, right from the input
+            if (typeof option === "string") {
+              return option;
+            }
+            if (option.inputValue) {
+              return option.inputValue;
+            }
+            if (option.title === undefined) {
+              return "";
+            }
+            return option.title;
+          } catch (e) {
+            console.log(e);
           }
-          if (option.inputValue) {
-            return option.inputValue;
-          }
-          return option.title;
         }}
         selectOnFocus
         clearOnBlur
@@ -247,7 +259,7 @@ export default function FreeSoloCreateOptionDialog({
                 onClick={() => {
                   console.log("Send create wrestler");
                   const newWres = wrestlerFormatter(newWrestler);
-                  createWrestler(newWres);
+                  userCreateWrestler(newWres);
                 }}
                 type='submit'
                 color='primary'
@@ -350,7 +362,7 @@ export default function FreeSoloCreateOptionDialog({
                 onClick={() => {
                   if (dialog.title === "Create Tournament") {
                     const tournament = tournamentFormatter(newTournament);
-                    createTournament(tournament);
+                    userCreateTournament(tournament);
                   }
                 }}
                 type='submit'

@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { DataGrid, GridToolbar } from "@material-ui/data-grid";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridColumnsToolbarButton,
+  GridFilterToolbarButton,
+} from "@material-ui/data-grid";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
@@ -20,14 +25,14 @@ export default function DataTable({ info }) {
   }, [info]);
 
   // Toolbar: GridToolbar,
-  // const CustomToolbar = () => {
-  //   return (
-  //     <GridToolbarContainer>
-  //       <GridColumnsToolbarButton />
-  //       <GridFilterToolbarButton />
-  //     </GridToolbarContainer>
-  //   );
-  // };
+  const CustomToolbar = () => {
+    return (
+      <GridToolbarContainer>
+        <GridColumnsToolbarButton />
+        <GridFilterToolbarButton />
+      </GridToolbarContainer>
+    );
+  };
   return (
     <div style={{ width: "100%" }}>
       <h1>{info.title}</h1>
@@ -35,7 +40,7 @@ export default function DataTable({ info }) {
         <DataGrid
           components={{
             // Pagination: CustomPagination,
-            Toolbar: GridToolbar,
+            Toolbar: CustomToolbar,
           }}
           disableColumnMenu
           // disableColumnSelector={true}

@@ -3,5 +3,9 @@ import { auth } from "../firebase";
 const API = "http://localhost:5000";
 
 export const createUserAccount = data => {
-  return axios.post(`${API}/signup`, data).then(res => res.data);
+  try {
+    return axios.put(`${API}/auth/signup`, data).then(res => res.data);
+  } catch (e) {
+    console.log(e);
+  }
 };
