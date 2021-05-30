@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import "./scss/style.scss";
-
+import dotenv from "dotenv";
 import Signup from "./pages/user/Signup";
 import ForgotPassword from "./pages/user/ForgotPassword";
 // import Auto from "./components/components/Auto";
