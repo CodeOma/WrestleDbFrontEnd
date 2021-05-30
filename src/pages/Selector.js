@@ -34,7 +34,7 @@ const Selector = ({ options, name, label, onChange, state }) => {
       >
         <option value=''> </option>
         {options.map(opt => {
-          return <option value={opt.id}>{opt.title}</option>;
+          return <option value={opt.title}>{opt.title}</option>;
         })}
       </NativeSelect>
       <FormHelperText>{label}</FormHelperText>

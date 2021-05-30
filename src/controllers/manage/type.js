@@ -10,9 +10,9 @@ export const userCreateType = async type => {
     const update = await axios.post(`${API}/user/type`, type, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userUpdateType = async type => {
@@ -22,9 +22,9 @@ export const userUpdateType = async type => {
     const update = await axios.put(`${API}/user/type`, type, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userFetchType = async () => {
@@ -35,19 +35,19 @@ export const userFetchType = async () => {
     });
 
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
-export const userDeleteType = async type => {
+export const userDeleteType = async id => {
   try {
     const token = await getIdToken();
 
-    const update = await axios.delete(`${API}/user/type/${type._id}`, {
+    const update = await axios.delete(`${API}/user/type/${id}`, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };

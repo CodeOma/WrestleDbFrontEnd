@@ -14,8 +14,8 @@ const Timestamp = ({
   setMatchEdit,
   time,
   wrestler,
-  tagIds,
-  takedownId,
+  setup,
+  takedown,
   pointsScored,
   details,
   color,
@@ -27,9 +27,7 @@ const Timestamp = ({
   deleteTimestamp,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [tags, setTags] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [takedown, setTakedown] = useState("");
   const styles = {
     root: {
       width: "95%",
@@ -48,40 +46,8 @@ const Timestamp = ({
   useEffect(() => {
     setIsLoading(true);
     setIsLoading(false);
-    console.log("rerender");
   }, [render, match]);
-  useEffect(() => {
-    setIsLoading(true);
-    const getTakedown = async () => {
-      try {
-        const data = await userFetchTakedownById(takedownId);
-        const takedownFetched = data.data[0].takedown;
-        setTakedown(takedownFetched);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getTakedown();
 
-    const getTags = async () => {
-      try {
-        // should try to implement this better
-        const tagList = await Promise.all(
-          tagIds.map(async t => {
-            const data = await userFetchTagById(t.id);
-            console.log("Data", data);
-            return data.data[0].tag;
-          })
-        );
-        console.log(tagList);
-        setTags(tagList);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getTags();
-    setIsLoading(false);
-  }, [render, match]);
   return (
     <Grid component={Card} style={{ backgroundColor: "white", ...styles.root }}>
       <hr
@@ -104,47 +70,35 @@ const Timestamp = ({
         />
         <Grid direction='column' className='px-2' container>
           <Grid container direction='row'>
-            {isLoading ? (
-              <p> Loading</p>
-            ) : (
-              <Grid
-              // container
-              // // justify='space-around'
-              // alignItems='start'
-              // direction='row'
-              >
-                {offdef == 1 ? (
-                  <>
-                    <p style={styles.p}>Takedown: {takedown}</p>
-                    {tags.length > 0 && (
-                      <p style={styles.p}>
-                        Setup:
-                        {tags.length > 0 &&
-                          tags.map((s, i) => (i === 0 ? `${s}` : `, ${s}`))}
-                      </p>
-                    )}
-                  </>
-                ) : offdef == 2 ? (
-                  <>
-                    {" "}
-                    <p style={styles.p}>Defense: {takedown}</p>
-                  </>
-                ) : offdef == 3 ? (
-                  <>
-                    {" "}
-                    <p style={styles.p}>Other: {takedown}</p>
-                  </>
-                ) : (
-                  <>
-                    <p style={styles.p}>Info Missing</p>
-                  </>
-                )}
+            <Grid
+            // container
+            // // justify='space-around'
+            // alignItems='start'
+            // direction='row'
+            >
+              {offdef ? (
+                <>
+                  <p style={styles.p}>
+                    {offdef}: {takedown}
+                  </p>
+                  {setup.length > 0 && (
+                    <p style={styles.p}>
+                      Setup:
+                      {setup.length > 0 &&
+                        setup.map((s, i) => (i === 0 ? `${s}` : `, ${s}`))}
+                    </p>
+                  )}
+                </>
+              ) : (
+                <>
+                  <p style={styles.p}>Info Missing</p>
+                </>
+              )}
 
-                <Button onClick={() => setTime(Math.floor(vidTime))}>
-                  Time: {time}
-                </Button>
-              </Grid>
-            )}
+              <Button onClick={() => setTime(Math.floor(vidTime))}>
+                Time: {time}
+              </Button>
+            </Grid>
           </Grid>
           {/* {isOpen ? (
             <ExpandLessIcon

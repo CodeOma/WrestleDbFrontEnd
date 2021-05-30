@@ -35,7 +35,6 @@ const TimestampList = ({
     }
   };
   useEffect(() => {
-    console.log("FETCHED");
     const fetch = async () => {
       try {
         // if (match.redWrestler.id) {
@@ -44,8 +43,6 @@ const TimestampList = ({
         // setWrestlers({
         //   ...wrestle rs,
         // });
-        console.log(redData);
-        console.log("wret", wrestlers);
         // }
         // if (match.blueWrestler.id) {
         const blueData = await getWrestlerById(match.blueWrestler.id);
@@ -62,7 +59,6 @@ const TimestampList = ({
             id: blueData.data[0]._id,
           },
         });
-
         // }
       } catch (error) {
         console.log(error);
@@ -70,8 +66,8 @@ const TimestampList = ({
     };
 
     fetch();
-    console.log(wrestlers);
   }, [match]);
+
   useEffect(() => {
     setIsLoading(true);
     if (match) {
@@ -94,10 +90,10 @@ const TimestampList = ({
                 const min = Math.floor(timestamp.time / 60);
                 const sec = timestamp.time - min * 60;
                 const times = `${min}m ${sec}sec`;
-                console.log(timestamp);
 
                 return (
                   <Timestamp
+                    key={timestamp.id}
                     render={render}
                     setMatchEdit={setMatchEdit}
                     deleteTimestamp={deleteTimestamp}
@@ -113,7 +109,7 @@ const TimestampList = ({
                     //     : wrestlers.blueWrestler.name
                     // }
                     wrestler={
-                      timestamp.name === wrestlers.redWrestler.name
+                      timestamp.wrestlerId === wrestlers.redWrestler.id
                         ? wrestlers.redWrestler.name
                         : wrestlers.blueWrestler.name
                     }
@@ -121,12 +117,12 @@ const TimestampList = ({
                     //   return Object.keys(object).find(key => object[key] === value);
                     // }
                     // opponent={timestamp.wrestlerInfo.opponent}
-                    takedownId={timestamp.takedown}
-                    tagIds={timestamp.tags}
+                    takedown={timestamp.takedown}
+                    setup={timestamp.setup}
                     pointsScored={timestamp.points}
                     // details={timestamp.scoringInfo.takedown.details}
                     color={
-                      timestamp.name === wrestlers.redWrestler.name
+                      timestamp.wrestlerId === wrestlers.redWrestler.id
                         ? "red"
                         : "blue"
                     }

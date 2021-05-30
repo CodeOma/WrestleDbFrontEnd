@@ -182,8 +182,9 @@ const Database = () => {
         console.log(e);
       }
     };
-
-    getData();
+    if (data) {
+      getData();
+    }
   }, [data, selectedFilters, page]);
 
   return (

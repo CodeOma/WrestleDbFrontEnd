@@ -27,6 +27,8 @@ import { userFetchType } from "../../../controllers/manage/type";
 import { userFetchPosition } from "../../../controllers/manage/position";
 import { userFetchCategory } from "../../../controllers/manage/category";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import Alert from "../../../components/components/Alert";
+import DeleteModal from "../../../components/components/DeleteModal";
 
 const Takedowns = () => {
   const [mode, setMode] = useState("list");
@@ -47,58 +49,56 @@ const Takedowns = () => {
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [positionOptions, setPositionOptions] = useState([]);
   const [typeOptions, setTypeOptions] = useState([]);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleSubmit = async () => {
     try {
-      console.log(takedown);
       if (isEdit) {
-        if (
-          takedown.takedown !== "" &&
-          takedown.offdef !== "" &&
-          takedown.position !== "" &&
-          takedown.type !== "" &&
-          takedown.category !== ""
-        ) {
-          userUpdateTakedown(takedown);
-          setTakedown({
-            takedown: "",
-            type: "",
-            position: "",
-            category: "",
-            offdef: "",
-            owner: "",
-            _id: "",
-          });
+        userUpdateTakedown(takedown);
+        const update = await setTakedown({
+          takedown: "",
+          type: "",
+          position: "",
+          category: "",
+          offdef: "",
+          owner: "",
+          _id: "",
+        });
+        if (update?.response?.statusText === "Bad Request") {
+          throw new Error(update.response.data.error);
+        }
+        if (update.statusText === "OK") {
+          setSuccess("Created Succesfully!");
         }
       } else {
-        if (
-          takedown.takedown !== "" &&
-          takedown.offdef !== "" &&
-          takedown.position !== "" &&
-          takedown.type !== "" &&
-          takedown.category !== ""
-        ) {
-          userCreateTakedown({
-            takedown: takedown.takedown,
-            type: takedown.type,
-            position: takedown.position,
-            category: takedown.category,
-            offdef: takedown.offdef,
-          });
-          setTakedown({
-            takedown: "",
-            type: "",
-            offdef: "",
-
-            position: "",
-            category: "",
-            owner: "",
-            _id: "",
-          });
+        const create = await userCreateTakedown({
+          takedown: takedown.takedown,
+          type: takedown.type,
+          position: takedown.position,
+          category: takedown.category,
+          offdef: takedown.offdef,
+        });
+        if (create?.response?.statusText === "Bad Request") {
+          throw new Error(create.response.data.error);
         }
+        if (create.statusText === "OK") {
+          setSuccess("Created Succesfully!");
+        }
+
+        setTakedown({
+          takedown: "",
+          type: "",
+          offdef: "",
+
+          position: "",
+          category: "",
+          owner: "",
+          _id: "",
+        });
       }
     } catch (e) {
-      console.log(e);
+      setError(e.message);
     }
   };
   const showDeleteModal = () => {};
@@ -115,16 +115,28 @@ const Takedowns = () => {
       const data = await userFetchTakedown();
       await setTakedownsList(data.data);
       // setIsLoading(false);
-      console.log(data);
     } catch (e) {
-      console.log(e);
+      setError(e.message);
     }
   };
+  useEffect(() => {
+    const timer = setTimeout(() => setError(""), 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [error]);
+  useEffect(() => {
+    const timer = setTimeout(() => setSuccess(""), 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [success]);
   useEffect(() => {
     fetch();
     const fetchType = async () => {
       const fetchedType = await userFetchType();
-      console.log(fetchedType.data);
       const newArray = fetchedType.data.map(type => {
         return { title: type.type, id: type._id };
       });
@@ -133,23 +145,39 @@ const Takedowns = () => {
     fetchType();
     const fetchPosition = async () => {
       const fetchedPosition = await userFetchPosition();
-      console.log(fetchedPosition.data);
       const newArray = fetchedPosition.data.map(position => {
         return { title: position.position, id: position._id };
       });
       setPositionOptions(newArray);
     };
     fetchPosition();
-    const fetchCategory = async () => {
-      const fetchedCategory = await userFetchCategory();
-      console.log(fetchedCategory.data);
-      const newArray = fetchedCategory.data.map(category => {
-        return { title: category.category, id: category._id };
-      });
-      setCategoryOptions(newArray);
-    };
-    fetchCategory();
+    // const fetchCategory = async () => {
+    //   const fetchedCategory = await userFetchCategory();
+    //   console.log(fetchedCategory.data);
+    //   const newArray = fetchedCategory.data.map(category => {
+    //     return { title: category.category, id: category._id };
+    //   });
+    //   setCategoryOptions(newArray);
+    // };
+    // fetchCategory();
   }, [refresh]);
+
+  const handleDelete = async id => {
+    const deleted = await userDeleteTakedown(id);
+
+    if (deleted.statusText === "OK") {
+      setSuccess("Deleted Succesfully!");
+    }
+
+    setRefresh(!refresh);
+    setIsEdit(false);
+    setTakedown({
+      type: "",
+      position: "",
+      owner: "",
+      _id: "",
+    });
+  };
   useEffect(() => {
     fetch();
   }, [refresh]);
@@ -170,32 +198,37 @@ const Takedowns = () => {
                 <h6>Loading</h6>
               ) : (
                 <ul
-                  className='pt-2'
+                  className='pt-2 pl-4 pr-2'
                   style={{
                     listStyle: "none",
-                    maxHeight: "50%",
+                    maxHeight: "25rem",
                     overflow: "scroll",
                   }}
                 >
                   {takedownsList.map(takedown => (
-                    <li>
-                      {takedown.takedown}{" "}
-                      <EditIcon
-                        fontSize='inherit'
-                        onClick={() => {
-                          setTakedown(takedown);
-                          setIsEdit(true);
-                        }}
-                      />
-                      <DeleteIcon
-                        fontSize='inherit'
-                        onClick={() => {
-                          console.log(takedown);
-                          setRefresh(!refresh);
-
-                          // showDeleteModal(takedown._id);
-                        }}
-                      />
+                    <li className='pt-1 d-flex justify-content-between'>
+                      <p style={{ whiteSpace: "nowrap" }}>
+                        {" "}
+                        {takedown.takedown}{" "}
+                      </p>
+                      <Grid direction='row' container justify='flex-end'>
+                        <div>
+                          {" "}
+                          <Button
+                            variant='outlined'
+                            color='primary'
+                            onClick={() => {
+                              setTakedown(takedown);
+                              setIsEdit(true);
+                            }}
+                          >
+                            <EditIcon fontSize='inherit' />
+                          </Button>
+                        </div>
+                        <DeleteModal
+                          deleteFunction={() => handleDelete(takedown._id)}
+                        />
+                      </Grid>
                     </li>
                   ))}
                 </ul>
@@ -211,6 +244,16 @@ const Takedowns = () => {
               <Grid className='pb-4' xs={12} justify='center' container>
                 {/* <input placeholder='Year'></input> */}
                 <Grid className='p-4' direction='column' container>
+                  {error && (
+                    <Alert title='Error' severity='error' message={error} />
+                  )}
+                  {success && (
+                    <Alert
+                      title='Success'
+                      severity='success'
+                      message={success}
+                    />
+                  )}
                   <h6>Takedowns:</h6>
                   <Grid className='pb-4' xs={12} container>
                     <TextField
@@ -222,13 +265,13 @@ const Takedowns = () => {
                         setTakedown({ ...takedown, takedown: e.target.value })
                       }
                     />
-                    <Selector
+                    {/* <Selector
                       options={categoryOptions}
                       name='category'
                       label='Category'
                       onChange={onSelectorChange}
                       state={takedown}
-                    />{" "}
+                    />{" "} */}
                     <Selector
                       options={typeOptions}
                       name='type'
@@ -268,11 +311,11 @@ const Takedowns = () => {
                         }}
                         style={{ marginTop: "20px" }}
                       >
-                        Save Edit{" "}
+                        Save{" "}
                       </Button>
                       <Button
                         onClick={() => {
-                          userDeleteTakedown(takedown);
+                          // userDeleteTakedown(takedown);
                           setRefresh(!refresh);
                           setIsEdit(false);
                           setTakedown({
@@ -288,14 +331,13 @@ const Takedowns = () => {
                         }}
                         style={{ marginTop: "20px" }}
                       >
-                        Delete{" "}
+                        Cancel
                       </Button>
                     </>
                   ) : (
                     <Button
                       onClick={
                         () => {
-                          console.log(takedown);
                           handleSubmit();
                           setRefresh(!refresh);
                         }

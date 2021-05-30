@@ -5,14 +5,15 @@ const API = "http://localhost:5000";
 
 export const userCreateTournament = async tournament => {
   try {
+    console.log("create");
     const token = await getIdToken();
 
     const update = await axios.post(`${API}/user/tournament`, tournament, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userUpdateTournament = async tournament => {
@@ -22,9 +23,9 @@ export const userUpdateTournament = async tournament => {
     const update = await axios.put(`${API}/user/tournament`, tournament, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userFetchTournament = async () => {
@@ -35,22 +36,19 @@ export const userFetchTournament = async () => {
     });
 
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
-export const userDeleteTournament = async tournament => {
+export const userDeleteTournament = async id => {
   try {
     const token = await getIdToken();
 
-    const update = await axios.delete(
-      `${API}/user/tournament/${tournament._id}`,
-      {
-        headers: { authorization: `Bearer ${token}` },
-      }
-    );
-    console.log(update);
+    const update = await axios.delete(`${API}/user/tournament/${id}`, {
+      headers: { authorization: `Bearer ${token}` },
+    });
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };

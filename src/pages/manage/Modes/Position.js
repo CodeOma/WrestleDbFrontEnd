@@ -17,10 +17,13 @@ import {
   userFetchPosition,
 } from "../../../controllers/manage/position";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import Alert from "../../../components/components/Alert";
+import DeleteModal from "../../../components/components/DeleteModal";
 
 const Positions = () => {
   const [mode, setMode] = useState("list");
   const [positionsList, setPositionsList] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [position, setPosition] = useState({
     position: "",
@@ -29,38 +32,83 @@ const Positions = () => {
   });
   const [isEdit, setIsEdit] = useState(false);
   const [refresh, setRefresh] = useState(false);
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleDelete = async id => {
+    const deleted = await userDeletePosition(id);
+    if (deleted.statusText === "OK") {
+      setSuccess("Deleted Succesfully!");
+    }
+    setRefresh(!refresh);
+    setIsEdit(false);
+    setPosition({ position: "", owner: "", _id: "" });
+  };
   const handleSubmit = async () => {
     try {
-      console.log(position);
       if (isEdit) {
         if (position.position.length !== 0) {
-          userUpdatePosition(position);
-          setPosition({ position: "", owner: "", _id: "" });
+          const update = await userUpdatePosition(position);
+          if (update?.response?.statusText === "Bad Request") {
+            throw new Error(update.response.data.error);
+          }
+          if (update.statusText === "OK") {
+            setSuccess("Created Succesfully!");
+          }
+          setPosition({
+            position: "",
+            owner: "",
+            _id: "",
+          });
+        } else {
+          throw new Error("Cannot be empty");
         }
       } else {
         if (position.position.length !== 0) {
-          userCreatePosition({
+          const create = await userCreatePosition({
             position: position.position,
             owner: position.owner,
           });
+          if (create?.response?.statusText === "Bad Request") {
+            throw new Error(create.response.data.error);
+          }
+          if (create.statusText === "OK") {
+            setSuccess("Created Succesfully!");
+          }
+
           setPosition({ position: "", owner: "", _id: "" });
+        } else {
+          throw new Error("Cannot be empty");
         }
       }
     } catch (e) {
-      console.log(e);
+      setError(e.message);
     }
   };
-  const showDeleteModal = () => {};
-  const onSelectorChange = () => {};
+
+  useEffect(() => {
+    const timer = setTimeout(() => setError(""), 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [error]);
+  useEffect(() => {
+    const timer = setTimeout(() => setSuccess(""), 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [success]);
   const fetch = async () => {
     try {
       // setIsLoading(true);
       const data = await userFetchPosition();
       await setPositionsList(data.data);
       // setIsLoading(false);
-      console.log(data);
     } catch (e) {
-      console.log(e);
+      setError(e.message);
     }
   };
   useEffect(() => {
@@ -83,32 +131,35 @@ const Positions = () => {
                 <h6>Loading</h6>
               ) : (
                 <ul
-                  className='pt-2'
+                  className='pt-2 pl-4 pr-2'
                   style={{
                     listStyle: "none",
-                    maxHeight: "50%",
+                    maxHeight: "25rem",
                     overflow: "scroll",
                   }}
                 >
                   {positionsList.map(position => (
-                    <li>
-                      {position.position}{" "}
-                      <EditIcon
-                        fontSize='inherit'
-                        onClick={() => {
-                          setPosition(position);
-                          setIsEdit(true);
-                        }}
-                      />
-                      <DeleteIcon
-                        fontSize='inherit'
-                        onClick={() => {
-                          console.log(position);
-                          setRefresh(!refresh);
-
-                          // showDeleteModal(position._id);
-                        }}
-                      />
+                    <li className='pt-1 d-flex justify-content-between'>
+                      <p style={{ whiteSpace: "nowrap" }}>
+                        {position.position}{" "}
+                      </p>
+                      <Grid direction='row' container justify='flex-end'>
+                        <div>
+                          <Button
+                            variant='outlined'
+                            color='primary'
+                            onClick={() => {
+                              setPosition(position);
+                              setIsEdit(true);
+                            }}
+                          >
+                            <EditIcon fontSize='inherit' />
+                          </Button>
+                        </div>
+                        <DeleteModal
+                          deleteFunction={() => handleDelete(position._id)}
+                        />
+                      </Grid>
                     </li>
                   ))}
                 </ul>
@@ -124,6 +175,16 @@ const Positions = () => {
               <Grid className='pb-4' xs={12} justify='center' container>
                 {/* <input placeholder='Year'></input> */}
                 <Grid className='p-4' direction='column' container>
+                  {error && (
+                    <Alert title='Error' severity='error' message={error} />
+                  )}
+                  {success && (
+                    <Alert
+                      title='Success'
+                      severity='success'
+                      message={success}
+                    />
+                  )}
                   <h6>Positions:</h6>
                   <TextField
                     id='outlined-helperText'
@@ -146,18 +207,16 @@ const Positions = () => {
                         }}
                         style={{ marginTop: "20px" }}
                       >
-                        Save Edit{" "}
+                        Save
                       </Button>
                       <Button
                         onClick={() => {
-                          userDeletePosition(position);
-                          setRefresh(!refresh);
-                          setIsEdit(false);
                           setPosition({ position: "", owner: "", _id: "" });
+                          setIsEdit(false);
                         }}
                         style={{ marginTop: "20px" }}
                       >
-                        Delete{" "}
+                        Cancel
                       </Button>
                     </>
                   ) : (

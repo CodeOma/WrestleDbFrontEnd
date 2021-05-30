@@ -10,9 +10,11 @@ export const userCreateTakedown = async takedown => {
     const update = await axios.post(`${API}/user/takedown`, takedown, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+
+    return update;
   } catch (e) {
     console.log(e);
+    return e;
   }
 };
 export const userUpdateTakedown = async takedown => {
@@ -48,19 +50,18 @@ export const userFetchTakedownById = async id => {
     });
     return data;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
-export const userDeleteTakedown = async takedown => {
+export const userDeleteTakedown = async id => {
   try {
     const token = await getIdToken();
-
-    const update = await axios.delete(`${API}/user/takedown/${takedown._id}`, {
+    const update = await axios.delete(`${API}/user/takedown/${id}`, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 
@@ -77,6 +78,6 @@ export const userAutocompleteTakedown = async query => {
       return data;
     }
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };

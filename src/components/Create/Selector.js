@@ -3,7 +3,16 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import NativeSelect from "@material-ui/core/NativeSelect";
 
-const Selector = ({ options, name, label, onChange, state, fn, disabled }) => {
+const Selector = ({
+  options,
+  name,
+  label,
+  onChange,
+  state,
+  fn,
+  disabled,
+  value,
+}) => {
   const styles = {
     formControl: {
       minWidth: 150,
@@ -15,12 +24,13 @@ const Selector = ({ options, name, label, onChange, state, fn, disabled }) => {
   };
   const [opt, setOpt] = useState("");
   useEffect(() => {
+    console.log(value);
     setOpt(state[name]);
   }, [state]);
   return (
     <FormControl className='px-2' style={styles.formControl}>
       <NativeSelect
-        value={opt}
+        value={value}
         disabled={disabled ? true : false}
         onChange={e => {
           // setOpt(e.target.value);
@@ -34,8 +44,8 @@ const Selector = ({ options, name, label, onChange, state, fn, disabled }) => {
         inputProps={{ "aria-label": "age" }}
       >
         <option value=''> </option>
-        {options.map(opt => {
-          return <option value={opt}>{opt}</option>;
+        {options.map(option => {
+          return <option value={option}>{option}</option>;
         })}
       </NativeSelect>
       <FormHelperText>{label}</FormHelperText>

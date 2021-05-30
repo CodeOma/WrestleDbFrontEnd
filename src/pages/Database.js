@@ -305,6 +305,7 @@ const Database = () => {
 
             {fetchedData &&
               fetchedData.map(match => {
+                console.log(match);
                 return (
                   <Card
                     className='p-2'
@@ -318,12 +319,12 @@ const Database = () => {
                       {match.result.winner} {match.result.victoryType}{" "}
                       {match.result.loser}{" "}
                       {match.result.winner === match.wrestler.fullName
-                        ? match.wrestlerScores?.total || 0
-                        : match.opponentScores?.total || 0}
+                        ? match?.wrestTotals || 0
+                        : match?.oppTotals || 0}
                       -
                       {match.result.loser === match.wrestler.fullName
-                        ? match.wrestlerScores?.total ?? 0
-                        : match.opponentScores?.total ?? 0}
+                        ? match?.wrestTotals || 0
+                        : match?.oppTotals || 0}
                     </p>
                     <p>
                       {match.tournamentName}: {match.round}

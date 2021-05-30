@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import { Sidebar, Footer, Header } from "./containers/index";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/Route/PrivateRoute";
-
-import Editor from "./components/Editor/Editor";
+import { Grid } from "@material-ui/core";
 import Home from "./pages/Home";
-import Create from "./pages/Create";
-import CreateNew from "./components/Create/CreateNew";
-import EditorNew from "./components/Create/Editor2";
+import Create from "./components/Create/Create";
+import Editor from "./components/Create/Editor";
 
 import View from "./components/View/View";
 
@@ -24,15 +22,15 @@ const TheLayout = () => {
   const [toggleSideBar, setToggleSideBar] = useState(false);
 
   return (
-    <div className='c-app c-default-layout'>
+    <Grid className='c-app c-default-layout'>
       {/* <Router> */}
       <Sidebar toggleSideBar={toggleSideBar} />
-      <div className='c-wrapper'>
+      <Grid className='c-wrapper'>
         <Header
           setToggleSideBar={setToggleSideBar}
           toggleSideBar={toggleSideBar}
         />
-        <div className='c-body px-4'>
+        <Grid className='c-body w-100 d-flex'>
           {/* <Switch> */}
           <AuthProvider>
             <Route exact path='/'>
@@ -60,10 +58,10 @@ const TheLayout = () => {
               <Editor />
             </Route>
             <Route exact path='/match/create'>
-              <CreateNew />
+              <Create />
             </Route>
             <Route exact path='/match/edit'>
-              <EditorNew />
+              <Editor />
             </Route>
 
             {/* </Route> */}
@@ -75,17 +73,17 @@ const TheLayout = () => {
             <Route path='/stats'>
               <GeneralStats />
             </Route>
-            <PrivateRoute exact path='/testprivate' component={CreateNew} />
+            <PrivateRoute exact path='/testprivate' component={Create} />
 
             <PrivateRoute exact path='/manage' component={Manage} />
             {/* </Switch> */}
           </AuthProvider>
-        </div>
+        </Grid>
 
         <Footer />
-      </div>
+      </Grid>
       {/* </Router> */}
-    </div>
+    </Grid>
   );
 };
 

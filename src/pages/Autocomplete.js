@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { userAutocompleteTeam } from "../controllers/manage/team";
 import { Grid, TextField } from "@material-ui/core";
 
-const AutoComplete = ({ searchFunction, name, setFunction }) => {
+const AutoComplete = ({ searchFunction, name, setFunction, label, value }) => {
   const [suggestion, setSuggestion] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(value);
   const [suggestionArray, setSuggestionArray] = useState([""]);
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +16,7 @@ const AutoComplete = ({ searchFunction, name, setFunction }) => {
         const data = await searchFunction(search);
         setSuggestionArray(data);
         console.log(suggestionArray);
+        console.log(search);
       };
       fetch();
       console.log(suggestion);
@@ -76,13 +77,13 @@ const AutoComplete = ({ searchFunction, name, setFunction }) => {
         <div>
           <TextField
             id='outlined-helperText'
-            label={name}
+            label={""}
             value={search}
             onChange={e => {
               setSearch(e.target.value);
               setIsOpen(true);
             }}
-            helperText={name}
+            helperText={label}
           />
           {/* <input
             value={search}

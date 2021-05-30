@@ -17,7 +17,6 @@ export default function CheckboxesTags({
   name,
   state,
 }) {
-  console.log(value);
   return (
     <Autocomplete
       value={value}
@@ -43,9 +42,8 @@ export default function CheckboxesTags({
         //   setFunction(value[0].id);
         // }
       }
-      getOptionLabel={option => option.title}
+      getOptionLabel={option => option}
       renderOption={(option, stuff) => {
-        console.log(stuff);
         return (
           <React.Fragment>
             <Checkbox
@@ -54,7 +52,7 @@ export default function CheckboxesTags({
               style={{ marginRight: 8 }}
               checked={stuff.selected}
             />
-            {option.title}
+            {option}
           </React.Fragment>
         );
       }}

@@ -47,64 +47,64 @@ export const manageOptions = [
     _children: ["Manage"],
   },
 
+  // {
+  //   _tag: "CSidebarNavDropdown",
+  //   name: "Matches",
+  //   route: "/managematches",
+  //   icon: "cil-star",
+  //   _children: [
   {
-    _tag: "CSidebarNavDropdown",
-    name: "Matches",
-    route: "/managematches",
-    icon: "cil-star",
-    _children: [
-      {
-        _tag: "CSidebarNavItem",
-        name: "Management",
-        to: "/manage",
-        icon: "cil-drop",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "View Match",
-        to: "/database",
-        icon: "cil-pencil",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Create Match",
-        to: "/match/create",
-        icon: "cil-drop",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Edit Match",
-        to: "/match/edit",
-        icon: "cil-pencil",
-      },
-    ],
+    _tag: "CSidebarNavItem",
+    name: "Management",
+    to: "/manage",
+    icon: "cil-drop",
   },
   {
-    _tag: "CSidebarNavDropdown",
-    name: "Team",
-    route: "/manageteam",
-    icon: "cil-star",
-    _children: [
-      {
-        _tag: "CSidebarNavItem",
-        name: "Manage Team",
-        to: "/theme/typography",
-        icon: "PersonIcon",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Stats",
-        to: "/theme/colors",
-        icon: "cil-drop",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Assign?",
-        to: "/theme/typography",
-        icon: "cil-pencil",
-      },
-    ],
+    _tag: "CSidebarNavItem",
+    name: "View Match",
+    to: "/database",
+    icon: "cil-pencil",
   },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Create Match",
+    to: "/match/create",
+    icon: "cil-drop",
+  },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Edit Match",
+    to: "/match/edit",
+    icon: "cil-pencil",
+    //   },
+    // ],
+  },
+  // {
+  //   _tag: "CSidebarNavDropdown",
+  //   name: "Team",
+  //   route: "/manageteam",
+  //   icon: "cil-star",
+  //   _children: [
+  //     {
+  //       _tag: "CSidebarNavItem",
+  //       name: "Manage Team",
+  //       to: "/theme/typography",
+  //       icon: "PersonIcon",
+  //     },
+  //     {
+  //       _tag: "CSidebarNavItem",
+  //       name: "Stats",
+  //       to: "/theme/colors",
+  //       icon: "cil-drop",
+  //     },
+  //     {
+  //       _tag: "CSidebarNavItem",
+  //       name: "Assign?",
+  //       to: "/theme/typography",
+  //       icon: "cil-pencil",
+  //     },
+  //   ],
+  // },
 ];
 export const settingOptions = [
   {

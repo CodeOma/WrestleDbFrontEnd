@@ -10,6 +10,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Select from "../../../components/Create/Selector";
 import AutoComplete from "../../../components/Create/AutoCompleteInput";
+import Selector from "../../../pages/Selector";
 
 import {
   userCreateTournament,
@@ -19,12 +20,16 @@ import {
 } from "../../../controllers/manage/tournament.js";
 import { getTournamentByUser } from "../../../controllers/manage/getbyuser.js";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import Alert from "../../../components/components/Alert";
+import DeleteModal from "../../../components/components/DeleteModal";
 
 const Tournament = () => {
   const [isLoading, setisLoading] = useState(false);
   const [tournamentList, setTournamentList] = useState([]);
   const [refresh, setRefresh] = useState(true);
   const [mode, setMode] = useState("list");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [tournament, setTournament] = useState({
     name: "",
     year: "",
@@ -37,12 +42,54 @@ const Tournament = () => {
   });
   const [isEdit, setIsEdit] = useState(false);
   const onSelectorChange = () => {};
+  useEffect(() => {
+    const timer = setTimeout(() => setError(""), 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [error]);
+  useEffect(() => {
+    const timer = setTimeout(() => setSuccess(""), 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [success]);
+
+  // else {
+  //   throw new Error("Cannot be empty");
+  // }
   const handleSubmit = async () => {
     try {
       console.log(tournament);
       if (isEdit) {
+        if (!tournament.type || !tournament.type.length) {
+          throw new Error("Length is Required");
+        }
+        if (!tournament.year || !tournament.year.length) {
+          throw new Error("Year is Required");
+        }
+        if (!tournament.location.city || !tournament.location.city.length) {
+          throw new Error("City is Required");
+        }
+        if (
+          !tournament.location.country ||
+          !tournament.location.country.length
+        ) {
+          throw new Error("Country is Required");
+        }
+        if (!tournament.name || !tournament.name.length) {
+          throw new Error("Name is Required");
+        }
         if (tournament.name.length !== 0) {
-          userUpdateTournament(tournament);
+          const update = await userUpdateTournament(tournament);
+          if (update?.response?.statusText === "Bad Request") {
+            throw new Error(update.response.data.error);
+          }
+          if (update.statusText === "OK") {
+            setSuccess("Updated Succesfully!");
+          }
           setTournament({
             name: "",
             year: "",
@@ -53,11 +100,30 @@ const Tournament = () => {
               country: "",
             },
             owner: "",
+            private: true,
           });
         }
       } else {
+        if (!tournament.type || !tournament.type.length) {
+          throw new Error("Type is Required");
+        }
+        if (!tournament.year || !tournament.year.length) {
+          throw new Error("Year is Required");
+        }
+        if (!tournament.location.city || !tournament.location.city.length) {
+          throw new Error("City is Required");
+        }
+        if (
+          !tournament.location.country ||
+          !tournament.location.country.length
+        ) {
+          throw new Error("Coutnry is Required");
+        }
+        if (!tournament.name || !tournament.name.length) {
+          throw new Error("Name is Required");
+        }
         if (tournament.name.length !== 0) {
-          userCreateTournament({
+          const create = await userCreateTournament({
             name: tournament.name,
             year: tournament.year,
             type: tournament.type,
@@ -66,7 +132,14 @@ const Tournament = () => {
               city: tournament.location.city,
               country: tournament.location.country,
             },
+            private: tournament.private,
           });
+          if (create?.response?.statusText === "Bad Request") {
+            throw new Error(create.response.data.error);
+          }
+          if (create.statusText === "OK") {
+            setSuccess("Created Succesfully!");
+          }
           setTournament({
             name: "",
             year: "",
@@ -77,11 +150,12 @@ const Tournament = () => {
               country: "",
             },
             owner: "",
+            private: true,
           });
         }
       }
     } catch (e) {
-      console.log(e);
+      setError(e.message);
     }
   };
   const fetch = async () => {
@@ -92,8 +166,30 @@ const Tournament = () => {
       // setIsLoading(false);
       console.log(data);
     } catch (e) {
-      console.log(e);
+      setError(e.message);
     }
+  };
+  const handleDelete = async id => {
+    const deleted = await userDeleteTournament(id);
+
+    if (deleted.statusText === "OK") {
+      setSuccess("Deleted Succesfully!");
+    }
+
+    setRefresh(!refresh);
+    setIsEdit(false);
+    setTournament({
+      name: "",
+      year: "",
+      type: "",
+
+      location: {
+        city: "",
+        country: "",
+      },
+      owner: "",
+      private: true,
+    });
   };
   useEffect(() => {
     fetch();
@@ -115,32 +211,33 @@ const Tournament = () => {
                 <h6>Loading</h6>
               ) : (
                 <ul
-                  className='pt-2'
+                  className='pt-2 pl-4 pr-2'
                   style={{
                     listStyle: "none",
-                    maxHeight: "50%",
+                    maxHeight: "25rem",
                     overflow: "scroll",
                   }}
                 >
                   {tournamentList.map(tournament => (
-                    <li>
-                      {`${tournament.name} ${tournament.year}`}
-                      <EditIcon
-                        fontSize='inherit'
-                        onClick={() => {
-                          setTournament(tournament);
-                          setIsEdit(true);
-                        }}
-                      />
-                      <DeleteIcon
-                        fontSize='inherit'
-                        onClick={() => {
-                          console.log(tournament);
-                          setRefresh(!refresh);
-
-                          // showDeleteModal(tournament._id);
-                        }}
-                      />
+                    <li className='pt-1 d-flex justify-content-between'>
+                      {`${tournament.name}`}
+                      <Grid direction='row' container justify='flex-end'>
+                        <div>
+                          <Button
+                            variant='outlined'
+                            color='primary'
+                            onClick={() => {
+                              setTournament(tournament);
+                              setIsEdit(true);
+                            }}
+                          >
+                            <EditIcon fontSize='inherit' />
+                          </Button>
+                        </div>
+                        <DeleteModal
+                          deleteFunction={() => handleDelete(tournament._id)}
+                        />
+                      </Grid>
                     </li>
                   ))}
                 </ul>
@@ -148,14 +245,20 @@ const Tournament = () => {
             </Card>
           </Grid>
           <Grid xs={6} sm={7}>
-            {/* <Grid container direction='row'>
-              <Button onClick={() => setMode("create")}>Create New</Button>
-              <Button onClick={() => setMode("list")}>List</Button>
-            </Grid> */}
             <Card>
               <Grid className='pb-4' xs={12} justify='center' container>
                 {/* <input placeholder='Year'></input> */}
                 <Grid className='p-4' direction='column' container>
+                  {error && (
+                    <Alert title='Error' severity='error' message={error} />
+                  )}
+                  {success && (
+                    <Alert
+                      title='Success'
+                      severity='success'
+                      message={success}
+                    />
+                  )}
                   <h6>Tournament:</h6>
                   <TextField
                     id='outlined-helperText'
@@ -215,6 +318,13 @@ const Tournament = () => {
                     helperText='City'
                   />
                   <br />
+                  <Selector
+                    options={[{ title: "true" }, { title: "false" }]}
+                    name='private'
+                    label='Private'
+                    onChange={onSelectorChange}
+                    state={tournament}
+                  />
                 </Grid>
                 <Grid direction='row' container justify='center'>
                   {isEdit ? (
@@ -230,9 +340,6 @@ const Tournament = () => {
                       </Button>
                       <Button
                         onClick={() => {
-                          userDeleteTournament(tournament);
-                          setRefresh(!refresh);
-                          setIsEdit(false);
                           setTournament({
                             name: "",
                             year: "",
@@ -243,11 +350,12 @@ const Tournament = () => {
                               country: "",
                             },
                             owner: "",
+                            private: true,
                           });
                         }}
                         style={{ marginTop: "20px" }}
                       >
-                        Delete{" "}
+                        Cancel Edit{" "}
                       </Button>
                     </>
                   ) : (

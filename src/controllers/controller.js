@@ -9,12 +9,16 @@ const API = "http://localhost:5000";
 //   headers: { Authorization: `Bearer ${token}` },
 // };
 
-export const getMatchByWrestlerId = id => {
+export const getMatchByWrestlerId = async id => {
   try {
-    const data = axios.get(`${API}/match/wrestler/list/${id}`, {});
+    const token = await getIdToken();
+
+    const data = axios.get(`${API}/user/match/wrestler/list/${id}`, {
+      headers: { authorization: `Bearer ${token}` },
+    });
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 
@@ -64,41 +68,6 @@ export const getStatCategories = () => {
     .catch(err => console.log(err));
 };
 
-export const getFilteredProducts = (skip, limit, filters = {}) => {
-  const data = {
-    limit,
-    skip,
-    filters,
-  };
-  return fetch(`${API}/products/by/search`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then(response => {
-      return response.json();
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
-
-export const list = params => {
-  //   const query = queryString.stringify(params);
-  const query = "";
-  console.log("query", query);
-  return fetch(`${API}/products/search?${query}`, {
-    method: "GET",
-  })
-    .then(response => {
-      return response.json();
-    })
-    .catch(err => console.log(err));
-};
-
 export const getMatch = matchId => {
   return axios
     .get(`${API}/match/${matchId}`)
@@ -118,6 +87,7 @@ export const getMatchByWrestler = async (wrestlerId, filters, skip, limit) => {
     const data = axios.get(`${API}/match/wrestler/${wrestlerId}`, {
       params: { filters, skip: skipNum },
     });
+    console.log(filters);
     return data;
   } catch (error) {
     console.log(error);
@@ -172,8 +142,8 @@ export const getGeneralStats = async () => {
     const data = axios.get(`${API}/stats/general`);
     console.log(data);
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 
@@ -183,8 +153,8 @@ export const individualProfileStats = async id => {
     const data = axios.get(`${API}/stats/wrestler/${id}`);
     console.log(data);
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 /////////////////////////////////
@@ -208,8 +178,8 @@ export const getAllTechniques = async (
     });
 
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 

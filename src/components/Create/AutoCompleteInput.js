@@ -33,6 +33,7 @@ export default function FreeSoloCreateOptionDialog({
   state,
   name,
   database,
+  value: val,
 }) {
   const [query, setQuery] = useState("");
 
@@ -62,6 +63,21 @@ export default function FreeSoloCreateOptionDialog({
     });
     toggleOpen(false);
   };
+  useEffect(() => {
+    // console.log("VALUE", !val.fullName);
+    if (val?.fullName) {
+      setValue({
+        title: val.fullName,
+        id: val.id,
+      });
+      console.log("VAL", value);
+    } else if (val?.tournamentName) {
+      setValue({
+        title: val.tournamentName,
+        id: val.tournamentId,
+      });
+    }
+  }, [val]);
 
   const [dialogValue, setDialogValue] = React.useState({
     title: "",
@@ -138,8 +154,6 @@ export default function FreeSoloCreateOptionDialog({
             });
           } else if (name && newValue && state) {
             setValue(newValue);
-            console.log(name, newValue, state);
-            console.log(newWrestler);
             if (dialog.title === "Add a Wrestler") {
               if (name && newValue.title) {
                 fn({
@@ -147,10 +161,19 @@ export default function FreeSoloCreateOptionDialog({
                   [name]: newValue.title || "",
                   [`${name}Id`]: newValue.id || "",
                 });
+                console.log(state);
               }
             }
-            if (dialog.title === "Create Tournament") {
-              fn({ ...state, [name]: newTournament.name });
+            if (name === "tournament") {
+              console.log(newValue, state, name);
+              fn({
+                ...state,
+                tournament: {
+                  tournamentName: newValue.title,
+                  tournamentId: newValue.id,
+                  tournamentType: "",
+                },
+              });
             }
           }
         }}

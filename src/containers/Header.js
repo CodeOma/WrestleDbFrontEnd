@@ -73,10 +73,10 @@ const Header = ({ setToggleSideBar, toggleSideBar }) => {
       </CHeaderNav>
 
       <CHeaderNav className='px-3'>
-        <HeaderDropdownNotif />
+        {/* <HeaderDropdownNotif />
         <HeaderDropdownTasks />
         <HeaderDropdownMssg />
-        <HeaderDropdown />
+        <HeaderDropdown /> */}
       </CHeaderNav>
 
       {/* <CSubheader className="px-3 justify-content-between">

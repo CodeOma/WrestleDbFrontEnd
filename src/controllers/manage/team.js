@@ -10,9 +10,9 @@ export const userCreateTeam = async team => {
     const update = await axios.post(`${API}/user/team`, team, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userUpdateTeam = async team => {
@@ -22,9 +22,9 @@ export const userUpdateTeam = async team => {
     const update = await axios.put(`${API}/user/team`, team, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userFetchTeam = async () => {
@@ -35,20 +35,20 @@ export const userFetchTeam = async () => {
     });
 
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
-export const userDeleteTeam = async team => {
+export const userDeleteTeam = async id => {
   try {
     const token = await getIdToken();
 
-    const update = await axios.delete(`${API}/user/team/${team._id}`, {
+    const update = await axios.delete(`${API}/user/team/${id}`, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 
@@ -65,6 +65,6 @@ export const userAutocompleteTeam = async query => {
       return data;
     }
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };

@@ -13,6 +13,8 @@ import Select from "../../../components/Create/Selector";
 import AutoComplete from "../../../pages/Autocomplete";
 import Selector from "../../../pages/Selector";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import Alert from "../../../components/components/Alert";
+import DeleteModal from "../../../components/components/DeleteModal";
 
 import {
   userCreateWrestler,
@@ -33,44 +35,74 @@ const Wrestlers = () => {
     lastName: "",
     team: "",
     owner: "",
+    private: true,
     _id: "",
   });
   const [isEdit, setIsEdit] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
   const [teamOptions, setTeamOptions] = useState([]);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const handleSubmit = async () => {
     try {
-      console.log(wrestler);
       if (isEdit) {
-        if (wrestler.fullName.length !== 0) {
-          userUpdateWrestler(wrestler);
+        if (
+          wrestler.fullName.length !== 0 &&
+          wrestler.lastName.length !== 0 &&
+          wrestler.team.length !== 0
+        ) {
+          const update = await userUpdateWrestler(wrestler);
+          if (update?.response?.statusText === "Bad Request") {
+            throw new Error(update.response.data.error);
+          }
+          if (update.statusText === "OK") {
+            setSuccess("Created Succesfully!");
+          }
           setWrestler({
             team: "",
             fullName: "",
             lastName: "",
+            private: true,
             owner: "",
             _id: "",
           });
+        } else {
+          throw new Error("Cannot be empty");
         }
       } else {
-        if (wrestler.fullName.length !== 0) {
-          userCreateWrestler({
+        if (
+          wrestler.fullName.length !== 0 &&
+          wrestler.lastName.length !== 0 &&
+          wrestler.team.length !== 0
+        ) {
+          const create = await userCreateWrestler({
             fullName: wrestler.fullName,
             lastName: wrestler.lastName,
             team: wrestler.team,
+            private: wrestler.private,
           });
+          if (create?.response?.statusText === "Bad Request") {
+            throw new Error(create.response.data.error);
+          }
+          if (create.statusText === "OK") {
+            console.log("yeetavas");
+            setSuccess("Created Succesfully!");
+          }
           setWrestler({
             team: "",
             fullName: "",
             lastName: "",
             owner: "",
             _id: "",
+            private: true,
           });
+        } else {
+          throw new Error("Cannot be empty");
         }
       }
     } catch (e) {
-      console.log(e);
+      setError(e.message);
     }
   };
   const showDeleteModal = () => {};
@@ -80,6 +112,20 @@ const Wrestlers = () => {
       [e.target.name]: e.target.value,
     });
   };
+  useEffect(() => {
+    const timer = setTimeout(() => setError(""), 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [error]);
+  useEffect(() => {
+    const timer = setTimeout(() => setSuccess(""), 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [success]);
 
   const fetch = async () => {
     try {
@@ -92,6 +138,24 @@ const Wrestlers = () => {
       console.log(e);
     }
   };
+  const handleDelete = async id => {
+    const deleted = await userDeleteWrestler(id);
+
+    if (deleted.statusText === "OK") {
+      setSuccess("Deleted Succesfully!");
+    }
+
+    setRefresh(!refresh);
+    setIsEdit(false);
+    setWrestler({
+      team: "",
+      fullName: "",
+      lastName: "",
+      owner: "",
+      _id: "",
+      private: true,
+    });
+  };
   useEffect(() => {
     const fetchTeam = async () => {
       const fetchedData = await userFetchTeam();
@@ -100,6 +164,7 @@ const Wrestlers = () => {
         return { title: team.teamName, id: team._id };
       });
       setTeamOptions(newArray);
+      console.log("newArray");
     };
     fetchTeam();
   }, [refresh]);
@@ -123,32 +188,33 @@ const Wrestlers = () => {
                 <h6>Loading</h6>
               ) : (
                 <ul
-                  className='pt-2'
+                  className='pt-2 pl-4 pr-2'
                   style={{
                     listStyle: "none",
-                    maxHeight: "50%",
+                    maxHeight: "25rem",
                     overflow: "scroll",
                   }}
                 >
                   {wrestlersList.map(wrestler => (
-                    <li>
+                    <li className='pt-1 d-flex justify-content-between'>
                       {wrestler.fullName}{" "}
-                      <EditIcon
-                        fontSize='inherit'
-                        onClick={() => {
-                          setWrestler(wrestler);
-                          setIsEdit(true);
-                        }}
-                      />
-                      <DeleteIcon
-                        fontSize='inherit'
-                        onClick={() => {
-                          console.log(wrestler);
-                          setRefresh(!refresh);
-
-                          // showDeleteModal(wrestler._id);
-                        }}
-                      />
+                      <Grid direction='row' container justify='flex-end'>
+                        <div>
+                          <Button
+                            variant='outlined'
+                            color='primary'
+                            onClick={() => {
+                              setWrestler(wrestler);
+                              setIsEdit(true);
+                            }}
+                          >
+                            <EditIcon fontSize='inherit' />
+                          </Button>{" "}
+                        </div>
+                        <DeleteModal
+                          deleteFunction={() => handleDelete(wrestler._id)}
+                        />
+                      </Grid>
                     </li>
                   ))}
                 </ul>
@@ -156,14 +222,20 @@ const Wrestlers = () => {
             </Card>
           </Grid>
           <Grid xs={6} sm={7}>
-            {/* <Grid container direction='row'>
-              <Button onClick={() => setMode("create")}>Create New</Button>
-              <Button onClick={() => setMode("list")}>List</Button>
-            </Grid> */}
             <Card>
               <Grid className='pb-4' xs={12} justify='center' container>
                 {/* <input placeholder='Year'></input> */}
                 <Grid className='p-4' direction='column' container>
+                  {error && (
+                    <Alert title='Error' severity='error' message={error} />
+                  )}
+                  {success && (
+                    <Alert
+                      title='Success'
+                      severity='success'
+                      message={success}
+                    />
+                  )}{" "}
                   <h6>Wrestlers:</h6>
                   <Grid className='pb-4' xs={12} container>
                     <TextField
@@ -191,8 +263,14 @@ const Wrestlers = () => {
                       onChange={onSelectorChange}
                       state={wrestler}
                     />
+                    <Selector
+                      options={[{ title: "true" }, { title: "false" }]}
+                      name='private'
+                      label='Private'
+                      onChange={onSelectorChange}
+                      state={wrestler}
+                    />
                   </Grid>
-
                   <br />
                 </Grid>
                 <Grid direction='row' container justify='center'>
@@ -209,7 +287,7 @@ const Wrestlers = () => {
                       </Button>
                       <Button
                         onClick={() => {
-                          userDeleteWrestler(wrestler);
+                          // userDeleteWrestler(wrestler);
                           setRefresh(!refresh);
                           setIsEdit(false);
                           setWrestler({
@@ -218,11 +296,12 @@ const Wrestlers = () => {
                             lastName: "",
                             owner: "",
                             _id: "",
+                            private: true,
                           });
                         }}
                         style={{ marginTop: "20px" }}
                       >
-                        Delete{" "}
+                        Cancel Edit{" "}
                       </Button>
                     </>
                   ) : (

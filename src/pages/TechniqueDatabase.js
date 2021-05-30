@@ -272,7 +272,7 @@ const Database = () => {
                 wrestName={wrestName}
                 name='takedown'
                 label='Takedown'
-                data={filterOptions.takedown}
+                data={filterOptions?.takedown}
                 selectedFilters={selectedFilters}
                 setSelectedFilters={setSelectedFilters}
               />

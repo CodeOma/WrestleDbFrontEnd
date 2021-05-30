@@ -1,47 +1,46 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Grid, Button, FormHelperText } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { Grid, Button, FormHelperText, TextField } from "@material-ui/core";
 import Select from "./Selector";
-// import { useGlobalContext } from "../../context/context";
+
 import Video from "../Editor/Video";
 import Modal from "./CreateModal";
 import Selector from "../../pages/Selector";
+import Alert from "../components/Alert";
 
-import axios from "axios";
-// import {
-//   getMatch,
-//   updateMatch,
-//   getMatchByWrestler,
-// } from "../../controllers/controller";
-import { userUpdateMatch } from "../../controllers/manage/create";
-import uniqid from "uniqid";
+import uniqid, { time } from "uniqid";
 import SaveIcon from "@material-ui/icons/Save";
 import AutocompleteCheckbox from "../Editor/AutocompleteCheckbox2";
-import { getWrestlerById } from "../../controllers/controller";
+import { userFetchWrestlerById } from "../../controllers/manage/wrestler";
 import { userFetchTakedown } from "../../controllers/manage/takedown";
 
 import { userFetchType } from "../../controllers/manage/type";
 import { userFetchPosition } from "../../controllers/manage/position";
 import { userFetchCategory } from "../../controllers/manage/category";
 import { userFetchTag } from "../../controllers/manage/tag";
+import { userCreateMatch } from "../../controllers/manage/match";
 const Editor = () => {
-  // const { addScore, videoTime: globalTime, match } = useGlobalContext();
-
   const [videoTime, setVideoTime] = useState(0);
   const [wrestlerId, setWrestlerId] = useState("6042f3208e4ff31a532f7324");
   const [currentWrestler, setCurrentWrestler] = useState({});
   const [isEdit, setIsEdit] = useState(false);
-  const [editId, setEditId] = useState("");
+  // const [editId, setEditId] = useState("");
   const [editingRender, setEditingRender] = useState(false);
-  const [matchIndex, setMatchIndex] = useState(0);
-  const [matchList, setMatchList] = useState([]);
-  const [tags, setTags] = useState([]);
-  const [categoryOptions, setCategoryOptions] = useState([]);
+
   const [positionOptions, setPositionOptions] = useState([]);
   const [typeOptions, setTypeOptions] = useState([]);
   const [takedownOptions, setTakedownOptions] = useState([]);
   const [tagOptions, setTagOptions] = useState([]);
   const [filteredTakedowns, setFilteredTakedowns] = useState([]);
   const [filteredTypes, setFilteredTypes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  //For Alerts
+  const [error, setError] = useState("");
+  const [saveError, setSaveError] = useState("");
+  const [saveSuccess, setSaveSuccess] = useState("");
+  const [success, setSuccess] = useState("");
+  const [warning, setWarning] = useState("");
+  /////
   const [wrestler, setWrestler] = useState({
     red: "",
     redId: "",
@@ -52,18 +51,18 @@ const Editor = () => {
   const [timestamp, setTimestamp] = useState({
     takedown: {
       id: uniqid.process(),
-      round: "",
+      round: 1,
       wrestlerId: "",
       takedown: "",
       offdef: "Offensive",
-      position: "Standing",
+      position: "",
       oppDefendedShot: "",
       type: "",
-      tags: [],
+      setup: [],
       details: "",
       videoTime: 0,
       time: 0,
-      points: 0,
+      points: "",
     },
   });
 
@@ -78,10 +77,11 @@ const Editor = () => {
     color: "blue",
   });
   useEffect(() => {
+    setIsLoading(true);
     const fetchTags = async () => {
       const fetchedTags = await userFetchTag();
       const newArray = fetchedTags.data.map(tag => {
-        return { title: tag.tag, id: tag._id };
+        return tag.tag;
       });
       setTagOptions(newArray);
     };
@@ -89,7 +89,7 @@ const Editor = () => {
     const fetchType = async () => {
       const fetchedType = await userFetchType();
       const newArray = fetchedType.data.map(type => {
-        return { ...type, title: type.type, id: type._id };
+        return type;
       });
       setTypeOptions(newArray);
     };
@@ -97,57 +97,52 @@ const Editor = () => {
     const fetchPosition = async () => {
       const fetchedPosition = await userFetchPosition();
       const newArray = fetchedPosition.data.map(position => {
-        return { ...position, title: position.position, id: position._id };
+        return position.position;
       });
       setPositionOptions(newArray);
     };
     fetchPosition();
-    const fetchCategory = async () => {
-      const fetchedCategory = await userFetchCategory();
-      const newArray = fetchedCategory.data.map(category => {
-        return { ...category, title: category.category, id: category._id };
-      });
-      setCategoryOptions(newArray);
-    };
-    fetchCategory();
+    // const fetchCategory = async () => {
+    //   const fetchedCategory = await userFetchCategory();
+    //   const newArray = fetchedCategory.data.map(category => {
+    //     return category.category;
+    //   });
+    //   setCategoryOptions(newArray);
+    // };
+    // fetchCategory();
     const fetchTakedown = async () => {
       const fetchedTakedown = await userFetchTakedown();
-      const newArray = fetchedTakedown.data.map(td => {
-        return { ...td, title: td.takedown, id: td._id };
-      });
+      const newArray = fetchedTakedown.data;
       setTakedownOptions(newArray);
     };
     fetchTakedown();
+    setIsLoading(false);
   }, []);
   useEffect(() => {
     const fetch = async () => {
       try {
-        if (wrestler.redId) {
-          const redData = await getWrestlerById(wrestler.redId);
+        if (wrestler.redId && wrestler.blueId) {
+          const redData = await userFetchWrestlerById(wrestler.redId);
+          const blueData = await userFetchWrestlerById(wrestler.blueId);
+
           setFinalMatch({
             ...finalMatch,
             redWrestler: {
               id: redData.data[0]._id,
-
+              fullName: redData.data[0].fullName,
               team: redData.data[0].team,
+            },
+            blueWrestler: {
+              id: blueData.data[0]._id,
+              fullName: blueData.data[0].fullName,
+              // lastName: blueData.data[0].lastName,
+              team: blueData.data[0].team,
             },
           });
           setScoreRed({
             ...scoreRed,
             name: redData.data[0].fullName,
             id: redData.data[0]._id,
-          });
-        }
-        if (wrestler.blueId) {
-          const blueData = await getWrestlerById(wrestler.blueId);
-          setFinalMatch({
-            ...finalMatch,
-            blueWrestler: {
-              id: blueData.data[0]._id,
-              // fullName: blueData.data[0].fullName,
-              // lastName: blueData.data[0].lastName,
-              team: blueData.data[0].team,
-            },
           });
           setScoreBlue({
             ...scoreBlue,
@@ -163,7 +158,11 @@ const Editor = () => {
   }, [wrestler]);
 
   const [finalMatch, setFinalMatch] = useState({
-    tournament: "",
+    tournament: {
+      tournamentName: "",
+      tournamentId: "",
+      tournamentType: "",
+    },
     style: "",
     weightClass: "",
     round: "",
@@ -173,21 +172,22 @@ const Editor = () => {
       loser: "",
       winnerPoints: "",
       loserPoints: "",
-      redTotalPoints: 0,
-      blueTotalPoints: "",
+      redTotalScore: 0,
+      blueTotalScore: 0,
     },
     redWrestler: {
       id: "",
+      fullName: "",
 
       team: "",
     },
     blueWrestler: {
       id: "",
-
+      fullName: "",
       team: "",
     },
 
-    url: {},
+    url: "",
 
     scores: [],
   });
@@ -205,7 +205,7 @@ const Editor = () => {
       overflow: "scroll",
     },
     input: {
-      borderTopStyle: "hidden",
+      borderSaveStyle: "hidden",
       borderRightStyle: "hidden",
       borderLeftStyle: "hidden",
       width: "50px",
@@ -273,101 +273,160 @@ const Editor = () => {
       takedown: {
         ...timestamp.takedown,
         wrestlerId: currentWrestler.id,
+        fullName: currentWrestler.name,
       },
     });
+    console.log(currentWrestler);
   }, [currentWrestler]);
+  const handleSave = async () => {
+    try {
+      if (
+        !finalMatch.tournament.tournamentId ||
+        !finalMatch.tournament.tournamentId
+      ) {
+      }
+
+      const create = await userCreateMatch(finalMatch);
+      console.log("create", create.message);
+      if (create?.response?.statusText === "Bad Request") {
+        throw new Error(create.response.data.error);
+      }
+      if (create?.message === "Network Error") {
+        throw new Error("Network Error");
+      }
+      if (create.statusText === "OK") {
+        setSaveSuccess("Created Succesfully!");
+      }
+    } catch (e) {
+      console.log(e.name, e.message);
+      setSaveError(e.message);
+    }
+  };
   const handleSubmit = e => {
     e.preventDefault();
     try {
-      let fixed = timestamp.takedown;
-      setTimestamp({ takedown: { ...timestamp.takedown, tags: tags } });
-      if (
-        timestamp.takedown.offdef === "Defensive" ||
-        timestamp.takedown.offdef === "Other"
-      ) {
-        fixed = { ...fixed, tags: [], type: "" };
-      }
-      if (timestamp.takedown.position === "Ground") {
-        fixed = { ...fixed, tags: [], type: "Ground" };
-      }
-      if (
-        timestamp.takedown.offdef === "Offensive" ||
-        timestamp.takedown.offdef === "Other"
-      ) {
-        fixed["oppDefendedShot"] = "";
-      }
-      if (timestamp.takedown.offdef === "Other") {
-        fixed["position"] = "";
-      }
+      Object.entries(timestamp.takedown).forEach(([k, v]) => {
+        if (v === "") {
+          console.log(k);
 
-      const setTotals = () => {
-        const totalRed = finalMatch.scores
-          .filter(takedown => takedown.wrestlerId === finalMatch.redWrestler.id)
-          .reduce((a, score) => parseInt(score.points) + a, 0);
-        const totalBlue = finalMatch.scores
-          .filter(
-            takedown => takedown.wrestlerId === finalMatch.blueWrestler.id
-          )
-          .reduce((a, score) => parseInt(score.points) + a, 0);
+          if (k !== "oppDefendedShot" && k !== "details" && k !== "id") {
+            throw new Error(`${k} missing`);
+          }
+        }
+      });
 
-        setFinalMatch({
-          ...finalMatch,
-          result: { ...finalMatch.result, redTotalPoints: totalRed },
-        });
-        setTotals();
-        setFinalMatch({
-          ...finalMatch,
-          result: { ...finalMatch.result, blueTotalPoints: totalBlue },
-        });
-      };
+      if (!timestamp.takedown.wrestlerId) {
+        throw new Error(`Wrestler missing, try switching and trying again`);
+      }
+      if (timestamp.takedown.time === 0) {
+        setWarning("Time is 0");
+      }
+      if (timestamp.takedown.videoTime === 0) {
+        setWarning("Video time is 0");
+      }
+      // if(timestamp.takedown === '' || timestamp.takedown === ''|| timestamp ){
+
+      // let fixed = timestamp.takedown;
+      //removed tags:tags
+      // setTimestamp({ takedown: { ...timestamp.takedown } });
+
       const filteredArr = [...finalMatch.scores].filter(
         a => a.id !== timestamp.takedown.id
       );
-      const sorted = [...filteredArr, fixed].sort((a, b) => a.time - b.time);
+      const sorted = [...filteredArr, timestamp.takedown].sort(
+        (a, b) => a.time - b.time
+      );
+
+      const totalRed = sorted
+        .filter(takedown => takedown.wrestlerId === finalMatch.redWrestler.id)
+        .reduce((a, score) => parseInt(score.points) + a, 0);
+      const totalBlue = sorted
+        .filter(takedown => takedown.wrestlerId === finalMatch.blueWrestler.id)
+        .reduce((a, score) => parseInt(score.points) + a, 0);
+
       setFinalMatch({
         ...finalMatch,
         scores: sorted,
+
+        result: {
+          ...finalMatch.result,
+          redTotalScore: totalRed,
+          blueTotalScore: totalBlue,
+        },
       });
-      setTags([]);
       setTimestamp({
         takedown: {
           id: uniqid.process(),
-          round: "",
+          round: timestamp.takedown.round,
           wrestlerId: currentWrestler.id,
+          fullName: currentWrestler.name,
           // color: currentWrestler.color,
           takedown: "",
-          offdef: "1",
+          offdef: "Offensive",
           position: "",
           oppDefendedShot: "",
           type: "",
-          tags: [],
+          setup: [],
           details: "",
           videoTime: 0,
           time: 0,
-          points: 0,
+          points: "",
         },
       });
       setIsEdit(false);
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   };
-  useEffect(() => {}, [scoreRed, scoreBlue]);
+  useEffect(() => {
+    const timer = setTimeout(() => setError(""), 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [error]);
+  useEffect(() => {
+    const timer = setTimeout(() => setSaveError(""), 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [saveError]);
+  useEffect(() => {
+    const timer = setTimeout(() => setWarning(""), 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [warning]);
+  useEffect(() => {
+    const timer = setTimeout(() => setSaveSuccess(""), 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [saveSuccess]);
+  // commented this out double check on later
+  // useEffect(() => {}, [scoreRed, scoreBlue]);
   useEffect(() => {
     setFilteredTypes(
-      typeOptions.filter(type => {
-        return type.position !== timestamp.takedown.position;
-        //  && type.offdef === timestamp.offdef
-      })
+      typeOptions
+        .filter(type => {
+          return type.position === timestamp.takedown.position;
+          //  && type.offdef === timestamp.offdef
+        })
+        .map(t => t.type)
     );
     setFilteredTakedowns(
-      takedownOptions.filter(td => {
-        return (
-          td.position === timestamp.takedown.position &&
-          td.type === timestamp.takedown.type &&
-          td.offdef === timestamp.takedown.offdef
-        );
-      })
+      takedownOptions
+        .filter(td => {
+          return (
+            td.position === timestamp.takedown.position &&
+            td.type === timestamp.takedown.type &&
+            td.offdef === timestamp.takedown.offdef
+          );
+        })
+        .map(td => td.takedown)
     );
     //
   }, [timestamp]);
@@ -399,7 +458,7 @@ const Editor = () => {
       );
       setEditingRender(!editingRender);
       setIsEdit(true);
-      setTags(timestamp.takedown.tags);
+      // setTags(timestamp.takedown.setup);
     } catch (error) {
       console.log(error);
     }
@@ -423,10 +482,17 @@ const Editor = () => {
         justify='flex-end'
         container
       >
+        {saveError && (
+          <Alert title='Error' severity='error' message={saveError} />
+        )}
+        {saveSuccess && (
+          <Alert title='Success' severity='success' message={saveSuccess} />
+        )}
         <Button
           onClick={() => {
             //updateMatch(finalMatch)
             console.log(finalMatch);
+            handleSave();
           }}
         >
           <SaveIcon />{" "}
@@ -478,6 +544,7 @@ const Editor = () => {
             >
               <div style={{ maxWidth: 200 }}>
                 <Select
+                  value={timestamp.takedown.wrestler}
                   state={timestamp.takedown}
                   fn={setTimestamp}
                   name={"wrestler"}
@@ -486,20 +553,18 @@ const Editor = () => {
                   label={"Wrestler"}
                 />
               </div>
-              <Selector
+              <Select
+                value={timestamp.takedown.offdef}
                 state={timestamp.takedown}
                 fn={setTimestamp}
                 name={"offdef"}
                 onChange={onSelectorChange}
-                options={[
-                  { id: 1, title: "Offensive" },
-                  { id: 2, title: "Defensive" },
-                  { id: 3, title: "Other" },
-                ]}
+                options={["Offensive", "Defensive", "Other"]}
                 label={"Offensive/Defensive "}
               />
 
-              <Selector
+              <Select
+                value={timestamp.takedown.position}
                 state={timestamp.takedown}
                 fn={setTimestamp}
                 name={"position"}
@@ -517,12 +582,22 @@ const Editor = () => {
                 spacing={2}
               >
                 <Select
+                  value={timestamp.takedown.points}
                   state={timestamp.takedown}
                   fn={setTimestamp}
                   name={"points"}
                   onChange={onSelectChange}
                   options={[1, 2, 4, 5]}
                   label={"points"}
+                />
+                <Select
+                  value={timestamp.takedown.round}
+                  state={timestamp.takedown}
+                  fn={setTimestamp}
+                  name={"round"}
+                  onChange={onSelectorChange}
+                  options={["1", "2"]}
+                  label={"round"}
                 />
                 <div>
                   <input
@@ -534,6 +609,22 @@ const Editor = () => {
                   />
                   <FormHelperText>time</FormHelperText>
                 </div>
+                <TextField
+                  id='video time'
+                  label='Video time'
+                  type='number'
+                  value={timestamp.takedown.videoTime}
+                  onChange={e =>
+                    setTimestamp({
+                      takedown: {
+                        ...timestamp.takedown,
+                        videoTime: e.target.value,
+                      },
+                    })
+                  }
+                  placeholder='Video Time'
+                  margin='normal'
+                />
 
                 {/* <input
                   name={"details"}
@@ -543,11 +634,12 @@ const Editor = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Button
+
+          {/* <Button
             onClick={() => console.log(currentWrestler, finalMatch, timestamp)}
           >
             Press
-          </Button>
+          </Button> */}
           <Grid
             container
             alignItems='flex-start'
@@ -557,32 +649,57 @@ const Editor = () => {
             //  alignItems='center'
             xs={5}
           >
-            <Grid xs={12} md={6}>
-              <AutocompleteCheckbox
-                state={timestamp}
-                options={tagOptions}
-                setFunction={setTimestamp}
-                value={timestamp.takedown.tags}
-                name='tags'
-              />
-            </Grid>
-            <Selector
-              state={timestamp.takedown}
-              fn={setTimestamp}
-              name={"type"}
-              onChange={onSelectorChange}
-              options={filteredTypes}
-              label={"type"}
-            />
-            <Selector
-              state={timestamp.takedown}
-              fn={setTimestamp}
-              name={"takedown"}
-              onChange={onSelectorChange}
-              options={filteredTakedowns}
-              label={"Scoring"}
-            />
+            <Grid xs={12} md={12}>
+              {error && (
+                <Alert title='Error' severity='error' message={error} />
+              )}
+              {warning && (
+                <Alert title='Warning' severity='warning' message={warning} />
+              )}
+              <Grid container xs={12} direction='row'>
+                <Grid direction='column' xs={12} md={6} container>
+                  <AutocompleteCheckbox
+                    state={timestamp}
+                    options={tagOptions}
+                    setFunction={setTimestamp}
+                    value={timestamp.takedown.setup}
+                    name='setup'
+                  />
+                </Grid>
+                <Grid direction='column' xs={12} md={6} container>
+                  <Select
+                    value={timestamp.takedown.type}
+                    state={timestamp.takedown}
+                    fn={setTimestamp}
+                    name={"type"}
+                    onChange={onSelectorChange}
+                    options={filteredTypes}
+                    label={"type"}
+                  />
+                  <Select
+                    value={timestamp.takedown.takedown}
+                    state={timestamp.takedown}
+                    fn={setTimestamp}
+                    name={"takedown"}
+                    onChange={onSelectorChange}
+                    options={filteredTakedowns}
+                    label={"Scoring"}
+                  />
 
+                  {timestamp.takedown.offdef === "Defensive" && (
+                    <Select
+                      value={timestamp.takedown.oppDefendedShot}
+                      state={timestamp.takedown}
+                      fn={setTimestamp}
+                      name={"oppDefendedShot"}
+                      onChange={onSelectorChange}
+                      options={takedownOptions.map(td => td.takedown)}
+                      label={"Defended Shot"}
+                    />
+                  )}
+                </Grid>
+              </Grid>{" "}
+            </Grid>
             <Grid xs={12} md={6} container direction='column'></Grid>
             <Button type='submit' onClick={handleSubmit}>
               {isEdit ? "Save" : "Submit"}
@@ -591,7 +708,25 @@ const Editor = () => {
               <Button
                 onClick={() => {
                   setIsEdit(false);
-                  setTags([]);
+                  setTimestamp({
+                    takedown: {
+                      id: uniqid.process(),
+                      round: timestamp.takedown.round,
+                      wrestlerId: currentWrestler.id,
+                      fullName: currentWrestler.name,
+                      // color: currentWrestler.color,
+                      takedown: "",
+                      offdef: "Offensive",
+                      position: "",
+                      oppDefendedShot: "",
+                      type: "",
+                      setup: [],
+                      details: "",
+                      videoTime: 0,
+                      time: 0,
+                      points: "",
+                    },
+                  });
                 }}
               >
                 Cancel Edit

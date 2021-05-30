@@ -10,9 +10,9 @@ export const userCreatePosition = async position => {
     const update = await axios.post(`${API}/user/position`, position, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userUpdatePosition = async position => {
@@ -22,9 +22,9 @@ export const userUpdatePosition = async position => {
     const update = await axios.put(`${API}/user/position`, position, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userFetchPosition = async () => {
@@ -35,19 +35,19 @@ export const userFetchPosition = async () => {
     });
 
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
-export const userDeletePosition = async position => {
+export const userDeletePosition = async id => {
   try {
     const token = await getIdToken();
 
-    const update = await axios.delete(`${API}/user/position/${position._id}`, {
+    const update = await axios.delete(`${API}/user/position/${id}`, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };

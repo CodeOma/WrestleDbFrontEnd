@@ -10,9 +10,9 @@ export const userCreateTag = async tag => {
     const update = await axios.post(`${API}/user/tag`, tag, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userUpdateTag = async tag => {
@@ -22,9 +22,9 @@ export const userUpdateTag = async tag => {
     const update = await axios.put(`${API}/user/tag`, tag, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userFetchTag = async () => {
@@ -35,8 +35,8 @@ export const userFetchTag = async () => {
     });
 
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 export const userFetchTagById = async id => {
@@ -51,15 +51,15 @@ export const userFetchTagById = async id => {
     console.log(e);
   }
 };
-export const userDeleteTag = async tag => {
+export const userDeleteTag = async id => {
   try {
     const token = await getIdToken();
 
-    const update = await axios.delete(`${API}/user/tag/${tag._id}`, {
+    const update = await axios.delete(`${API}/user/tag/${id}`, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };

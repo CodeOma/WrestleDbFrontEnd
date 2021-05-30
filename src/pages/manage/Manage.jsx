@@ -21,25 +21,29 @@ import CategoryMode from "./Modes/Category";
 import TypeMode from "./Modes/Type";
 
 const Manage = () => {
-  const [manageState, setManageState] = useState("matches");
+  const [manageState, setManageState] = useState("takedowns");
 
   //   const [modes, setModes] = useState({
 
   //   })
   return (
-    <Grid container direction='row' className='m-3'>
+    <Grid container direction='row' className=' m-4'>
       <h3>Manage</h3>
 
-      <Grid container className='p-3' xs={12}>
-        <Grid container direction='row' xs={12}></Grid>
-        <Grid xs={4} className='pt-4' style={{ backgroundColor: "white" }}>
+      <Grid container direction='row' xs={12}>
+        <Grid
+          xs={2}
+          // md={3}
+          className='pt-4'
+          style={{ backgroundColor: "white" }}
+        >
           <CheckboxDef name='Wrestlers' setManageState={setManageState} />
           <CheckboxDef name='Takedowns' setManageState={setManageState} />
           <CheckboxDef name='Matches' setManageState={setManageState} />
         </Grid>
         <Grid
-          xs={8}
-          className='p-2'
+          xs={10}
+          // md={9}
           justify='center'
           style={{ backgroundColor: "white" }}
         >
