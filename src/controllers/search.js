@@ -1,5 +1,5 @@
 import axios from "axios";
-const API = "http://localhost:5000";
+const API = process.env.REACT_APP_API;
 
 export const AutocompleteMatch = async query => {
   try {

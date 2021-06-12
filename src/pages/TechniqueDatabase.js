@@ -215,7 +215,7 @@ const Database = () => {
   }, [data, selectedFilters, page]);
 
   return (
-    <Grid className='m-2 mx-5' style={{ backgroundColor: "white" }}>
+    <Grid className='m-2 mx-2' style={{ backgroundColor: "white" }}>
       <Grid
         // className='px-3'
         container
@@ -223,7 +223,7 @@ const Database = () => {
         alignItems='flex-start'
         direction='row'
       >
-        <Grid direction='column' xs={6} sm={3} container>
+        <Grid direction='column' xs={4} sm={3} container>
           <Grid
             direction='column'
             className='d-flex'
@@ -231,7 +231,7 @@ const Database = () => {
             className='pl-3 pr-4 pt-2'
           >
             <Grid className='pt-4'>
-              <Selector
+              {/* <Selector
                 valu={searchTopic}
                 onOptChange={setSearchTopic}
                 options={["Wrestlers", "Teams", "Tournaments"]}
@@ -253,8 +253,7 @@ const Database = () => {
                   }}
                 />
                 {renderResults()}
-              </div>
-              {/* <Selector options={[""]} label={"Weight Class"} /> */}
+              </div> */}
             </Grid>
 
             <Grid className='pt-4' style={{ width: "100%" }}>
@@ -279,8 +278,8 @@ const Database = () => {
               <Checkbox
                 wrestName={wrestName}
                 name='setup'
-                label='Tags/Setups'
-                data={filterOptions.setup}
+                label='Tags/ Setups'
+                data={filterOptions?.setup}
                 selectedFilters={selectedFilters}
                 setSelectedFilters={setSelectedFilters}
               />
@@ -288,8 +287,8 @@ const Database = () => {
               <Checkbox
                 wrestName={wrestName}
                 name='offdef'
-                label='Offensive/Defensive'
-                data={filterOptions.offdef}
+                label='Offensive/ Defensive'
+                data={filterOptions?.offdef}
                 selectedFilters={selectedFilters}
                 setSelectedFilters={setSelectedFilters}
               />
@@ -297,7 +296,7 @@ const Database = () => {
                 wrestName={wrestName}
                 name='wrestler'
                 label='Wrestler'
-                data={filterOptions.wrestler}
+                data={filterOptions?.wrestler}
                 selectedFilters={selectedFilters}
                 setSelectedFilters={setSelectedFilters}
               />
@@ -305,7 +304,7 @@ const Database = () => {
                 wrestName={wrestName}
                 name='position'
                 label='Position'
-                data={filterOptions.position}
+                data={filterOptions?.position}
                 selectedFilters={selectedFilters}
                 setSelectedFilters={setSelectedFilters}
               />
@@ -313,7 +312,7 @@ const Database = () => {
                 wrestName={wrestName}
                 name='type'
                 label='Type'
-                data={filterOptions.type}
+                data={filterOptions?.type}
                 selectedFilters={selectedFilters}
                 setSelectedFilters={setSelectedFilters}
               />
@@ -322,7 +321,7 @@ const Database = () => {
                 wrestName={wrestName}
                 name='points'
                 label='Points'
-                data={filterOptions.points}
+                data={filterOptions?.points}
                 selectedFilters={selectedFilters}
                 setSelectedFilters={setSelectedFilters}
               />
@@ -331,14 +330,14 @@ const Database = () => {
                 label='Weight Class'
                 name='weightClass'
                 selectedFilters={selectedFilters}
-                data={filterOptions.weightClass}
+                data={filterOptions?.weightClass}
                 setSelectedFilters={setSelectedFilters}
               />
               <Checkbox
                 wrestName={wrestName}
                 name='round'
                 label='Round'
-                data={filterOptions.round}
+                data={filterOptions?.round}
                 selectedFilters={selectedFilters}
                 setSelectedFilters={setSelectedFilters}
               />
@@ -348,7 +347,7 @@ const Database = () => {
           </Grid>
         </Grid>
 
-        <Grid container xs={6} sm={9}>
+        <Grid container xs={8} sm={9}>
           <h5 className='pt-3'>Techniqes</h5>
 
           <Grid container sm={12} className='pt-4' alignItems='flex-start'>
@@ -363,42 +362,37 @@ const Database = () => {
             {fetchedData &&
               fetchedData.map(match => {
                 return (
-                  <Card
-                    className='p-2'
-                    style={{
-                      width: "33%",
-                      height: "330px",
-                    }}
-                    onClick={() => {}}
-                  >
-                    <VideoModal
-                      type='img'
-                      link={`${match.url}?t=${match.videoTime}`}
-                    />{" "}
-                    <p style={{ fontSize: "0.8rem" }} className='mb-0'></p>
-                    {match.wrestler}: {match.takedown}
-                    <p style={{ fontSize: "0.8rem" }} className='mb-0'>
-                      {" "}
-                      {match.setup.map(setup => setup)}
-                    </p>
-                    <p style={{ fontSize: "0.8rem" }} className='mb-0'>
-                      {" "}
-                      {match.round === "round1" ? "Round 1" : "Round 2"}, Time:{" "}
-                      {timeFormatter(match.time)}{" "}
-                    </p>
-                    <p style={{ fontSize: "0.8rem" }} className='mb-0'>
-                      {match.type}
-                    </p>
-                    <p style={{ fontSize: "0.8rem" }}>
-                      {" "}
-                      {match.offdef} Points: {match.points}
-                    </p>
-                    {/* <p></p>
+                  <Grid container xs={6} sm={3}>
+                    <Card className='p-2'>
+                      <VideoModal
+                        type='img'
+                        link={`${match.url}?t=${match.videoTime}`}
+                      />{" "}
+                      <p style={{ fontSize: "0.8rem" }} className='mb-0'></p>
+                      {match.wrestler}: {match.takedown}
+                      <p style={{ fontSize: "0.8rem" }} className='mb-0'>
+                        {" "}
+                        {match.setup.map(setup => `${setup} `)}
+                      </p>
+                      {/* <p style={{ fontSize: "0.8rem" }} className='mb-0'>
+                        {" "}
+                        {match.round === "round1" ? "Round 1" : "Round 2"},
+                        Time: {timeFormatter(match.time)}{" "}
+                      </p> */}
+                      <p style={{ fontSize: "0.8rem" }} className='mb-0'>
+                        {match.type}
+                      </p>
+                      <p style={{ fontSize: "0.8rem" }}>
+                        {" "}
+                        {match.offdef} Points: {match.points}
+                      </p>
+                      {/* <p></p>
                     <p></p> */}
-                    {/* <p style={{ fontSize: "0.5rem" }} className='mb-0'>
+                      {/* <p style={{ fontSize: "0.5rem" }} className='mb-0'>
                       {match.weightclass}
                     </p> */}
-                  </Card>
+                    </Card>
+                  </Grid>
                 );
               })}
           </Grid>

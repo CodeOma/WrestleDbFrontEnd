@@ -113,7 +113,7 @@ const Tags = () => {
         <h3 id='form-dialog-title'> Tags </h3>
 
         <Grid container direction='row'>
-          <Grid xs={6} sm={5} className='p-4'>
+          <Grid xs={6} sm={5} className='p-1'>
             <Card>
               <input />
               <Button onClick={() => fetch()}>

@@ -188,12 +188,15 @@ const Takedowns = () => {
         <h3 id='form-dialog-title'> Takedowns </h3>
 
         <Grid container direction='row'>
-          <Grid xs={6} sm={5} className='p-4'>
+          <Grid xs={6} sm={5} className='p-2'>
             <Card>
-              <input />
-              <Button onClick={() => fetch()}>
-                <RefreshIcon />
-              </Button>
+              <Grid container direction='row'>
+                <input />
+                <Button onClick={() => fetch()}>
+                  <RefreshIcon />
+                </Button>
+              </Grid>
+
               {isLoading ? (
                 <h6>Loading</h6>
               ) : (
@@ -203,6 +206,8 @@ const Takedowns = () => {
                     listStyle: "none",
                     maxHeight: "25rem",
                     overflow: "scroll",
+                    width: "100%",
+                    flexDirection: "column",
                   }}
                 >
                   {takedownsList.map(takedown => (

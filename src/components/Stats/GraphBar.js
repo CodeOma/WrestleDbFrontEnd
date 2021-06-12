@@ -8,7 +8,6 @@ const ExmapleChart = ({ tableData }) => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     if (!chartRef) return;
-    console.log(tableData.labels);
     const ctx = chartRef.current.getContext("2d");
     const myChart = new Chart(ctx, {
       type: tableData.type,
@@ -61,7 +60,6 @@ const ExmapleChart = ({ tableData }) => {
   }, [chartRef]);
 
   useEffect(() => {
-    console.log(tableData);
     if (!myChart) return;
     myChart.data.datasets[0].data = tableData.data;
     myChart.update();

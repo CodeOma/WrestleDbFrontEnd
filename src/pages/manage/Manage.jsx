@@ -27,13 +27,13 @@ const Manage = () => {
 
   //   })
   return (
-    <Grid container direction='row' className=' m-4'>
+    <Grid container direction='row' className='m-4'>
       <h3>Manage</h3>
 
       <Grid container direction='row' xs={12}>
         <Grid
-          xs={2}
-          // md={3}
+          xs={10}
+          md={2}
           className='pt-4'
           style={{ backgroundColor: "white" }}
         >

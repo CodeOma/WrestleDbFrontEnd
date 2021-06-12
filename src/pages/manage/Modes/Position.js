@@ -121,10 +121,15 @@ const Positions = () => {
         <h3 id='form-dialog-title'> Positions </h3>
 
         <Grid container direction='row'>
-          <Grid xs={6} sm={5} className='p-4'>
+          <Grid xs={6} sm={5} className='p-1'>
             <Card>
               <input />
-              <Button onClick={() => fetch()}>
+              <Button
+                onClick={() => {
+                  fetch();
+                  console.log(positionsList);
+                }}
+              >
                 <RefreshIcon />
               </Button>
               {isLoading ? (

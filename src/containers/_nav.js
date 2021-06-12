@@ -16,12 +16,24 @@ export const nav = [
   {
     _tag: "CSidebarNavItem",
     name: "Stats",
-    to: "/charts",
+    to: "/wrestler",
     icon: "cil-chart-pie",
   },
 
   {
     _tag: "CSidebarNavDivider",
+  },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Wrestler Profiles",
+    to: "/wrestler",
+    icon: "cil-chart-pie",
+  },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Matches",
+    to: "/database",
+    icon: "cil-chart-pie",
   },
 
   // {

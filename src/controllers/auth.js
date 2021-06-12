@@ -1,11 +1,12 @@
 import axios from "axios";
 import { auth } from "../firebase";
-const API = "http://localhost:5000";
+const API = process.env.REACT_APP_API;
 
-export const createUserAccount = data => {
+export const createUserAccount = async data => {
   try {
-    return axios.put(`${API}/auth/signup`, data).then(res => res.data);
+    const create = await axios.put(`${API}/auth/signup`, data);
+    return create;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };

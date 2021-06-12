@@ -15,8 +15,9 @@ const styles = {
     width: "100%",
   },
   heading: {
-    overflow: "wrap",
+    // overflow: "wrap",
     // width:'2vw' ,
+    fontSize: ".9rem",
     fontWeight: "regular",
   },
 };
@@ -70,24 +71,26 @@ const Checkbox = ({
       <div style={{ width: "100%" }}>
         <Accordion>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={<ExpandMoreIcon fontSize='small' />}
             aria-controls='panel1a-content'
             id='panel1a-header'
           >
-            <Grid>
+            <Grid container xs={11}>
               <p style={styles.heading}> {label || "Option"}</p>
 
               {checked.map(c => (
-                <li className='list-unstyled pl-3'>{c}</li>
+                <li style={styles.heading} className='list-unstyled pl-3'>
+                  {c}
+                </li>
               ))}
             </Grid>
           </AccordionSummary>
           <AccordionDetails>
             <Grid
-              className='pl-4'
+              className='pl-1'
               container
               direction='row'
-              style={{ maxHeight: "200px", overflow: "scroll" }}
+              style={{ maxHeight: "200px", width: "100%", overflow: "scroll" }}
             >
               {/* <input
                 onChange={e => {
@@ -108,7 +111,11 @@ const Checkbox = ({
                     <li
                       key={i}
                       className='list-unstyled'
-                      style={{ width: "100%" }}
+                      style={{
+                        width: "100%",
+                        display: "inline-block",
+                        fontSize: ".9rem",
+                      }}
                     >
                       <p>
                         {/* <Grid container direction='row'> */}

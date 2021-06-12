@@ -201,7 +201,7 @@ const Tournament = () => {
       <h3 id='form-dialog-title'> Tournament </h3>
       <Grid aria-labelledby='form-dialog-title'>
         <Grid container direction='row'>
-          <Grid xs={6} sm={5} className='p-4'>
+          <Grid xs={6} sm={5} className='p-1'>
             <Card>
               <input />
               <Button onClick={() => fetch()}>

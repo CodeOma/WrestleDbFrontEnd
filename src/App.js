@@ -10,7 +10,11 @@ import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Layout from "./TheLayout";
 import SignIn from "./pages/user/SignIn";
+dotenv.config();
+console.log(process.env);
+
 // import Profile from "./pages/user/Profile";
+console.log("api", process.env.REACT_APP_API);
 function App() {
   return (
     <AuthProvider>

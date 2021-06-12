@@ -4,7 +4,7 @@ import { Grid, TextField } from "@material-ui/core";
 
 const AutoComplete = ({ searchFunction, name, setFunction, label, value }) => {
   const [suggestion, setSuggestion] = useState([]);
-  const [search, setSearch] = useState(value);
+  const [search, setSearch] = useState("");
   const [suggestionArray, setSuggestionArray] = useState([""]);
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);

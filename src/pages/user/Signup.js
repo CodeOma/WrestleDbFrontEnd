@@ -1,5 +1,4 @@
-import React, { useRef, useState } from "react";
-import { Alert } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 
@@ -16,6 +15,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Alert from "../../components/components/Alert";
 
 function Copyright() {
   return (
@@ -69,17 +69,35 @@ export default function SignUp() {
     try {
       setError("");
       setLoading(true);
-      await signup(email, password, firstName, lastName);
-      history.push("/");
-    } catch {
+      const signU = await signup(email, password, firstName, lastName);
+
+      if (signU.data === "OK") {
+        history.push("/signin");
+      } else {
+        throw new Error("Error");
+      }
+      // if(signU.status)
+    } catch (e) {
+      console.log(e);
       setError("Failed to create an account");
     }
 
     setLoading(false);
   }
+  useEffect(() => {
+    const timer = setTimeout(() => setError(""), 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [error]);
 
   return (
-    <Grid container justify='center' style={{ backgroundColor: "#ebedef" }}>
+    <Grid
+      container
+      justify='center'
+      style={{ backgroundColor: "#ebedef", maxHeight: "1" }}
+    >
       <Grid
         justify='center'
         container
@@ -91,6 +109,7 @@ export default function SignUp() {
       >
         <CssBaseline />
         <div className={classes.paper}>
+          {error && <Alert title='Error' severity='error' message={error} />}
           <Typography component='h1' variant='h5'>
             Registration
           </Typography>

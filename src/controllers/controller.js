@@ -3,7 +3,7 @@ import axios from "axios";
 import firebase from "firebase";
 import { getIdToken } from "../firebase";
 
-const API = "http://localhost:5000";
+const API = process.env.REACT_APP_API;
 
 // const config = {
 //   headers: { Authorization: `Bearer ${token}` },

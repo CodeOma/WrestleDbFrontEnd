@@ -64,9 +64,9 @@ const Header = ({ setToggleSideBar, toggleSideBar }) => {
         <CHeaderNavItem className='px-3'>
           <CHeaderNavLink to='/techniques'>Techniques</CHeaderNavLink>
         </CHeaderNavItem>
-        <CHeaderNavItem className='px-3'>
+        {/* <CHeaderNavItem className='px-3'>
           <CHeaderNavLink to='/stats'>Stats</CHeaderNavLink>
-        </CHeaderNavItem>
+        </CHeaderNavItem> */}
         <CHeaderNavItem className='px-3'>
           <CHeaderNavLink to='/wrestler'>Wrestlers</CHeaderNavLink>
         </CHeaderNavItem>

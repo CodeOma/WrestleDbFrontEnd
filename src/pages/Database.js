@@ -292,8 +292,6 @@ const Database = () => {
         </Grid>
 
         <Grid container sm={9}>
-          <h5 className='pt-3'>sort</h5>
-
           <Grid container sm={12} className='pt-3 px-1' alignItems='flex-start'>
             {!isLoaded && (
               <Grid container justify='center'>

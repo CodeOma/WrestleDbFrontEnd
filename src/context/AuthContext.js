@@ -13,7 +13,8 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   function signup(email, password, firstName, lastName) {
-    createUserAccount({ email, password, firstName, lastName });
+    const create = createUserAccount({ email, password, firstName, lastName });
+    return create;
     // return auth.createUserWithEmailAndPassword(email, password);
   }
 
