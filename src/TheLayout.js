@@ -14,10 +14,16 @@ import Database from "./pages/Database";
 import WrestlerDB from "./pages/WrestlerDatabase";
 import WrestlerProfile from "./pages/wrestler/wrestlerProfile";
 // import { AppProvider } from "../context/context";
-import SearchPage from "./pages/searchPage";
 import GeneralStats from "./pages/rankingtables/GeneralStats";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import TechniqueDatabase from "./pages/TechniqueDatabase";
+import F404 from "./pages/F404";
+
 const TheLayout = () => {
   const [toggleSideBar, setToggleSideBar] = useState(false);
 
@@ -31,52 +37,44 @@ const TheLayout = () => {
           toggleSideBar={toggleSideBar}
         />
         <Grid className='c-body w-100 d-flex'>
-          {/* <Switch> */}
           <AuthProvider>
-            <Route exact path='/'>
-              <Home />
-            </Route>
-            <Route path='/wrestler'>
-              <WrestlerProfile />
-            </Route>
-
-            <Route exact path='/db'>
-              <WrestlerDB />
-            </Route>
-            <Route exact path='/database'>
-              <Database />
-            </Route>
-            <Route exact path='/techniques'>
-              <TechniqueDatabase />
-            </Route>
-
-            <Route path='/search'>
-              <SearchPage />
-            </Route>
-            {/* MATCHES */}
-            <Route exact path='/match/edi'>
-              <Editor />
-            </Route>
-            <Route exact path='/match/create'>
-              <Create />
-            </Route>
-            <Route exact path='/match/edit'>
-              <Editor />
-            </Route>
-
-            {/* </Route> */}
-
-            <Route exact path='/match/view/:match_id'>
-              <View />
-            </Route>
-
-            <Route path='/stats'>
-              <GeneralStats />
-            </Route>
-            <PrivateRoute exact path='/testprivate' component={Create} />
-
-            <PrivateRoute exact path='/manage' component={Manage} />
-            {/* </Switch> */}
+            <Switch>
+              <Route exact path='/'>
+                <Home />
+              </Route>
+              <Route path='/wrestler'>
+                <WrestlerProfile />
+              </Route>
+              <Route exact path='/db'>
+                <WrestlerDB />
+              </Route>
+              <Route exact path='/database'>
+                <Database />
+              </Route>
+              <Route exact path='/techniques'>
+                <TechniqueDatabase />
+              </Route>
+              {/* MATCHES */}
+              <Route exact path='/match/edi'>
+                <Editor />
+              </Route>
+              <Route exact path='/match/create'>
+                <Create />
+              </Route>
+              <Route exact path='/match/edit'>
+                <Editor />
+              </Route>
+              {/* </Route> */}
+              <Route exact path='/match/view/:match_id'>
+                <View />
+              </Route>
+              <Route exact path='/stats'>
+                <GeneralStats />
+              </Route>
+              <PrivateRoute exact path='/testprivate' component={Create} />
+              <PrivateRoute exact path='/manage' component={Manage} />
+              <Route component={F404} />{" "}
+            </Switch>
           </AuthProvider>
         </Grid>
 

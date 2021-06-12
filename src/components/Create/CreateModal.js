@@ -175,7 +175,7 @@ const CreateModal = ({
                     title: "Create Tournament",
                     contentText: "Add a tournament",
                   }}
-                  value={matchInfo.tournament}
+                  value={matchInfo?.tournament}
                   label={"Tournament Name"}
                   database='tournament'
                   name='tournament'
@@ -185,7 +185,7 @@ const CreateModal = ({
                   //
                   state={matchInfo}
                   fn={setMatchInfo}
-                  value={matchInfo.round}
+                  value={matchInfo?.round}
                   name={"round"}
                   onChange={onSelectorChange}
                   //
@@ -206,7 +206,7 @@ const CreateModal = ({
                   //
                   state={matchInfo}
                   fn={setMatchInfo}
-                  value={matchInfo.weightClass}
+                  value={matchInfo?.weightClass}
                   name={"weightClass"}
                   onChange={onSelectorChange}
                   //
@@ -235,7 +235,7 @@ const CreateModal = ({
                   label={"Red Wrestler"}
                   state={wrestler}
                   name={"red"}
-                  value={matchInfo.redWrestler}
+                  value={matchInfo?.redWrestler}
                   dialog={{
                     title: "Add a Wrestler",
                     contentText:
@@ -247,7 +247,7 @@ const CreateModal = ({
                 <AutoComplete
                   label={"Blue Wrestler"}
                   fn={setWrestler}
-                  value={matchInfo.blueWrestler}
+                  value={matchInfo?.blueWrestler}
                   state={wrestler}
                   name={"blue"}
                   dialog={{
@@ -268,9 +268,9 @@ const CreateModal = ({
                   name={"winner"}
                   onChange={onResultSelectorChange}
                   value={
-                    matchInfo.result.winner === wrestler.red
+                    matchInfo?.result.winner === wrestler.red
                       ? wrestler.red
-                      : matchInfo.result.winner === wrestler.blue
+                      : matchInfo?.result.winner === wrestler.blue
                       ? wrestler.blue
                       : ""
                   }
@@ -284,9 +284,9 @@ const CreateModal = ({
                   fn={setMatchInfo}
                   name={"loser"}
                   value={
-                    matchInfo.result.loser === wrestler.red
+                    matchInfo?.result.loser === wrestler.red
                       ? wrestler.red
-                      : matchInfo.result.loser === wrestler.blue
+                      : matchInfo?.result.loser === wrestler.blue
                       ? wrestler.blue
                       : ""
                   }
@@ -300,7 +300,7 @@ const CreateModal = ({
                   state={matchInfo}
                   fn={setMatchInfo}
                   name={"victoryType"}
-                  value={matchInfo.result.victoryType}
+                  value={matchInfo?.result.victoryType}
                   onChange={onResultSelectorChange}
                   //
                   options={[
@@ -328,7 +328,7 @@ const CreateModal = ({
                         url: e.target.value,
                       })
                     }
-                    value={matchInfo.url}
+                    value={matchInfo?.url}
                     // label='Video Url'
                     type='text'
                   >

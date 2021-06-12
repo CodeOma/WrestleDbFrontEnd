@@ -228,7 +228,7 @@ const Database = () => {
             direction='column'
             className='d-flex'
             container
-            className='pl-3 pr-4 pt-2'
+            className='pl-2 pr-2 pt-2'
           >
             <Grid className='pt-4'>
               {/* <Selector
@@ -348,7 +348,7 @@ const Database = () => {
         </Grid>
 
         <Grid container xs={8} sm={9}>
-          <h5 className='pt-3'>Techniqes</h5>
+          <h5 className='pt-3'>Techniques</h5>
 
           <Grid container sm={12} className='pt-4' alignItems='flex-start'>
             {!isLoaded && (

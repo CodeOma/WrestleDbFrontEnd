@@ -19,6 +19,7 @@ const Video = ({
   const [url, setUrl] = useState("https://www.youtube.com/watch?v=ox6VucsagHo");
   const [search, setSearch] = useState("");
   const [matchData, setMatchData] = useState({});
+  const [timestampOpen, setTimestampOpen] = useState(true);
   const player = useRef(null);
 
   const handleSubmit = e => {
@@ -38,7 +39,7 @@ const Video = ({
   }, [match]);
 
   return (
-    <Grid className='pb-4' xs={12} justify='center' container>
+    <Grid className='' xs={12} justify='center' container>
       <Grid xs={12} sm={8} justify='center' container>
         {isLoading ? (
           "loading"
@@ -54,14 +55,20 @@ const Video = ({
           />
         )}
       </Grid>
+
       <Grid xs={12} sm={4} justify='flex-start' container>
-        <TimestampList
-          setTime={setTime}
-          match={match}
-          setMatchEdit={setMatchEdit}
-          deleteTimestamp={deleteTimestamp}
-          render={render}
-        />
+        <Button onClick={() => setTimestampOpen(!timestampOpen)}>
+          Toggle Scores
+        </Button>
+        {timestampOpen && (
+          <TimestampList
+            setTime={setTime}
+            match={match}
+            setMatchEdit={setMatchEdit}
+            deleteTimestamp={deleteTimestamp}
+            render={render}
+          />
+        )}
       </Grid>
     </Grid>
   );

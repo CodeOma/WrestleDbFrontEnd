@@ -188,7 +188,7 @@ const Database = () => {
   }, [data, selectedFilters, page]);
 
   return (
-    <Grid className='m-2 mx-5' style={{ backgroundColor: "white" }}>
+    <Grid className='m-2 mx-2' style={{ backgroundColor: "white" }}>
       <Grid
         // className='ml-4 mr-4'
         container

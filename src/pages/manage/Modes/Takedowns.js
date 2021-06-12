@@ -164,8 +164,10 @@ const Takedowns = () => {
 
   const handleDelete = async id => {
     const deleted = await userDeleteTakedown(id);
-
-    if (deleted.statusText === "OK") {
+    console.log(deleted.data.n);
+    if (deleted.data.n === 0) {
+      setError(`Couldn't delete. Cannot delete defaults`);
+    } else if (deleted.statusText === "OK") {
       setSuccess("Deleted Succesfully!");
     }
 

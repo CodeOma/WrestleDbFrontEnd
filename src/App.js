@@ -10,11 +10,10 @@ import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Layout from "./TheLayout";
 import SignIn from "./pages/user/SignIn";
+
 dotenv.config();
-console.log(process.env);
 
 // import Profile from "./pages/user/Profile";
-console.log("api", process.env.REACT_APP_API);
 function App() {
   return (
     <AuthProvider>
@@ -30,12 +29,11 @@ function App() {
           <Route exact path='/forgotpassword' name='Forgot Password'>
             <ForgotPassword />
           </Route>
-          <Route exact path='/404' name='Page 404' />
+
           <Route exact path='/500' name='Page 500' />
           {/* <Route exact path='/profile' name='Profile'>
             <Profile />
           </Route> */}
-
           <Layout />
         </Switch>
       </Router>

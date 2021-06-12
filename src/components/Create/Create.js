@@ -194,7 +194,7 @@ const Editor = () => {
 
   const styles = {
     root: {
-      padding: "60px",
+      // padding: "60px",
       paddingTop: "30px",
       backgroundColor: "white",
     },
@@ -468,7 +468,7 @@ const Editor = () => {
     // handleTimestamp();
   }, [editingRender]);
   return (
-    <Grid Card className='m-2 mx-5' style={styles.root}>
+    <Grid Card className='m-1' style={styles.root}>
       {/* 
       {matchList.length !== 0 && (
         <p>

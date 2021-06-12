@@ -57,7 +57,7 @@ const Sidebar = ({ toggleSideBar }) => {
         /> */}
       </CSidebarBrand>
       <CSidebarNav>
-        <Link className='c-sidebar-nav-link ' to='/Home'>
+        <Link className='c-sidebar-nav-link ' to='/'>
           Dashboard
         </Link>
         <CCreateElement

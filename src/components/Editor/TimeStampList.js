@@ -85,54 +85,59 @@ const TimestampList = ({
         <p>Loading</p>
       ) : (
         <>
-          {timestamps.length > 0
-            ? timestamps.map(timestamp => {
-                const min = Math.floor(timestamp.time / 60);
-                const sec = timestamp.time - min * 60;
-                const times = `${min}m ${sec}sec`;
+          {timestamps.length > 0 ? (
+            timestamps.map(timestamp => {
+              const min = Math.floor(timestamp.time / 60);
+              const sec = timestamp.time - min * 60;
+              const times = `${min}m ${sec}sec`;
 
-                return (
-                  <Timestamp
-                    key={timestamp.id}
-                    render={render}
-                    setMatchEdit={setMatchEdit}
-                    deleteTimestamp={deleteTimestamp}
-                    setTime={setTime}
-                    id={timestamp.id}
-                    time={times}
-                    vidTime={timestamp.videoTime}
-                    round={timestamp.round}
-                    // scoring={timestamp.scoringInfo.takedown.scoring}
-                    // wrestler={
-                    //   timestamp.wrestlerId === match.redWrestler.id
-                    //     ? wrestlers.redWrestler.name
-                    //     : wrestlers.blueWrestler.name
-                    // }
-                    wrestler={
-                      timestamp.wrestlerId === wrestlers.redWrestler.id
-                        ? wrestlers.redWrestler.name
-                        : wrestlers.blueWrestler.name
-                    }
-                    //                     function getKeyByValue(object, value) {
-                    //   return Object.keys(object).find(key => object[key] === value);
-                    // }
-                    // opponent={timestamp.wrestlerInfo.opponent}
-                    takedown={timestamp.takedown}
-                    setup={timestamp.setup}
-                    pointsScored={timestamp.points}
-                    // details={timestamp.scoringInfo.takedown.details}
-                    color={
-                      timestamp.wrestlerId === wrestlers.redWrestler.id
-                        ? "red"
-                        : "blue"
-                    }
-                    // colorOpp={timestamp.wrestlerInfo.opponentColor}
-                    // match={timestamp.match || ""}
-                    offdef={timestamp.offdef}
-                  />
-                );
-              })
-            : "Empty"}{" "}
+              return (
+                <Timestamp
+                  key={timestamp.id}
+                  render={render}
+                  setMatchEdit={setMatchEdit}
+                  deleteTimestamp={deleteTimestamp}
+                  setTime={setTime}
+                  id={timestamp.id}
+                  time={times}
+                  vidTime={timestamp.videoTime}
+                  round={timestamp.round}
+                  // scoring={timestamp.scoringInfo.takedown.scoring}
+                  // wrestler={
+                  //   timestamp.wrestlerId === match.redWrestler.id
+                  //     ? wrestlers.redWrestler.name
+                  //     : wrestlers.blueWrestler.name
+                  // }
+                  wrestler={
+                    timestamp.wrestlerId === wrestlers.redWrestler.id
+                      ? wrestlers.redWrestler.name
+                      : wrestlers.blueWrestler.name
+                  }
+                  //                     function getKeyByValue(object, value) {
+                  //   return Object.keys(object).find(key => object[key] === value);
+                  // }
+                  // opponent={timestamp.wrestlerInfo.opponent}
+                  takedown={timestamp.takedown}
+                  setup={timestamp.setup}
+                  pointsScored={timestamp.points}
+                  // details={timestamp.scoringInfo.takedown.details}
+                  color={
+                    timestamp.wrestlerId === wrestlers.redWrestler.id
+                      ? "red"
+                      : "blue"
+                  }
+                  // colorOpp={timestamp.wrestlerInfo.opponentColor}
+                  // match={timestamp.match || ""}
+                  offdef={timestamp.offdef}
+                />
+              );
+            })
+          ) : (
+            <Grid container justify='center'>
+              {" "}
+              <p>No Takedowns</p>
+            </Grid>
+          )}{" "}
         </>
       )}
       <Grid container direction='row'></Grid>

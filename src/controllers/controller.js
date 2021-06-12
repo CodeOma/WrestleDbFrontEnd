@@ -13,10 +13,15 @@ export const getMatchByWrestlerId = async id => {
   try {
     const token = await getIdToken();
 
-    const data = axios.get(`${API}/user/match/wrestler/list/${id}`, {
-      headers: { authorization: `Bearer ${token}` },
-    });
-    return data;
+    if (token) {
+      const data = axios.get(`${API}/user/match/wrestler/list/${id}`, {
+        headers: { authorization: `Bearer ${token}` },
+      });
+      return data;
+    } else {
+      const data = axios.get(`${API}/user/match/wrestler/publiclist/${id}`);
+      return data;
+    }
   } catch (e) {
     return e;
   }
@@ -43,7 +48,6 @@ export const getTournaments = () => {
   return axios
     .get(`${API}/tournament`)
     .then(response => {
-      console.log(response);
       return response.json();
     })
     .catch(err => console.log(err));
@@ -87,7 +91,6 @@ export const getMatchByWrestler = async (wrestlerId, filters, skip, limit) => {
     const data = axios.get(`${API}/match/wrestler/${wrestlerId}`, {
       params: { filters, skip: skipNum },
     });
-    console.log(filters);
     return data;
   } catch (error) {
     console.log(error);
@@ -102,7 +105,6 @@ export const getMatchByTournament = async (id, filters, skip, limit) => {
     const data = axios.get(`${API}/match/tournament/${id}`, {
       params: { filters, skip: skipNum },
     });
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -118,7 +120,6 @@ export const getMatchByTeam = async (team, filters, skip, limit) => {
     const data = axios.get(`${API}/matches/team/${team}`, {
       params: { filters, skip: skipNum },
     });
-    console.log(filters);
     return data;
   } catch (error) {
     console.log(error);
@@ -140,7 +141,6 @@ export const listRelated = wrestlerId => {
 export const getGeneralStats = async () => {
   try {
     const data = axios.get(`${API}/stats/general`);
-    console.log(data);
     return data;
   } catch (e) {
     return e;
@@ -149,9 +149,7 @@ export const getGeneralStats = async () => {
 
 export const individualProfileStats = async id => {
   try {
-    console.log(id);
     const data = axios.get(`${API}/stats/wrestler/${id}`);
-    console.log(data);
     return data;
   } catch (e) {
     return e;
@@ -186,17 +184,13 @@ export const getAllTechniques = async (
 //Patch
 export const updateMatch = async match => {
   try {
-    console.log(match._id);
     const update = await axios.put(`${API}/match/${match._id}`, match);
-    console.log(update);
   } catch (e) {
-    console.log("wwhwhwhwhwh");
     console.log(e);
   }
 };
 
 export const createWrestler = async wrestler => {
-  console.log(wrestler);
   try {
     const update = await axios.put(`${API}/wrestler`, wrestler);
     console.log(update);

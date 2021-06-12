@@ -172,7 +172,9 @@ const Tournament = () => {
   const handleDelete = async id => {
     const deleted = await userDeleteTournament(id);
 
-    if (deleted.statusText === "OK") {
+    if (deleted.data.n === 0) {
+      setError(`Couldn't delete. Cannot delete defaults`);
+    } else if (deleted.statusText === "OK") {
       setSuccess("Deleted Succesfully!");
     }
 

@@ -51,6 +51,7 @@ const ExmapleChart = ({ tableData }) => {
         ],
       },
       options: {
+        // responsive: true,
         plugins: { legend: { labels: { padding: "20" } } },
         ...tableData.options,
         yeet: tableData.array,
@@ -72,8 +73,8 @@ const ExmapleChart = ({ tableData }) => {
         array={tableData}
         ref={chartRef}
         id='myChart'
-        width='500'
-        height='500'
+        // width='500'
+        // height='500'
       />
     </>
   );

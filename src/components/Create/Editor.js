@@ -500,7 +500,7 @@ const Editor = () => {
       const data = await getMatchByWrestlerId(wrestlerId);
       if (data.data) {
         setMatchIndex(0);
-        setFinalMatch(data.data[matchIndex]);
+        setFinalMatch(data?.data[matchIndex] || finalMatch);
         setMatchList(data.data);
         setIsLoading(false);
         setIsOpen(true);
@@ -567,10 +567,7 @@ const Editor = () => {
               matchList.map((match, i) => {
                 console.log(i);
                 return (
-                  <Card
-                    className='p-2'
-                    style={{ width: "25%", height: "330px" }}
-                  >
+                  <Card className='p-2' style={{ width: "25%" }}>
                     <img
                       onClick={() => {
                         setIsLoading(true);

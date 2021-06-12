@@ -86,7 +86,9 @@ const Tags = () => {
   const onSelectorChange = () => {};
   const handleDelete = async id => {
     const deleted = await userDeleteTag(id);
-    if (deleted.statusText === "OK") {
+    if (deleted.data.n === 0) {
+      setError(`Couldn't delete. Cannot delete defaults`);
+    } else if (deleted.statusText === "OK") {
       setSuccess("Deleted Succesfully!");
     }
     setRefresh(!refresh);

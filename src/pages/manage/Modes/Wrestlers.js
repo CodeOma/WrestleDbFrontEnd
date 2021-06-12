@@ -141,7 +141,9 @@ const Wrestlers = () => {
   const handleDelete = async id => {
     const deleted = await userDeleteWrestler(id);
 
-    if (deleted.statusText === "OK") {
+    if (deleted.data.n === 0) {
+      setError(`Couldn't delete. Cannot delete defaults`);
+    } else if (deleted.statusText === "OK") {
       setSuccess("Deleted Succesfully!");
     }
 
@@ -239,6 +241,7 @@ const Wrestlers = () => {
                   <h6>Wrestlers:</h6>
                   <Grid className='pb-4' xs={12} container>
                     <TextField
+                      className='pr-2'
                       id='outlined-helperText'
                       label=' '
                       value={wrestler.fullName}
@@ -248,6 +251,7 @@ const Wrestlers = () => {
                       helperText='Full Name'
                     />
                     <TextField
+                      className='pl-1'
                       id='outlined-helperText'
                       label=' '
                       value={wrestler.lastName}
