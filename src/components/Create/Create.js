@@ -568,7 +568,6 @@ const Editor = () => {
                 state={timestamp.takedown}
                 fn={setTimestamp}
                 name={"position"}
-                disabled={timestamp.takedown.offdef === "Other" ? true : false}
                 onChange={onSelectorChange}
                 options={positionOptions}
                 label={"Position"}
