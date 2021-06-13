@@ -200,7 +200,7 @@ const Editor = () => {
     },
 
     url: "",
-
+    private: false,
     scores: [],
   });
 
@@ -515,7 +515,7 @@ const Editor = () => {
   }, [editingRender]);
   return (
     <Grid Card className='m-2 mx-2' style={styles.root}>
-      <Grid container direction='row' alignItems='flex-end' className='pl-1'>
+      <Grid container direction='row' alignItems='flex-end' className='pl-2'>
         <AutoComplete
           database='wrestler'
           label='wrestler'

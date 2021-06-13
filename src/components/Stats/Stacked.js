@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Chart from "chart.js";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ZoomInIcon from "@material-ui/icons/ZoomIn";
-const ExampleChart = ({ tableData }) => {
+const StackedChart = ({ tableData }) => {
   const chartRef = useRef(null);
   const [myChart, setMyChart] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -80,4 +80,4 @@ const ExampleChart = ({ tableData }) => {
   );
 };
 
-export default ExampleChart;
+export default StackedChart;

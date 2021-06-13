@@ -342,7 +342,7 @@ const CreateModal = ({
                   value={matchInfo?.private}
                   name={"private"}
                   onChange={onSelectorChange}
-                  options={[true, false]}
+                  options={["true", "false"]}
                   label={"Private"}
                 />
                 <Button

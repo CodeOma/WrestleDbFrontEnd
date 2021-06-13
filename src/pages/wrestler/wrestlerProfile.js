@@ -6,6 +6,7 @@ import { Button, Card } from "@material-ui/core";
 import axios from "axios";
 import VideoModal from "../../components/components/VideoModal";
 import DataTable from "../../components/components/Table";
+// import Stacked from "../../components/Stats/Stacked";
 import { individualProfileStats } from "../../controllers/controller";
 import { timeFormatter, youtubeVideoId } from "../../helpers/formatting";
 import AutoComplete from "../Autocomplete";
@@ -95,6 +96,52 @@ const WrestlerProfile = () => {
       },
     },
   });
+  const [scData, setScData] = useState({
+    type: "bar",
+    title: "Score Percentage",
+    data: [],
+    labels: [],
+    options: {
+      scales: {
+        xAxes: [
+          {
+            stacked: true,
+          },
+        ],
+        yAxes: [
+          {
+            stacked: true,
+          },
+        ],
+      },
+      onClick: (e, item) => {
+        const index = item[0]?._index;
+        const obj =
+          item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
+        if (obj) {
+          setData(Object.values(obj));
+          setIsOpen(true);
+        }
+      },
+    },
+  });
+  const [counteredData, setCounteredData] = useState({
+    type: "pie",
+    title: "Countered",
+    data: [],
+    labels: [],
+    options: {
+      onClick: (e, item) => {
+        const index = item[0]?._index;
+        const obj =
+          item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
+        if (obj) {
+          setData(Object.values(obj));
+          setIsOpen(true);
+        }
+      },
+    },
+  });
 
   const [scoreType, setScoreType] = useState({
     type: "bar",
@@ -127,9 +174,24 @@ const WrestlerProfile = () => {
       },
     },
   });
-
+  const [setupData, setSetupData] = useState({
+    type: "pie",
+    title: "Tags/Setups",
+    data: [],
+    labels: [],
+    options: {
+      onClick: (e, item) => {
+        const index = item[0]?._index;
+        const obj =
+          item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
+        if (obj) {
+          setData(Object.values(obj));
+          setIsOpen(true);
+        }
+      },
+    },
+  });
   const matches = array => {
-    console.log(array);
     const rows = array.map((field, i) => {
       return {
         id: i,
@@ -139,7 +201,6 @@ const WrestlerProfile = () => {
         ...field.tournament,
       };
     });
-    console.log(rows);
     // const columns = Object.keys(array[0]).map(k => {
     //   return { field: k, headerName: k, width: 160 };
     // });
@@ -197,19 +258,6 @@ const WrestlerProfile = () => {
         // setProfileData(data2);
         // setTdData(data2);
         const initGraph = (array, fn, currData) => {
-          // const labels = new Set();
-          // array.splice(0, 7).forEach(t => {
-          //   obj.labels.push(t._id ? t._id : "Other");
-          //   obj.data.push(t.number);
-          // });
-
-          // let x = 0;
-          // let y = [];
-          // array.splice(0, 7).forEach(t => {
-          //   x += t.number;
-          // });
-          // obj.labels.push("Other");
-          // obj.data.push(x);
           const obj = {
             data: [],
             labels: [],
@@ -225,14 +273,15 @@ const WrestlerProfile = () => {
             array: [array],
           });
         };
+
         const fetchMatches = await getMatchByWrestlerId(wrestlerId);
         matches(fetchMatches.data);
-
-        initGraph(data[2], setTdData, tdData);
         initGraph(data[1], setTdcData, tdcData);
-
+        initGraph(data[2], setTdData, tdData);
+        initGraph(data[3], setCounteredData, counteredData);
         initGraph(data[4], setScoreType, scoreType);
-
+        initGraph(data[5], setSetupData, setupData);
+        // setScData(data[6]);
         // setWrestler(data.wrestler[0].fullName);
         setIsLoading(false);
         setIsOpen(false);
@@ -257,7 +306,7 @@ const WrestlerProfile = () => {
     },
   };
   return (
-    <Grid className='my-2  pt-4' style={styles.root}>
+    <Grid className='my-2 px-2  pt-4' style={styles.root}>
       <AutoComplete
         searchFunction={AutocompleteWrestler}
         setFunction={setWrestlerId}
@@ -363,6 +412,31 @@ const WrestlerProfile = () => {
             />
           )}
         </Grid>
+        <Grid container xs={12} sm={6}>
+          <h6> Tags/Setups</h6>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <GraphBar
+              setIsOpen={setIsOpen}
+              setData={setData}
+              tableData={setupData}
+            />
+          )}
+        </Grid>
+        <Grid container xs={12} sm={6}>
+          <h6> Countered</h6>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <GraphBar
+              setIsOpen={setIsOpen}
+              setData={setData}
+              tableData={counteredData}
+            />
+          )}
+        </Grid>
+        {/* {isLoading ? <CircularProgress /> : <Stacked />} */}
         {/* <Grid className='pl-2' item md={3}> */}
         {/* <h6> Set Ups/Tags</h6>
           {isLoading ? (
@@ -411,7 +485,7 @@ const WrestlerProfile = () => {
                         link={`${match.url}?t=${match.takedowns.videoTime}`}
                       />
                       <p>
-                        {match.takedowns.name}: {match.takedowns.takedown}
+                        {match.takedowns.takedown}
                         {/* <p> {match.setup.map(setup => setup)}</p> */}
                       </p>
                       Points: {match.takedowns.points}
