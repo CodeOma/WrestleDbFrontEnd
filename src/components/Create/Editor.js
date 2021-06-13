@@ -515,7 +515,7 @@ const Editor = () => {
   }, [editingRender]);
   return (
     <Grid Card className='m-2 mx-2' style={styles.root}>
-      <Grid container direction='row' alignItems='flex-end'>
+      <Grid container direction='row' alignItems='flex-end' className='pl-1'>
         <AutoComplete
           database='wrestler'
           label='wrestler'

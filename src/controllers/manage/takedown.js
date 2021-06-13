@@ -24,9 +24,9 @@ export const userUpdateTakedown = async takedown => {
     const update = await axios.put(`${API}/user/takedown`, takedown, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userFetchTakedown = async () => {

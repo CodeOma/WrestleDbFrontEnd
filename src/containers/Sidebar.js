@@ -101,7 +101,8 @@ const Sidebar = ({ toggleSideBar }) => {
               to='/profile'
               onClick={() => console.log("logout")}
             >
-              <PersonIcon /> Profile
+              {/* <PersonIcon />  */}
+              Profile
             </Link>
             <Link className='c-sidebar-nav-link ' to='/' onClick={handleLogout}>
               Logout

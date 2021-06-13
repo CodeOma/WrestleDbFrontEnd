@@ -336,6 +336,15 @@ const CreateModal = ({
                   </TextField>
                   <FormHelperText>Video Url</FormHelperText>
                 </Grid>
+                <Select
+                  state={matchInfo}
+                  fn={setMatchInfo}
+                  value={matchInfo?.private}
+                  name={"private"}
+                  onChange={onSelectorChange}
+                  options={[true, false]}
+                  label={"Private"}
+                />
                 <Button
                   onClick={() => {
                     console.log(wrestler);
