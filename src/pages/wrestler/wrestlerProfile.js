@@ -6,7 +6,7 @@ import { Button, Card } from "@material-ui/core";
 import axios from "axios";
 import VideoModal from "../../components/components/VideoModal";
 import DataTable from "../../components/components/Table";
-// import Stacked from "../../components/Stats/Stacked";
+import Stacked from "../../components/Stats/Stacked";
 import { individualProfileStats } from "../../controllers/controller";
 import { timeFormatter, youtubeVideoId } from "../../helpers/formatting";
 import AutoComplete from "../Autocomplete";
@@ -26,12 +26,13 @@ const WrestlerProfile = () => {
   const [profileData, setProfileData] = useState({});
   const [data, setData] = useState([]);
   const [graphDataList, setGraphDataList] = useState([]);
+
   const [matchInfo, setMatchInfo] = useState({
     title: "Matches",
     rows: [],
     columns: [],
   });
-  const [wrestlerId, setWrestlerId] = useState("6042f3208e4ff31a532f7324");
+  const [wrestlerId, setWrestlerId] = useState("6042f2898e4ff31a532f717c");
   const [wrestlerStats, setWrestlerStats] = useState({
     avgPCPM: "",
     avgPSPM: "",
@@ -64,17 +65,21 @@ const WrestlerProfile = () => {
         },
       },
       onClick: (e, item) => {
-        const index = item[0]?._index;
-        const obj =
-          item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
-        // console.log(item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]);
+        try {
+          const index = item[0]?._index;
+          const obj =
+            item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
+          // console.log(item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]);
 
-        if (obj) {
-          setGraphDataList(
-            item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]
-          );
-          setData(Object.values(obj));
-          setIsOpen(true);
+          if (obj) {
+            setGraphDataList(
+              item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]
+            );
+            setData(Object.values(obj));
+            setIsOpen(true);
+          }
+        } catch (e) {
+          console.log(e);
         }
       },
     },
@@ -93,48 +98,21 @@ const WrestlerProfile = () => {
         },
       },
       onClick: (e, item) => {
-        const index = item[0]?._index;
-        const obj =
-          item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
-        if (obj) {
-          setData(Object.values(obj));
-          setIsOpen(true);
-        }
-      },
-    },
-  });
-  const [scData, setScData] = useState({
-    type: "bar",
-    title: "Score Percentage",
-    data: [],
-    labels: [],
-    options: {
-      legend: {
-        display: false,
-        rtl: true,
-        labels: {
-          fontColor: "#333",
-        },
-      },
-      scales: {
-        xAxes: [
-          {
-            stacked: true,
-          },
-        ],
-        yAxes: [
-          {
-            stacked: true,
-          },
-        ],
-      },
-      onClick: (e, item) => {
-        const index = item[0]?._index;
-        const obj =
-          item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
-        if (obj) {
-          setData(Object.values(obj));
-          setIsOpen(true);
+        try {
+          const index = item[0]?._index;
+          const obj =
+            item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
+          // console.log(item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]);
+
+          if (obj) {
+            setGraphDataList(
+              item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]
+            );
+            setData(Object.values(obj));
+            setIsOpen(true);
+          }
+        } catch (e) {
+          console.log(e);
         }
       },
     },
@@ -153,17 +131,52 @@ const WrestlerProfile = () => {
         },
       },
       onClick: (e, item) => {
-        const index = item[0]?._index;
-        const obj =
-          item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
-        if (obj) {
-          setData(Object.values(obj));
-          setIsOpen(true);
+        try {
+          const index = item[0]?._index;
+          const obj =
+            item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
+          // console.log(item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]);
+
+          if (obj) {
+            setGraphDataList(
+              item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]
+            );
+            setData(Object.values(obj));
+            console.log(data);
+            setIsOpen(true);
+          }
+        } catch (e) {
+          console.log(e);
         }
       },
     },
   });
+  const [scData, setScData] = useState({
+    data: [],
+    labels: [],
+    options: {
+      onClick: (e, item) => {
+        try {
+          const index = item[0]?._index;
+          const obj =
+            item[0]?._chart?.config?.data?.datasets[1].yeet[0][0][index];
+          // console.log(item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]);
+          console.log(obj);
+          if (obj) {
+            setGraphDataList(
+              item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]
+            );
+            console.log(Object.values(obj));
 
+            setData(Object.values(obj));
+            setIsOpen(true);
+          }
+        } catch (e) {
+          // console.log(e);
+        }
+      },
+    },
+  });
   const [scoreType, setScoreType] = useState({
     type: "bar",
     title: "Score type",
@@ -178,12 +191,21 @@ const WrestlerProfile = () => {
         },
       },
       onClick: (e, item) => {
-        const index = item[0]?._index;
-        const obj =
-          item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
-        if (obj) {
-          setData(Object.values(obj));
-          setIsOpen(true);
+        try {
+          const index = item[0]?._index;
+          const obj =
+            item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
+          // console.log(item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]);
+
+          if (obj) {
+            setGraphDataList(
+              item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]
+            );
+            setData(Object.values(obj));
+            setIsOpen(true);
+          }
+        } catch (e) {
+          console.log(e);
         }
       },
       // onClick: (e, item) => {
@@ -212,12 +234,50 @@ const WrestlerProfile = () => {
         display: false,
       },
       onClick: (e, item) => {
-        const index = item[0]?._index;
-        const obj =
-          item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
-        if (obj) {
-          setData(Object.values(obj));
-          setIsOpen(true);
+        try {
+          const index = item[0]?._index;
+          const obj =
+            item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
+          // console.log(item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]);
+
+          if (obj) {
+            setGraphDataList(
+              item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]
+            );
+            setData(Object.values(obj));
+            setIsOpen(true);
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      },
+    },
+  });
+  const [oppSetupData, setOppSetupData] = useState({
+    type: "pie",
+    title: "Tags/Setups on Td's Conceded",
+    data: [],
+    labels: [],
+    options: {
+      legend: {
+        display: false,
+      },
+      onClick: (e, item) => {
+        try {
+          const index = item[0]?._index;
+          const obj =
+            item[0]?._chart?.config?.data?.datasets[0].yeet[0][0][index];
+          // console.log(item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]);
+
+          if (obj) {
+            setGraphDataList(
+              item[0]?._chart?.config?.data?.datasets[0].yeet[0][0]
+            );
+            setData(Object.values(obj));
+            setIsOpen(true);
+          }
+        } catch (e) {
+          console.log(e);
         }
       },
     },
@@ -304,15 +364,63 @@ const WrestlerProfile = () => {
             array: [array],
           });
         };
+        const prep = (array, fn, currData) => {
+          const obj = {
+            data: [],
+            labels: [],
+          };
+          const obj2 = {
+            data: [],
+            labels: [],
+          };
+          array.forEach(t => {
+            console.log(t.c.length);
+            obj.labels.push(t._id ? t._id : "Other");
+            obj.data.push(t.sc.length);
+          });
+          array.forEach(t => {
+            obj2.labels.push(t._id ? t._id : "Other");
+            obj2.data.push(t.c.length);
+          });
+          // const array1 = [
+          //   array.map(r => {
+          //     return { _id: r._id, scored: "scored", takedowns: r.sc };
+          //   }),
+          // ];
+          // const array2 = [
+          //   array.map(r => {
+          //     return { _id: r._id, scored: "countered", takedowns: r.c };
+          //   }),
+          // ];
+          // const [a1] = array1;
+          // const [a2] = array2;
+          fn({
+            ...currData,
+            labels: obj.labels,
+            data1: obj.data,
+            data2: obj2.data,
+
+            // array1,
+            // array2,
+            array: [
+              array.map(td => {
+                return { _id: td._id, takedowns: [...td.c, ...td.sc] };
+              }),
+            ],
+          });
+        };
 
         const fetchMatches = await getMatchByWrestlerId(wrestlerId);
         matches(fetchMatches.data);
+        prep(data[7], setScData, scData);
+
         initGraph(data[1], setTdcData, tdcData);
         initGraph(data[2], setTdData, tdData);
         initGraph(data[3], setCounteredData, counteredData);
         initGraph(data[4], setScoreType, scoreType);
         initGraph(data[5], setSetupData, setupData);
-        // setScData(data[6]);
+        initGraph(data[6], setOppSetupData, oppSetupData);
+
         // setWrestler(data.wrestler[0].fullName);
         setIsLoading(false);
         setIsOpen(false);
@@ -467,19 +575,31 @@ const WrestlerProfile = () => {
             />
           )}
         </Grid>
-        {/* {isLoading ? <CircularProgress /> : <Stacked />} */}
-        {/* <Grid className='pl-2' item md={3}> */}
-        {/* <h6> Set Ups/Tags</h6>
+        <Grid container xs={12} sm={6}>
+          <h6> Tags/Setups on points given up</h6>
           {isLoading ? (
             <CircularProgress />
           ) : (
             <GraphBar
               setIsOpen={setIsOpen}
               setData={setData}
-              tableData={tdcData}
+              tableData={oppSetupData}
             />
-          )} */}
-        {/* </Grid> */}
+          )}
+        </Grid>
+        <Grid container xs={12} sm={6}>
+          <h6> </h6>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <Stacked
+              setIsOpen={setIsOpen}
+              setData={setData}
+              tableData={scData}
+            />
+          )}
+        </Grid>
+
         <Grid className='px-2' direction='row' container xs={12}>
           <h5> Videos</h5>
           {!isOpen && !isLoading && false && (
@@ -507,6 +627,7 @@ const WrestlerProfile = () => {
 
             {isOpen &&
               data[1].map(match => {
+                console.log(match);
                 return (
                   <Grid xs={4} sm={2}>
                     <Card className='p-2'>
@@ -515,6 +636,14 @@ const WrestlerProfile = () => {
                         type='img'
                         link={`${match.url}?t=${match.takedowns.videoTime}`}
                       />
+                      {match.takedowns?.countered &&
+                      match?.takedowns.countered == "true" ? (
+                        <p>Given up</p>
+                      ) : match.takedownsx?.countered ? (
+                        <p>Scored</p>
+                      ) : (
+                        <></>
+                      )}
                       <p>
                         {match.takedowns.takedown}
                         {/* <p> {match.setup.map(setup => setup)}</p> */}
