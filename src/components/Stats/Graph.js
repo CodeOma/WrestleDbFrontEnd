@@ -11,7 +11,7 @@ const ExampleChart = ({ tableData }) => {
     if (!chartRef) return;
     const ctx = chartRef.current.getContext("2d");
     const myChart = new Chart(ctx, {
-      type: tableData.type,
+      type: "pie",
       data: {
         labels: tableData.labels,
         datasets: [
@@ -69,8 +69,6 @@ const ExampleChart = ({ tableData }) => {
   }, [tableData, myChart]);
   return (
     <>
-      {" "}
-      <h6>{tableData.name || ""}</h6>
       <Grid container>
         {myChart?.legend?.legendItems.length >= 1 &&
           myChart?.legend?.legendItems.map(item => {

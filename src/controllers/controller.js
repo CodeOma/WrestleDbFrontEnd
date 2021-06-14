@@ -147,6 +147,15 @@ export const getGeneralStats = async () => {
   }
 };
 
+export const getTakedownStats = async () => {
+  try {
+    const data = axios.get(`${API}/stats/all`);
+    return data;
+  } catch (e) {
+    return e;
+  }
+};
+
 export const individualProfileStats = async id => {
   try {
     const data = axios.get(`${API}/stats/wrestler/${id}`);
