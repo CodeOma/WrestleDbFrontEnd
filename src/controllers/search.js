@@ -20,8 +20,6 @@ export const AutocompleteMatch = async query => {
 };
 
 export const AutocompleteWrestler = async query => {
-  console.log(query);
-
   try {
     if (query.length > 0) {
       console.log(query);

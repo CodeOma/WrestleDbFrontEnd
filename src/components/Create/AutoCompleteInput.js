@@ -70,7 +70,6 @@ export default function FreeSoloCreateOptionDialog({
         title: val.fullName,
         id: val.id,
       });
-      console.log("VAL", value);
     } else if (val?.tournamentName) {
       setValue({
         title: val.tournamentName,
@@ -106,7 +105,6 @@ export default function FreeSoloCreateOptionDialog({
             setOptions(fetch);
           }
         }
-        console.log(options);
       } catch (e) {
         console.log(e);
       }
@@ -161,11 +159,9 @@ export default function FreeSoloCreateOptionDialog({
                   [name]: newValue.title || "",
                   [`${name}Id`]: newValue.id || "",
                 });
-                console.log(state);
               }
             }
             if (name === "tournament") {
-              console.log(newValue, state, name);
               fn({
                 ...state,
                 tournament: {

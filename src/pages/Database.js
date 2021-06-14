@@ -165,7 +165,6 @@ const Database = () => {
   useEffect(() => {
     const fetchInfo = async getFunc => {
       const fetch = await getFunc(data, selectedFilters, page);
-      console.log(fetch);
       setFetchedData(fetch.data.matches);
       setFilterOptions(fetch.data.filters);
       setWrestName(fetch.data.matches[0]?.teamName);
@@ -293,17 +292,15 @@ const Database = () => {
 
         <Grid container sm={9}>
           <Grid container sm={12} className='pt-3 px-1' alignItems='flex-start'>
-            {!isLoaded && (
+            {!fetchedData.length && (
               <Grid container justify='center'>
-                <h4 style={{ color: "lightgrey" }}>
-                  No matches use Search to find some matches
-                </h4>
+                <h4 style={{ color: "lightgrey" }}>No matches use Search</h4>
               </Grid>
             )}
 
             {fetchedData &&
+              fetchedData.length >= 1 &&
               fetchedData.map(match => {
-                console.log(match);
                 return (
                   <Card
                     className='p-2'

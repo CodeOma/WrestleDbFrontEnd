@@ -277,7 +277,6 @@ const Editor = () => {
         fullName: currentWrestler.name,
       },
     });
-    console.log(currentWrestler);
   }, [currentWrestler]);
   const handleSave = async () => {
     try {
@@ -288,7 +287,6 @@ const Editor = () => {
       }
 
       const create = await userCreateMatch(finalMatch);
-      console.log("create", create.message);
       if (create?.response?.statusText === "Bad Request") {
         throw new Error(create.response.data.error);
       }
@@ -308,8 +306,6 @@ const Editor = () => {
     try {
       Object.entries(timestamp.takedown).forEach(([k, v]) => {
         if (v === "") {
-          console.log(k);
-
           if (k !== "oppDefendedShot" && k !== "details" && k !== "id") {
             throw new Error(`${k} missing`);
           }

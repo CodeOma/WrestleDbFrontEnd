@@ -280,20 +280,16 @@ const Editor = () => {
         fullName: currentWrestler.name,
       },
     });
-    console.log(currentWrestler);
   }, [currentWrestler]);
   const handleSave = async () => {
     try {
-      console.log("YOOOO");
       if (
         !finalMatch.tournament.tournamentId ||
         !finalMatch.tournament.tournamentId
       ) {
       }
-      console.log("Not YOOOO");
 
       const create = await userUpdateMatch(finalMatch);
-      console.log("create");
       if (create?.response?.statusText === "Bad Request") {
         throw new Error(create.response.data.error);
       }
@@ -304,13 +300,11 @@ const Editor = () => {
         setSaveSuccess("Saved Succesfully!");
       }
     } catch (e) {
-      console.log(e.name, e.message);
       setSaveError(e.message);
     }
   };
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(timestamp);
     try {
       Object.entries(timestamp.takedown).forEach(([k, v]) => {
         if (v === "") {
@@ -360,7 +354,6 @@ const Editor = () => {
           blueTotalScore: totalBlue,
         },
       });
-      console.log(currentWrestler.name);
       setTimestamp({
         takedown: {
           id: uniqid.process(),

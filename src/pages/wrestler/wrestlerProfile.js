@@ -56,13 +56,13 @@ const WrestlerProfile = () => {
     data: [],
     labels: [],
     options: {
-      // legend: {
-      //   display: true,
-      //   rtl: true,
-      //   labels: {
-      //     fontColor: "#333",
-      //   },
-      // },
+      legend: {
+        display: false,
+        rtl: true,
+        labels: {
+          fontColor: "#333",
+        },
+      },
       onClick: (e, item) => {
         const index = item[0]?._index;
         const obj =
@@ -85,6 +85,13 @@ const WrestlerProfile = () => {
     data: [],
     labels: [],
     options: {
+      legend: {
+        display: false,
+        rtl: true,
+        labels: {
+          fontColor: "#333",
+        },
+      },
       onClick: (e, item) => {
         const index = item[0]?._index;
         const obj =
@@ -102,6 +109,13 @@ const WrestlerProfile = () => {
     data: [],
     labels: [],
     options: {
+      legend: {
+        display: false,
+        rtl: true,
+        labels: {
+          fontColor: "#333",
+        },
+      },
       scales: {
         xAxes: [
           {
@@ -131,6 +145,13 @@ const WrestlerProfile = () => {
     data: [],
     labels: [],
     options: {
+      legend: {
+        display: false,
+        rtl: true,
+        labels: {
+          fontColor: "#333",
+        },
+      },
       onClick: (e, item) => {
         const index = item[0]?._index;
         const obj =
@@ -149,6 +170,13 @@ const WrestlerProfile = () => {
     data: [],
     labels: [],
     options: {
+      legend: {
+        display: false,
+        rtl: true,
+        labels: {
+          fontColor: "#333",
+        },
+      },
       onClick: (e, item) => {
         const index = item[0]?._index;
         const obj =
@@ -180,6 +208,9 @@ const WrestlerProfile = () => {
     data: [],
     labels: [],
     options: {
+      legend: {
+        display: false,
+      },
       onClick: (e, item) => {
         const index = item[0]?._index;
         const obj =

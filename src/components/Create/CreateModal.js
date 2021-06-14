@@ -345,15 +345,9 @@ const CreateModal = ({
                   options={["true", "false"]}
                   label={"Private"}
                 />
-                <Button
-                  onClick={() => {
-                    console.log(wrestler);
-                    console.log(matchInfo);
-                  }}
-                  style={{ marginTop: "20px" }}
-                >
+                {/* <Button onClick={() => {}} style={{ marginTop: "20px" }}>
                   Set Match Info
-                </Button>
+                </Button> */}
               </Grid>
             </Grid>
           </Card>
