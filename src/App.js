@@ -3,6 +3,9 @@ import "./App.css";
 import "./scss/style.scss";
 import dotenv from "dotenv";
 import Signup from "./pages/user/Signup";
+import Profile from "./pages/user/UpdateProfile";
+// import Profilee from "./pages/user/Profile";
+
 import ForgotPassword from "./pages/user/ForgotPassword";
 // import Auto from "./components/components/Auto";
 import { AuthProvider } from "./context/AuthContext";
@@ -23,9 +26,15 @@ function App() {
             <SignIn />
           </Route>
 
-          <Route exact path='/signup' name='Signup Page'>
+          {/* <Route exact path='/signup' name='Signup Page'>
             <Signup />
+          </Route> */}
+          <Route exact path='/profile' name='Profile Page'>
+            <Profile />
           </Route>
+          {/* <Route exact path='/profilee' name='Profile Page'>
+            <Profilee />
+          </Route> */}
           <Route exact path='/forgotpassword' name='Forgot Password'>
             <ForgotPassword />
           </Route>

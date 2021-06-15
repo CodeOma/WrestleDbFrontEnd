@@ -69,39 +69,7 @@ const ExampleChart = ({ tableData }) => {
   }, [tableData, myChart]);
   return (
     <>
-      <Grid container>
-        {
-          {
-            /* myChart?.legend?.legendItems.length >= 1 &&
-          myChart?.legend?.legendItems.map(item => {
-            return (
-              <li
-                key={item.text}
-                style={{
-                  color: "#333",
-                  fontSize: ".8rem",
-                  listStyle: "none",
-                  textAlign: "left",
-                  display: "flex",
-                  flexDirection: "row",
-                  margin: "8px",
-                }}
-              >
-                <div
-                  style={{
-                    marginRight: "8px",
-                    width: "1.5rem",
-                    height: "0.8rem",
-                    backgroundColor: item.fillStyle,
-                  }}
-                />
-                {item.text}
-              </li>
-            );
-          }) */
-          }
-        }
-      </Grid>
+      <Grid container></Grid>
       <canvas
         array={tableData}
         ref={chartRef}

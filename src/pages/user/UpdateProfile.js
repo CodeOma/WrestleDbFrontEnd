@@ -1,14 +1,16 @@
 import React, { useRef, useState } from "react";
-import { Form, Button, Card, Alert } from "@material-ui/core";
+import { Button, Card, Grid } from "@material-ui/core";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-
+import Alert from "../../components/components/Alert";
 export default function UpdateProfile() {
   const emailRef = useRef();
   const passwordRef = useRef();
+
   const passwordConfirmRef = useRef();
-  const { currentUser, updatePassword, updateEmail } = useAuth();
+  const { currentUser, updatePassword, updateEmail, login } = useAuth();
   const [error, setError] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
@@ -25,7 +27,12 @@ export default function UpdateProfile() {
     if (emailRef.current.value !== currentUser.email) {
       promises.push(updateEmail(emailRef.current.value));
     }
+
     if (passwordRef.current.value) {
+      const c = async () => {
+        const a = await login(currentUser.email, oldPassword);
+      };
+      c();
       promises.push(updatePassword(passwordRef.current.value));
     }
 
@@ -33,7 +40,7 @@ export default function UpdateProfile() {
       .then(() => {
         history.push("/");
       })
-      .catch(() => {
+      .catch(e => {
         setError("Failed to update account");
       })
       .finally(() => {
@@ -44,40 +51,49 @@ export default function UpdateProfile() {
   return (
     <>
       <Card>
-        <Card.Body>
+        <Card>
           <h2 className='text-center mb-4'>Update Profile</h2>
-          {error && <Alert variant='danger'>{error}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id='email'>
-              <Form.Label>Email</Form.Label>
-              <Form.Control
+          {error && <Alert title='Error' severity='error' message={error} />}
+          <form onSubmit={handleSubmit}>
+            <Grid id='email'>
+              <p>Email</p>
+              <input
                 type='email'
                 ref={emailRef}
                 required
                 defaultValue={currentUser.email}
               />
-            </Form.Group>
-            <Form.Group id='password'>
-              <Form.Label>Password</Form.Label>
-              <Form.Control
+            </Grid>
+            <Grid id='oldPassword'>
+              <input
+                type='password'
+                onChange={e => {
+                  setOldPassword(e.target.value);
+                }}
+                placeholder='Old Password'
+              />
+            </Grid>
+            <Grid id='password' className='pt-4'>
+              <p>Password</p>
+              <input
                 type='password'
                 ref={passwordRef}
                 placeholder='Leave blank to keep the same'
               />
-            </Form.Group>
-            <Form.Group id='password-confirm'>
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control
+            </Grid>
+            <Grid id='password-confirm'>
+              <p>Password Confirmation</p>
+              <input
                 type='password'
                 ref={passwordConfirmRef}
                 placeholder='Leave blank to keep the same'
               />
-            </Form.Group>
+            </Grid>
             <Button disabled={loading} className='w-100' type='submit'>
               Update
             </Button>
-          </Form>
-        </Card.Body>
+          </form>
+        </Card>
       </Card>
       <div className='w-100 text-center mt-2'>
         <Link to='/'>Cancel</Link>
@@ -132,18 +148,18 @@ export default function UpdateProfile() {
 //           <h2 className="text-center mb-4">Sign Up</h2>
 //           {error && <Alert variant="danger">{error}</Alert>}
 //           <Form onSubmit={handleSubmit}>
-//             <Form.Group id="email">
-//               <Form.Label>Email</Form.Label>
-//               <Form.Control type="email" ref={emailRef} required />
-//             </Form.Group>
-//             <Form.Group id="password">
-//               <Form.Label>Password</Form.Label>
-//               <Form.Control type="password" ref={passwordRef} required />
-//             </Form.Group>
-//             <Form.Group id="password-confirm">
-//               <Form.Label>Password Confirmation</Form.Label>
-//               <Form.Control type="password" ref={passwordConfirmRef} required />
-//             </Form.Group>
+//             <Grid id="email">
+//               <p>Email</p>
+//               <input type="email" ref={emailRef} required />
+//             </Grid>
+//             <Grid id="password">
+//               <p>Password</p>
+//               <input type="password" ref={passwordRef} required />
+//             </Grid>
+//             <Grid id="password-confirm">
+//               <p>Password Confirmation</p>
+//               <input type="password" ref={passwordConfirmRef} required />
+//             </Grid>
 //             <Button disabled={loading} className="w-100" type="submit">
 //               Sign Up
 //             </Button>

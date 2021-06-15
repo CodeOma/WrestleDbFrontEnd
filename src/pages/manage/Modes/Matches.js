@@ -77,7 +77,7 @@ const Matches = () => {
     try {
       // setIsLoading(true);
       const data = await userFetchMatch();
-      await setMatchList(data.data.slice(0, 10));
+      // await setMatchList(data.data.slice(0, 10));
       console.log(data);
     } catch (e) {
       setError(e.message);

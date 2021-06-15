@@ -89,21 +89,21 @@ const Home = () => {
           </Link>
         </Grid>
       </Grid>
-      <Grid container xs={12} direction='row' className='p-1'>
+      <Grid container xs={12} direction='row' className='p-1 '>
         <Grid container xs={12} sm={4} className='px-1'>
-          <Card className='p-2'>
+          <Card className='p-2 w-100'>
             <h6> Top 10 Takedowns</h6>
             {isLoading ? <CircularProgress /> : <Graph tableData={offGraph} />}
           </Card>{" "}
         </Grid>
         <Grid container xs={12} sm={4} className='px-1'>
-          <Card className='p-2'>
+          <Card className='p-2 w-100'>
             <h6> Top 10 Def</h6>
             {isLoading ? <CircularProgress /> : <Graph tableData={defGraph} />}
           </Card>
         </Grid>
         <Grid container xs={12} sm={4} className='px-1'>
-          <Card className='p-2'>
+          <Card className='p-2 w-100'>
             <h6> Top 10 Tags/Setups</h6>
             {isLoading ? <CircularProgress /> : <Graph tableData={tagGraph} />}
           </Card>
