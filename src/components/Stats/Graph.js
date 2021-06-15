@@ -70,7 +70,9 @@ const ExampleChart = ({ tableData }) => {
   return (
     <>
       <Grid container>
-        {myChart?.legend?.legendItems.length >= 1 &&
+        {
+          {
+            /* myChart?.legend?.legendItems.length >= 1 &&
           myChart?.legend?.legendItems.map(item => {
             return (
               <li
@@ -96,7 +98,9 @@ const ExampleChart = ({ tableData }) => {
                 {item.text}
               </li>
             );
-          })}
+          }) */
+          }
+        }
       </Grid>
       <canvas
         array={tableData}
