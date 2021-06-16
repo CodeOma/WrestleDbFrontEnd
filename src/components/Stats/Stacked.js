@@ -20,7 +20,7 @@ const ExampleChart = ({ tableData }) => {
         labels: tableData.labels,
         datasets: [
           {
-            label: "Given Up",
+            label: "Scored",
             data: d1,
             datasetIndex: 0,
             backgroundColor: [
@@ -54,7 +54,7 @@ const ExampleChart = ({ tableData }) => {
           },
 
           {
-            label: "Scored",
+            label: "Given Up",
             data: d2,
             datasetIndex: 1,
             backgroundColor: [
