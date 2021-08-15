@@ -57,6 +57,7 @@ const Editor = () => {
       offdef: "Offensive",
       position: "",
       oppDefendedShot: "",
+      fullName: "",
       type: "",
       setup: [],
       details: "",
@@ -541,7 +542,7 @@ const Editor = () => {
             >
               <div style={{ maxWidth: 200 }}>
                 <Select
-                  value={timestamp.takedown.wrestler}
+                  value={timestamp.takedown.fullName}
                   state={timestamp.takedown}
                   fn={setTimestamp}
                   name={"wrestler"}

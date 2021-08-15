@@ -84,6 +84,7 @@ const Editor = () => {
       position: "",
       oppDefendedShot: "",
       type: "",
+      fullName: "",
       setup: [],
       details: "",
       videoTime: 0,
