@@ -52,6 +52,15 @@ export const getTournaments = () => {
     })
     .catch(err => console.log(err));
 };
+
+export const getTeams = async () => {
+  try {
+    const data = axios.get(`${API}/team`);
+    return data;
+  } catch (e) {
+    return e;
+  }
+};
 export const getWrestlersList = () => {
   return axios
     .get(`${API}/wrestlers`)

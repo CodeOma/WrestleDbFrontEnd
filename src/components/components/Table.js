@@ -7,7 +7,7 @@ export default function DataTable({ info }) {
   }, [info]);
   return (
     <div style={{ height: 400, width: "100%" }}>
-      <h1>{info.title}</h1>
+      {/* <h1>{info.title}</h1> */}
 
       <DataGrid rows={info.rows} columns={info.columns} pageSize={5} />
     </div>

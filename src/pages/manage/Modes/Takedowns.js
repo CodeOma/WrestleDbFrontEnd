@@ -185,7 +185,7 @@ const Takedowns = () => {
   }, [refresh]);
 
   return (
-    <div>
+    <Grid style={{ background: "#f7fcfc" }}>
       <Grid aria-labelledby='form-dialog-title'>
         <h3 id='form-dialog-title'> Takedowns </h3>
 
@@ -361,7 +361,7 @@ const Takedowns = () => {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </Grid>
   );
 };
 

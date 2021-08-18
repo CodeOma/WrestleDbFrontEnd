@@ -159,10 +159,6 @@ const Database = () => {
   };
 
   useEffect(() => {
-    setPage(0);
-    setIsLoaded(true);
-  }, [wrestName]);
-  useEffect(() => {
     const fetchInfo = async getFunc => {
       const fetch = await getFunc(data, selectedFilters, page);
       setFetchedData(fetch.data.matches);

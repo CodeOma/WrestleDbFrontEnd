@@ -13,8 +13,10 @@ import Manage from "./pages/manage/Manage.jsx";
 import Database from "./pages/Database";
 import WrestlerDB from "./pages/WrestlerDatabase";
 import WrestlerProfile from "./pages/wrestler/wrestlerProfile";
+import ProfileSearch from "./pages/wrestler/ProfileSearch";
+
 // import { AppProvider } from "../context/context";
-import GeneralStats from "./pages/rankingtables/GeneralStats";
+import GeneralStats from "./pages/stats/GeneralStats";
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,26 +25,34 @@ import {
 } from "react-router-dom";
 import TechniqueDatabase from "./pages/TechniqueDatabase";
 import F404 from "./pages/F404";
+import MakeSelections from "./pages/fantasy/MakeSelections";
+import Fantasy from "./pages/fantasy/Fantasy";
 
 const TheLayout = () => {
   const [toggleSideBar, setToggleSideBar] = useState(false);
 
   return (
-    <Grid className='c-app c-default-layout'>
+    <Grid style={{ width: "100%" }}>
       {/* <Router> */}
-      <Sidebar toggleSideBar={toggleSideBar} />
-      <Grid className='c-wrapper'>
+      <Sidebar
+        setToggleSideBar={setToggleSideBar}
+        toggleSideBar={toggleSideBar}
+      />
+      <Grid container xs={12} style={{ width: "100%" }}>
         <Header
           setToggleSideBar={setToggleSideBar}
           toggleSideBar={toggleSideBar}
         />
-        <Grid className='c-body w-100 d-flex'>
+        <Grid xs={12} style={{ width: "100%", background: "#f7fcfc" }}>
           <AuthProvider>
             <Switch>
               <Route exact path='/'>
                 <Home />
               </Route>
               <Route path='/wrestler'>
+                <ProfileSearch />
+              </Route>{" "}
+              <Route path='/wrestlers/:wrestler_id'>
                 <WrestlerProfile />
               </Route>
               <Route exact path='/db'>
@@ -63,6 +73,12 @@ const TheLayout = () => {
               </Route>
               <Route exact path='/match/edit'>
                 <Editor />
+              </Route>
+              <Route exact path='/fantasy'>
+                <Fantasy />
+              </Route>
+              <Route exact path='/fantasy/makeselections'>
+                <MakeSelections />
               </Route>
               {/* </Route> */}
               <Route exact path='/match/view/:match_id'>

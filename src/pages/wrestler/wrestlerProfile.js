@@ -12,6 +12,8 @@ import { timeFormatter, youtubeVideoId } from "../../helpers/formatting";
 import AutoComplete from "../Autocomplete";
 import { AutocompleteWrestler } from "../../controllers/search";
 import { getMatchByWrestlerId } from "../../controllers/controller";
+import { Link, useParams } from "react-router-dom";
+
 // const styles = {
 //   graph:{
 
@@ -19,6 +21,8 @@ import { getMatchByWrestlerId } from "../../controllers/controller";
 // }
 // These labels appear in the legend and in the tooltips when hovering different arcs
 const WrestlerProfile = () => {
+  const { wrestler_id } = useParams();
+
   const [isLoading, setIsLoading] = useState(true);
   const [wrestler, setWrestler] = useState("");
   // const [wrestlerId, setWrestlerId] = useState("6042f3098e4ff31a532f72c6");
@@ -32,7 +36,7 @@ const WrestlerProfile = () => {
     rows: [],
     columns: [],
   });
-  const [wrestlerId, setWrestlerId] = useState("6042f2898e4ff31a532f717c");
+  const [wrestlerId, setWrestlerId] = useState("");
   const [wrestlerStats, setWrestlerStats] = useState({
     avgPCPM: "",
     avgPSPM: "",
@@ -283,6 +287,7 @@ const WrestlerProfile = () => {
     },
   });
   const matches = array => {
+    console.log("array", array);
     const rows = array.map((field, i) => {
       return {
         id: i,
@@ -316,7 +321,9 @@ const WrestlerProfile = () => {
       // array: [array],
     });
   };
-
+  useEffect(() => {
+    setWrestlerId(wrestler_id);
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -346,6 +353,8 @@ const WrestlerProfile = () => {
           totalPS: data[0][0].totalPS,
           winPercentage: data[0][0].winPercentage,
         });
+        console.log(data[7]);
+
         // setProfileData(data2);
         // setTdData(data2);
         const initGraph = (array, fn, currData) => {
@@ -411,9 +420,11 @@ const WrestlerProfile = () => {
         };
 
         const fetchMatches = await getMatchByWrestlerId(wrestlerId);
+        console.log(fetchMatches);
         matches(fetchMatches.data);
-        prep(data[7], setScData, scData);
+        console.log(data[7]);
 
+        prep(data[7], setScData, scData);
         initGraph(data[1], setTdcData, tdcData);
         initGraph(data[2], setTdData, tdData);
         initGraph(data[3], setCounteredData, counteredData);
@@ -434,7 +445,7 @@ const WrestlerProfile = () => {
   useEffect(() => {}, [isOpen]);
   const styles = {
     root: {
-      backgroundColor: "white",
+      // backgroundColor: "#f1f0f7",
 
       p: {
         fontSize: "10",
@@ -445,178 +456,231 @@ const WrestlerProfile = () => {
     },
   };
   return (
-    <Grid className='my-2 px-2  pt-4' style={styles.root}>
-      <AutoComplete
-        searchFunction={AutocompleteWrestler}
-        setFunction={setWrestlerId}
-        label='Wrestler'
-        value={wrestlerId}
-      />
-      <h2 className='ml-4 pt-4 pt-2'>{wrestlerStats.fullName} </h2>
-
+    <Grid style={styles.root}>
       <Grid
         container
-        className='mt-2 pt-4'
-        alignItems='flex-start'
-        direction='row'
-        justify='space-evenly'
         xs={12}
+        direction='row'
+        justify='space-between'
+        style={{
+          background: "#1d2a3c",
+          boxShadow: "0 8px 5px -8px rgba(148, 148, 148, 1)",
+        }}
+        className='p-4'
       >
-        <Grid container sm={4}>
+        <h2 className='pt-4 pl-4' style={{ color: "white" }}>
+          {wrestlerStats.fullName}
+        </h2>
+        <Grid
+          container
+          xs={3}
+          className='p-0'
+          style={{ backgroundColor: "#4f72a4", borderRadius: "20px" }}
+        >
+          <AutoComplete
+            searchFunction={AutocompleteWrestler}
+            setFunction={setWrestlerId}
+            label='Wrestler'
+            value={wrestlerId}
+          />
+        </Grid>
+      </Grid>{" "}
+      <Grid container xs={12} className='m-2 p-2' direction='row'>
+        <Grid
+          container
+          className='mt-2 pt-4'
+          alignItems='flex-start'
+          direction='row'
+          justify='flex-start'
+          alignContent='flex-start'
+          xs={3}
+          sm={3}
+          style={{ background: "#3c6089", borderRadius: "10px" }}
+        >
           {isLoading ? (
             <CircularProgress />
           ) : (
-            <>
-              <Card>
-                <ul style={{ listStyle: "none" }}>
-                  <h5 className='py-2'>Stats</h5>
-                  <h6>Matches:</h6>
-                  <li className='pl-4'>Wins: {wrestlerStats.wins}</li>
-                  <li className='pl-4'>Losses: {wrestlerStats.losses}</li>
-                  <li className='pl-4'>
-                    Win Percentage: {wrestlerStats.winPercentage}
-                  </li>
-                  <li className='pl-4'>
-                    Total Matches:{wrestlerStats.totalMatches}
-                  </li>
-                  <h6>Scores:</h6>
-                  <li className='pl-4'>
-                    Total Points Conceded: {wrestlerStats.totalPC}
-                  </li>
-                  <li className='pl-4'>
-                    Total Points Scored:{wrestlerStats.totalPS}
-                  </li>
-                  <li className='pl-4'>
-                    Average Points Conceded: {wrestlerStats.avgPCPM}
-                  </li>
-                  <li className='pl-4'>
-                    Average Points Scored:{wrestlerStats.avgPSPM}
-                  </li>
-                  <li className='pl-4'>
-                    Matches Score First: {wrestlerStats.matchesScoreFirst}
-                  </li>
-                  <li className='pl-4'>
-                    Matches Score Last: {wrestlerStats.matchesScoreLast}
-                  </li>
-                  <li className='pl-4'>
-                    Point Scored/Condceded: {wrestlerStats.pspcRatio}
-                  </li>
-                  <li className='pl-4'>
-                    Score First (%): {wrestlerStats.scoreFirstPerc}
-                  </li>
-                  {/* <li>Opponents Beat: {wrestlerStats.opponentsBeat}</li> */}
-                  {/* <li>opponentsLostTo: {wrestlerStats.opponentsLostTo}</li> */}
-                  <li className='pl-4'>
-                    Score Last (%): {wrestlerStats.scorelastPerc}
-                  </li>
-                </ul>
-              </Card>
-            </>
+            <ul style={{ listStyle: "none", color: "white" }}>
+              <h6>Matches:</h6>
+              <li className='pl-4'>Wins: {wrestlerStats.wins}</li>
+              <li className='pl-4'>Losses: {wrestlerStats.losses}</li>
+              <li className='pl-4'>
+                Win Percentage: {wrestlerStats.winPercentage}
+              </li>
+              <li className='pl-4'>
+                Total Matches:{wrestlerStats.totalMatches}
+              </li>
+              <h6>Scores:</h6>
+              <li className='pl-4'>
+                Total Points Conceded: {wrestlerStats.totalPC}
+              </li>
+              <li className='pl-4'>
+                Total Points Scored:{wrestlerStats.totalPS}
+              </li>
+              <li className='pl-4'>
+                Average Points Conceded: {wrestlerStats.avgPCPM}
+              </li>
+              <li className='pl-4'>
+                Average Points Scored:{wrestlerStats.avgPSPM}
+              </li>
+              <li className='pl-4'>
+                Matches Score First: {wrestlerStats.matchesScoreFirst}
+              </li>
+              <li className='pl-4'>
+                Matches Score Last: {wrestlerStats.matchesScoreLast}
+              </li>
+              <li className='pl-4'>
+                Point Scored/Conceded: {wrestlerStats.pspcRatio}
+              </li>
+              <li className='pl-4'>
+                Score First (%): {wrestlerStats.scoreFirstPerc}
+              </li>
+              {/* <li>Opponents Beat: {wrestlerStats.opponentsBeat}</li> */}
+              {/* <li>opponentsLostTo: {wrestlerStats.opponentsLostTo}</li> */}
+              <li className='pl-4'>
+                Score Last (%): {wrestlerStats.scorelastPerc}
+              </li>
+            </ul>
           )}
         </Grid>
-        <Grid className='pt-3' item xs={11} sm={6} md={4}>
-          {isLoading ? (
-            <CircularProgress />
-          ) : (
-            <>
-              <h6>Score Type</h6>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <Grid
+            container
+            alignItems='flex-start'
+            direction='row'
+            // justify='center'
+            // alignContent='center'
+            xs={9}
+          >
+            <Grid container xs={12}>
+              <Grid className='pt-3' item xs={11} sm={4}>
+                <Card className='p-4 m-2'>
+                  {" "}
+                  {isLoading ? (
+                    <CircularProgress />
+                  ) : (
+                    <>
+                      <h6>Score Type</h6>
 
-              <GraphBar tableData={scoreType} />
-            </>
-          )}
-        </Grid>
-      </Grid>
-      <Grid container xs={12}>
-        <Grid container xs={12} sm={6}>
-          <h6> Points Scored</h6>
-          {isLoading ? (
-            <CircularProgress />
-          ) : (
-            <GraphBar
-              setIsOpen={setIsOpen}
-              setData={setData}
-              tableData={tdData}
-            />
-          )}
-        </Grid>
-        <Grid container xs={12} sm={6}>
-          <h6> Points Given Up</h6>
-          {isLoading ? (
-            <CircularProgress />
-          ) : (
-            <GraphBar
-              setIsOpen={setIsOpen}
-              setData={setData}
-              tableData={tdcData}
-            />
-          )}
-        </Grid>
-        <Grid container xs={12} sm={6}>
-          <h6> Tags/Setups</h6>
-          {isLoading ? (
-            <CircularProgress />
-          ) : (
-            <GraphBar
-              setIsOpen={setIsOpen}
-              setData={setData}
-              tableData={setupData}
-            />
-          )}
-        </Grid>
-        <Grid container xs={12} sm={6}>
-          <h6> Countered</h6>
-          {isLoading ? (
-            <CircularProgress />
-          ) : (
-            <GraphBar
-              setIsOpen={setIsOpen}
-              setData={setData}
-              tableData={counteredData}
-            />
-          )}
-        </Grid>
-        <Grid container xs={12} sm={6}>
-          <h6> Tags/Setups on points given up</h6>
-          {isLoading ? (
-            <CircularProgress />
-          ) : (
-            <GraphBar
-              setIsOpen={setIsOpen}
-              setData={setData}
-              tableData={oppSetupData}
-            />
-          )}
-        </Grid>
-        <Grid container xs={12} sm={6}>
-          <h6> </h6>
-          {isLoading ? (
-            <CircularProgress />
-          ) : (
-            <Stacked
-              setIsOpen={setIsOpen}
-              setData={setData}
-              tableData={scData}
-            />
-          )}
-        </Grid>
+                      <GraphBar tableData={scoreType} />
+                    </>
+                  )}
+                </Card>
+              </Grid>
 
-        <Grid className='px-2' direction='row' container xs={12}>
-          <h5> Videos</h5>
-          {!isOpen && !isLoading && false && (
-            <Grid xs={6}>
-              {/* <h6>{graphDataList[0]}</h6> */}
-
-              <ul style={{ padding: 0, margin: 0 }}>
-                {graphDataList.map(i => (
-                  <Card className='d-flex' style={{ padding: 0, margin: 0 }}>
-                    <p>{i._id}: </p>
-                    <p> {i.number}</p>
-                  </Card>
-                ))}
-              </ul>
+              <Grid container xs={12} sm={4}>
+                <Card className='p-4 m-2'>
+                  <h6> Points Scored</h6>
+                  {isLoading ? (
+                    <CircularProgress />
+                  ) : (
+                    <GraphBar
+                      setIsOpen={setIsOpen}
+                      setData={setData}
+                      tableData={tdData}
+                    />
+                  )}
+                </Card>
+              </Grid>
+              <Grid
+                container
+                xs={12}
+                sm={4}
+                style={{ height: "auto", width: "auto" }}
+              >
+                <Card className='p-4 m-2'>
+                  <h6> Points Given Up</h6>
+                  {isLoading ? (
+                    <CircularProgress />
+                  ) : (
+                    <GraphBar
+                      setIsOpen={setIsOpen}
+                      setData={setData}
+                      tableData={tdcData}
+                    />
+                  )}
+                </Card>
+              </Grid>
+              <Grid container xs={12} sm={4}>
+                <Card className='p-4 m-2'>
+                  <h6> Tags/Setups</h6>
+                  {isLoading ? (
+                    <CircularProgress />
+                  ) : (
+                    <GraphBar
+                      setIsOpen={setIsOpen}
+                      setData={setData}
+                      tableData={setupData}
+                    />
+                  )}
+                </Card>
+              </Grid>
+              <Grid container xs={12} sm={4}>
+                <Card className='p-4 m-2'>
+                  <h6> Countered</h6>
+                  {isLoading ? (
+                    <CircularProgress />
+                  ) : (
+                    <GraphBar
+                      setIsOpen={setIsOpen}
+                      setData={setData}
+                      tableData={counteredData}
+                    />
+                  )}
+                </Card>
+              </Grid>
+              <Grid container xs={12} sm={4}>
+                <Card className='p-4 m-2'>
+                  <h6> Tags/Setups on points given up</h6>
+                  {isLoading ? (
+                    <CircularProgress />
+                  ) : (
+                    <GraphBar
+                      setIsOpen={setIsOpen}
+                      setData={setData}
+                      tableData={oppSetupData}
+                    />
+                  )}
+                </Card>
+              </Grid>
+              <Grid container xs={12} sm={4}>
+                <Card className='p-4 m-2'>
+                  {/* <h6> </h6> */}
+                  {isLoading ? (
+                    <CircularProgress />
+                  ) : (
+                    <Stacked
+                      setIsOpen={setIsOpen}
+                      setData={setData}
+                      tableData={scData}
+                    />
+                  )}
+                </Card>
+              </Grid>
             </Grid>
-          )}
-          <Grid container sm={12} className='pt-4 ' alignItems='flex-start'>
+          </Grid>
+        )}
+      </Grid>
+      {!isOpen && !isLoading && false && (
+        <Grid className='px-2' direction='row' container xs={12}>
+          {/* <h5> Videos</h5> */}
+
+          <Grid xs={6}>
+            {/* <h6>{graphDataList[0]}</h6> */}
+
+            <ul style={{ padding: 0, margin: 0 }}>
+              {graphDataList.map(i => (
+                <Card className='d-flex' style={{ padding: 0, margin: 0 }}>
+                  <p>{i._id}: </p>
+                  <p> {i.number}</p>
+                </Card>
+              ))}
+            </ul>
+          </Grid>
+
+          <Grid container sm={12} className='p-4 m-4' alignItems='flex-start'>
             {isLoading && (
               <Grid container justify='center'>
                 <h4 style={{ color: "lightgrey" }}>
@@ -634,12 +698,16 @@ const WrestlerProfile = () => {
                       {/* "                    can try tochange so use img instead */}
                       <VideoModal
                         type='img'
-                        link={`${match.url}?t=${match.takedowns.videoTime}`}
+                        link={
+                          match.videoTime
+                            ? `${match.url}?t=${match.takedowns.videoTime}`
+                            : match.url
+                        }
                       />
                       {match.takedowns?.countered &&
-                      match?.takedowns.countered == "true" ? (
+                      Boolean(match?.takedowns.countered) === "true" ? (
                         <p>Given up</p>
-                      ) : match.takedownsx?.countered ? (
+                      ) : match.takedowns?.countered ? (
                         <p>Scored</p>
                       ) : (
                         <></>
@@ -666,11 +734,11 @@ const WrestlerProfile = () => {
               })}
           </Grid>
         </Grid>
-      </Grid>
-      <h5>Matches</h5>
-      <Grid container direction='row'></Grid>
-      <Grid container xs={12}>
-        {isLoading ? <CircularProgress /> : <DataTable info={matchInfo} />}
+      )}
+      <Grid container xs={12} justify='flex-end' className='p-4'>
+        <Grid container xs={8} style={{ background: "white" }}>
+          {isLoading ? <CircularProgress /> : <DataTable info={matchInfo} />}
+        </Grid>
       </Grid>
     </Grid>
   );

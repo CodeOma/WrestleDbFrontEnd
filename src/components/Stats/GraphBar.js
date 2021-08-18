@@ -7,6 +7,7 @@ const ExampleChart = ({ tableData }) => {
   const chartRef = useRef(null);
   const [myChart, setMyChart] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [style, setStyle] = useState({});
   useEffect(() => {
     if (!chartRef) return;
     const ctx = chartRef.current.getContext("2d");
@@ -67,11 +68,21 @@ const ExampleChart = ({ tableData }) => {
     myChart.data.datasets[0].data = tableData.data;
     myChart.update();
   }, [tableData, myChart]);
+  console.log(myChart?.legend?.legendItems);
   return (
-    <>
+    <Grid
+      // onMouseOver={() => setStyle({ height: "100%" })}
+      // onMouseOut={() => setStyle({ height: "auto", overflow: "hidden" })}
+      container
+      style={style}
+    >
       {" "}
       <h6>{tableData.name || ""}</h6>
-      <Grid container>
+      <Grid
+        container
+        style={{ maxHeight: 75, overflow: "scroll" }}
+        className='pb-2'
+      >
         {myChart?.legend?.legendItems.length >= 1 &&
           myChart?.legend?.legendItems.map(item => {
             return (
@@ -84,12 +95,12 @@ const ExampleChart = ({ tableData }) => {
                   textAlign: "left",
                   display: "flex",
                   flexDirection: "row",
-                  margin: "8px",
+                  margin: "2px",
                 }}
               >
                 <div
                   style={{
-                    marginRight: "8px",
+                    marginRight: "5px",
                     width: "1.5rem",
                     height: "0.8rem",
                     backgroundColor: item.fillStyle,
@@ -107,7 +118,7 @@ const ExampleChart = ({ tableData }) => {
         // width='500'
         // height='500'
       />
-    </>
+    </Grid>
   );
 };
 

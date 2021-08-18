@@ -129,6 +129,7 @@ const Database = () => {
     };
     set();
   }, [search]);
+
   useEffect(() => {
     // const getData = async () => {
     //   const fetch = await getAllTechniques();
@@ -174,8 +175,8 @@ const Database = () => {
 
   useEffect(() => {
     setPage(0);
-    setIsLoaded(true);
-  }, [wrestName]);
+    // setIsLoaded(true);
+  }, [wrestName, selectedFilters]);
   useEffect(() => {
     const fetchInfo = async getFunc => {
       try {

@@ -17,10 +17,10 @@ import { nav as navigation, manageOptions, settingOptions } from "./_nav";
 
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
-import { Grid } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
-const Sidebar = ({ toggleSideBar }) => {
+const Sidebar = ({ toggleSideBar, setToggleSideBar }) => {
   const history = useHistory();
   const { currentUser, logout } = useAuth();
   const [error, setError] = useState("initialState");
@@ -43,18 +43,10 @@ const Sidebar = ({ toggleSideBar }) => {
 
   return (
     <CSidebar show={toggleSideBar}>
-      <CSidebarBrand className='d-md-down-none' to='/'>
-        LOGO
-        {/* <CIcon
-          className="c-sidebar-brand-full"
-          name="logo-negative"
-          height={35}
-        />
-        <CIcon
-          className="c-sidebar-brand-minimized"
-          name="sygnet"
-          height={35}
-        /> */}
+      <CSidebarBrand className='d-md-down-none' >
+      <Button style={{ textDecoration: "none" }} className='nav-logo' onClick={()=>setToggleSideBar(!toggleSideBar)}>
+            Hide
+          </Button>
       </CSidebarBrand>
       <CSidebarNav>
         <Link className='c-sidebar-nav-link ' to='/'>

@@ -175,7 +175,7 @@ const Wrestlers = () => {
   }, [refresh]);
 
   return (
-    <div>
+    <div style={{ background: "#f7fcfc" }}>
       <Grid aria-labelledby='form-dialog-title'>
         <h3 id='form-dialog-title'> Wrestlers </h3>
 
