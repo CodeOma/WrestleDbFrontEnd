@@ -127,10 +127,10 @@ const ExampleChart = ({ tableData }) => {
   //   myChart.update();
   // }, [tableData, myChart]);
   return (
-    <>
+    <Grid className='w-100'>
       {" "}
       <h6>Score/Conceded per td</h6>
-      <Grid container>
+      {/* <Grid container>
         {myChart?.legend?.legendItems.length &&
           myChart?.legend?.legendItems.map(item => {
             return (
@@ -158,15 +158,15 @@ const ExampleChart = ({ tableData }) => {
               </li>
             );
           })}
-      </Grid>
+      </Grid> */}
       <canvas
         array={tableData}
         ref={chartRef}
         id='myChart'
-        // width='500'
-        // height='500'
+        width='100%'
+        height='70'
       />
-    </>
+    </Grid>
   );
 };
 

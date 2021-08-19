@@ -67,15 +67,11 @@ const AutoComplete = ({ searchFunction, name, setFunction, label, value }) => {
   };
 
   return (
-    <Grid
-      direction='column'
-      className='d-flex'
-      container
-      className='pl-3 pr-4 pt-2'
-    >
-      <Grid className='pt-4'>
+    <Grid direction='column' className='d-flex' container>
+      <Grid className='pt-1'>
         <div>
           <TextField
+            className='w-100'
             id='outlined-helperText'
             label={""}
             value={search}

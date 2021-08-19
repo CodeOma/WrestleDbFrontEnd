@@ -471,20 +471,20 @@ const WrestlerProfile = () => {
         <h2 className='pt-4 pl-4' style={{ color: "white" }}>
           {wrestlerStats.fullName}
         </h2>
-        <Grid
-          container
-          xs={3}
-          className='p-0'
-          style={{ backgroundColor: "#4f72a4", borderRadius: "20px" }}
-        >
-          <AutoComplete
-            searchFunction={AutocompleteWrestler}
-            setFunction={setWrestlerId}
-            label='Wrestler'
-            value={wrestlerId}
-          />
-        </Grid>
       </Grid>{" "}
+      <Grid
+        container
+        xs={12}
+        className='p-1 px-3'
+        style={{ backgroundColor: "#4f72a4" }}
+      >
+        <AutoComplete
+          searchFunction={AutocompleteWrestler}
+          setFunction={setWrestlerId}
+          label='Wrestler'
+          value={wrestlerId}
+        />
+      </Grid>
       <Grid container xs={12} className='m-2 p-2' direction='row'>
         <Grid
           container
@@ -495,49 +495,57 @@ const WrestlerProfile = () => {
           alignContent='flex-start'
           xs={3}
           sm={3}
-          style={{ background: "#3c6089", borderRadius: "10px" }}
+          style={{ background: "#3c6089", borderRadius: "10px", width: "100%" }}
         >
           {isLoading ? (
             <CircularProgress />
           ) : (
-            <ul style={{ listStyle: "none", color: "white" }}>
+            <ul
+              style={{
+                listStyle: "none",
+                color: "white",
+                padding: 0,
+                fontSize: ".8rem",
+              }}
+              className='p-1'
+            >
               <h6>Matches:</h6>
-              <li className='pl-4'>Wins: {wrestlerStats.wins}</li>
-              <li className='pl-4'>Losses: {wrestlerStats.losses}</li>
-              <li className='pl-4'>
+              <li className='pl-2'>Wins: {wrestlerStats.wins}</li>
+              <li className='pl-2'>Losses: {wrestlerStats.losses}</li>
+              <li className='pl-2'>
                 Win Percentage: {wrestlerStats.winPercentage}
               </li>
-              <li className='pl-4'>
+              <li className='pl-2'>
                 Total Matches:{wrestlerStats.totalMatches}
               </li>
               <h6>Scores:</h6>
-              <li className='pl-4'>
+              <li className='pl-2'>
                 Total Points Conceded: {wrestlerStats.totalPC}
               </li>
-              <li className='pl-4'>
+              <li className='pl-2'>
                 Total Points Scored:{wrestlerStats.totalPS}
               </li>
-              <li className='pl-4'>
+              <li className='pl-2'>
                 Average Points Conceded: {wrestlerStats.avgPCPM}
               </li>
-              <li className='pl-4'>
+              <li className='pl-2'>
                 Average Points Scored:{wrestlerStats.avgPSPM}
               </li>
-              <li className='pl-4'>
+              <li className='pl-2'>
                 Matches Score First: {wrestlerStats.matchesScoreFirst}
               </li>
-              <li className='pl-4'>
+              <li className='pl-2'>
                 Matches Score Last: {wrestlerStats.matchesScoreLast}
               </li>
-              <li className='pl-4'>
+              <li className='pl-2'>
                 Point Scored/Conceded: {wrestlerStats.pspcRatio}
               </li>
-              <li className='pl-4'>
+              <li className='pl-2'>
                 Score First (%): {wrestlerStats.scoreFirstPerc}
               </li>
               {/* <li>Opponents Beat: {wrestlerStats.opponentsBeat}</li> */}
               {/* <li>opponentsLostTo: {wrestlerStats.opponentsLostTo}</li> */}
-              <li className='pl-4'>
+              <li className='pl-2'>
                 Score Last (%): {wrestlerStats.scorelastPerc}
               </li>
             </ul>
@@ -645,28 +653,13 @@ const WrestlerProfile = () => {
                   )}
                 </Card>
               </Grid>
-              <Grid container xs={12} sm={4}>
-                <Card className='p-4 m-2'>
-                  {/* <h6> </h6> */}
-                  {isLoading ? (
-                    <CircularProgress />
-                  ) : (
-                    <Stacked
-                      setIsOpen={setIsOpen}
-                      setData={setData}
-                      tableData={scData}
-                    />
-                  )}
-                </Card>
-              </Grid>
             </Grid>
           </Grid>
         )}
       </Grid>
-      {!isOpen && !isLoading && false && (
-        <Grid className='px-2' direction='row' container xs={12}>
-          {/* <h5> Videos</h5> */}
-
+      <Grid className='px-2' direction='row' container xs={12}>
+        {/* <h5> Videos</h5> */}
+        {!isOpen && !isLoading && false && (
           <Grid xs={6}>
             {/* <h6>{graphDataList[0]}</h6> */}
 
@@ -679,64 +672,77 @@ const WrestlerProfile = () => {
               ))}
             </ul>
           </Grid>
+        )}
+        <Grid container sm={12} className='p-4 m-4' alignItems='flex-start'>
+          {isLoading && (
+            <Grid container justify='center'>
+              <h4 style={{ color: "lightgrey" }}>
+                No clips, try changing the filters to find some techniques
+              </h4>
+            </Grid>
+          )}
 
-          <Grid container sm={12} className='p-4 m-4' alignItems='flex-start'>
-            {isLoading && (
-              <Grid container justify='center'>
-                <h4 style={{ color: "lightgrey" }}>
-                  No clips, try changing the filters to find some techniques
-                </h4>
-              </Grid>
-            )}
-
-            {isOpen &&
-              data[1].map(match => {
-                console.log(match);
-                return (
-                  <Grid xs={4} sm={2}>
-                    <Card className='p-2'>
-                      {/* "                    can try tochange so use img instead */}
-                      <VideoModal
-                        type='img'
-                        link={
-                          match.videoTime
-                            ? `${match.url}?t=${match.takedowns.videoTime}`
-                            : match.url
-                        }
-                      />
-                      {match.takedowns?.countered &&
-                      Boolean(match?.takedowns.countered) === "true" ? (
-                        <p>Given up</p>
-                      ) : match.takedowns?.countered ? (
-                        <p>Scored</p>
-                      ) : (
-                        <></>
-                      )}
-                      <p>
-                        {match.takedowns.takedown}
-                        {/* <p> {match.setup.map(setup => setup)}</p> */}
-                      </p>
-                      Points: {match.takedowns.points}
-                      <p>
-                        {" "}
-                        {match.takedowns.round === "round1"
-                          ? "Round 1"
-                          : "Round 2"}{" "}
-                        Time: {timeFormatter(match.takedowns.time)}
-                      </p>
-                      <p></p>
-                      {/* <p></p>
+          {isOpen &&
+            data[1].map(match => {
+              console.log(match);
+              return (
+                <Grid xs={4} sm={2}>
+                  <Card className='p-2'>
+                    {/* "                    can try tochange so use img instead */}
+                    <VideoModal
+                      type='img'
+                      link={
+                        match.videoTime
+                          ? `${match.url}?t=${match.takedowns.videoTime}`
+                          : match.url
+                      }
+                    />
+                    {match.takedowns?.countered &&
+                    Boolean(match?.takedowns.countered) === "true" ? (
+                      <p>Given up</p>
+                    ) : match.takedowns?.countered ? (
+                      <p>Scored</p>
+                    ) : (
+                      <></>
+                    )}
+                    <p>
+                      {match.takedowns.takedown}
+                      {/* <p> {match.setup.map(setup => setup)}</p> */}
+                    </p>
+                    Points: {match.takedowns.points}
+                    <p>
+                      {" "}
+                      {match.takedowns.round === "round1"
+                        ? "Round 1"
+                        : "Round 2"}{" "}
+                      Time: {timeFormatter(match.takedowns.time)}
+                    </p>
+                    <p></p>
+                    {/* <p></p>
                     <p></p> */}
-                      <p>{match.takedowns.weightclass}</p>
-                    </Card>
-                  </Grid>
-                );
-              })}
-          </Grid>
+                    <p>{match.takedowns.weightclass}</p>
+                  </Card>
+                </Grid>
+              );
+            })}
         </Grid>
-      )}
-      <Grid container xs={12} justify='flex-end' className='p-4'>
-        <Grid container xs={8} style={{ background: "white" }}>
+      </Grid>
+      <Grid container xs={12} justify='flex-end' className='p-2'>
+        <Grid container xs={4} sm={4}>
+          <Card className='p-4 m-2'>
+            {/* <h6> </h6> */}
+            {isLoading ? (
+              <CircularProgress />
+            ) : (
+              <Stacked
+                setIsOpen={setIsOpen}
+                setData={setData}
+                tableData={scData}
+              />
+            )}
+          </Card>
+        </Grid>{" "}
+        <Grid container xs={8} style={{ backgroundColor: "white" }}>
           {isLoading ? <CircularProgress /> : <DataTable info={matchInfo} />}
         </Grid>
       </Grid>

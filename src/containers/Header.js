@@ -30,22 +30,31 @@ const Header = ({ setToggleSideBar, toggleSideBar }) => {
       style={{ width: "100%" }}
       className={`nav px-2 ${menuOpen ? " nav-open" : ""}`}
     >
-      <Grid className='nav-content'>
+      <Grid className='nav-content' container>
         <Button
           style={{ textDecoration: "none" }}
           className='nav-logo'
           onClick={() => setToggleSideBar(!toggleSideBar)}
         >
-          <Grid className='nav-logo'> Wrestling DB</Grid>{" "}
+          <Grid className='nav-logo' container xs={4} direction='row'>
+            {" "}
+            Wrestling DB
+          </Grid>{" "}
         </Button>
 
-        <nav className='nav-links__container'>
+        {/* {menuOpen && ( */}
+        <Grid
+          container
+          xs={8}
+          className='nav-links__container'
+          justify='flex-end'
+        >
           {links &&
             links.map((link, i) => (
-              <Grid>
-                <Link className='nav-link' to={link.to} key={i}>
+              <Grid item className='pt-4' justir>
+                <Link to={link.to} key={i}>
                   <Grid className='nav-link__text'>{link.title}</Grid>
-                  <Grid className='nav-link__background' />
+                  {/* <Grid className='nav-link__background' /> */}
                 </Link>{" "}
               </Grid>
             ))}
@@ -57,7 +66,8 @@ const Header = ({ setToggleSideBar, toggleSideBar }) => {
               <Grid className='nav-link__background' />
             </Link>{" "}
           </Grid> */}
-        </nav>
+        </Grid>
+        {/* )} */}
 
         <Grid className='nav-menu__icon' onClick={() => setMenuOpen(!menuOpen)}>
           <Grid />
