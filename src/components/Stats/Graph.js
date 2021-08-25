@@ -68,16 +68,16 @@ const ExampleChart = ({ tableData }) => {
     myChart.update();
   }, [tableData, myChart]);
   return (
-    <>
-      <Grid container></Grid>
+    <Grid container className='h-100 w-100'>
       <canvas
         array={tableData}
         ref={chartRef}
         id='myChart'
-        // width='500'
+        height='100%'
+        width='100%'
         // height='500'
       />
-    </>
+    </Grid>
   );
 };
 

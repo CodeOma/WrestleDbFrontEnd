@@ -134,7 +134,7 @@ const GeneralStats = () => {
   // }, []);
 
   return (
-    <div>
+    <Grid container className='p-4'>
       {/* <Grid
         container
         className='p-3'
@@ -169,7 +169,7 @@ const GeneralStats = () => {
         <Grid container xs={4} justify='center' className='px-1'>
           {" "}
           <Link to='/technique' className='w-100'>
-            <Card className='w-75 py-4 px-1 my-2'>
+            <Card className='w-75 py-4 px-1 my-2 '>
               <Grid className='w-100' container direction='column'>
                 <h4>By Technique</h4>
               </Grid>
@@ -178,26 +178,33 @@ const GeneralStats = () => {
         </Grid>
       </Grid>
       <Grid container xs={12} direction='row' className='py-4 px-2 '>
-        <Grid container xs={12} sm={4} className='px-1'>
+        <Grid container xs={12} md={4} sm={6} className='px-1 mb-1'>
           <Card className='p-2 w-100'>
             <h6> Top 10 Takedowns</h6>
             {isLoading ? <CircularProgress /> : <Graph tableData={offGraph} />}
-          </Card>{" "}
+          </Card>
         </Grid>
-        <Grid container xs={12} sm={4} className='px-1'>
+        <Grid container xs={12} md={4} sm={6} className='px-1 mb-1'>
           <Card className='p-2 w-100'>
             <h6> Top 10 Def</h6>
             {isLoading ? <CircularProgress /> : <Graph tableData={defGraph} />}
           </Card>
         </Grid>
-        <Grid container xs={12} sm={4} className='px-1'>
+        <Grid
+          container
+          xs={12}
+          md={4}
+          sm={6}
+          className='px-1 mb-1'
+          style={{ height: "20rem" }}
+        >
           <Card className='p-2 w-100'>
             <h6> Top 10 Tags/Setups</h6>
             {isLoading ? <CircularProgress /> : <Graph tableData={tagGraph} />}
           </Card>
         </Grid>
       </Grid>
-    </div>
+    </Grid>
   );
 };
 

@@ -6,7 +6,6 @@ import Timestamp from "./Timestamp";
 import { useGlobalContext } from "../../context/context";
 
 const TimestampList = ({ setTime, match, setMatchEdit, render }) => {
-  const { clearList } = useGlobalContext();
   const [timestamps, setTimestamps] = useState([]);
 
   useEffect(() => {

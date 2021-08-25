@@ -43,14 +43,18 @@ const Sidebar = ({ toggleSideBar, setToggleSideBar }) => {
 
   return (
     <CSidebar show={toggleSideBar}>
-      <CSidebarBrand className='d-md-down-none' >
-      <Button style={{ textDecoration: "none" }} className='nav-logo' onClick={()=>setToggleSideBar(!toggleSideBar)}>
-            Hide
-          </Button>
+      <CSidebarBrand className='d-md-down-none'>
+        <Button
+          style={{ textDecoration: "none" }}
+          className='nav-logo'
+          onClick={() => setToggleSideBar(!toggleSideBar)}
+        >
+          Hide
+        </Button>
       </CSidebarBrand>
       <CSidebarNav>
         <Link className='c-sidebar-nav-link ' to='/'>
-          Dashboard
+          Home
         </Link>
         <CCreateElement
           items={navigation}

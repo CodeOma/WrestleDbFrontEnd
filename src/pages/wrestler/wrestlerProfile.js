@@ -13,6 +13,7 @@ import AutoComplete from "../Autocomplete";
 import { AutocompleteWrestler } from "../../controllers/search";
 import { getMatchByWrestlerId } from "../../controllers/controller";
 import { Link, useParams } from "react-router-dom";
+import "../../assets/styles.css";
 
 // const styles = {
 //   graph:{
@@ -466,7 +467,7 @@ const WrestlerProfile = () => {
           background: "#1d2a3c",
           boxShadow: "0 8px 5px -8px rgba(148, 148, 148, 1)",
         }}
-        className='p-4'
+        className='p-4 section-text'
       >
         <h2 className='pt-4 pl-4' style={{ color: "white" }}>
           {wrestlerStats.fullName}
@@ -476,7 +477,7 @@ const WrestlerProfile = () => {
         container
         xs={12}
         className='p-1 px-3'
-        style={{ backgroundColor: "#4f72a4" }}
+        style={{ backgroundColor: "white" }}
       >
         <AutoComplete
           searchFunction={AutocompleteWrestler}
@@ -488,68 +489,68 @@ const WrestlerProfile = () => {
       <Grid container xs={12} className='m-2 p-2' direction='row'>
         <Grid
           container
-          className='mt-2 pt-4'
           alignItems='flex-start'
           direction='row'
           justify='flex-start'
           alignContent='flex-start'
+          className='mt-2 section-text__body p-2'
           xs={3}
-          sm={3}
-          style={{ background: "#3c6089", borderRadius: "10px", width: "100%" }}
+          lg={3}
+          style={{ borderRadius: "10px", width: "100%" }}
         >
-          {isLoading ? (
-            <CircularProgress />
-          ) : (
-            <ul
-              style={{
-                listStyle: "none",
-                color: "white",
-                padding: 0,
-                fontSize: ".8rem",
-              }}
-              className='p-1'
-            >
-              <h6>Matches:</h6>
-              <li className='pl-2'>Wins: {wrestlerStats.wins}</li>
-              <li className='pl-2'>Losses: {wrestlerStats.losses}</li>
-              <li className='pl-2'>
-                Win Percentage: {wrestlerStats.winPercentage}
-              </li>
-              <li className='pl-2'>
-                Total Matches:{wrestlerStats.totalMatches}
-              </li>
-              <h6>Scores:</h6>
-              <li className='pl-2'>
-                Total Points Conceded: {wrestlerStats.totalPC}
-              </li>
-              <li className='pl-2'>
-                Total Points Scored:{wrestlerStats.totalPS}
-              </li>
-              <li className='pl-2'>
-                Average Points Conceded: {wrestlerStats.avgPCPM}
-              </li>
-              <li className='pl-2'>
-                Average Points Scored:{wrestlerStats.avgPSPM}
-              </li>
-              <li className='pl-2'>
-                Matches Score First: {wrestlerStats.matchesScoreFirst}
-              </li>
-              <li className='pl-2'>
-                Matches Score Last: {wrestlerStats.matchesScoreLast}
-              </li>
-              <li className='pl-2'>
-                Point Scored/Conceded: {wrestlerStats.pspcRatio}
-              </li>
-              <li className='pl-2'>
-                Score First (%): {wrestlerStats.scoreFirstPerc}
-              </li>
-              {/* <li>Opponents Beat: {wrestlerStats.opponentsBeat}</li> */}
-              {/* <li>opponentsLostTo: {wrestlerStats.opponentsLostTo}</li> */}
-              <li className='pl-2'>
-                Score Last (%): {wrestlerStats.scorelastPerc}
-              </li>
-            </ul>
-          )}
+          <Card>
+            {isLoading ? (
+              <CircularProgress />
+            ) : (
+              <ul
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                  fontSize: ".8rem",
+                }}
+                className='p-1'
+              >
+                <li className='pl-2'>Wins: {wrestlerStats.wins}</li>
+                <li className='pl-2'>Losses: {wrestlerStats.losses}</li>
+                <li className='pl-2'>
+                  Win Percentage: {wrestlerStats.winPercentage}
+                </li>
+                <li className='pl-2'>
+                  Total Matches:{wrestlerStats.totalMatches}
+                </li>
+                <h6>Scores:</h6>
+                <li className='pl-2'>
+                  Total Points Conceded: {wrestlerStats.totalPC}
+                </li>
+                <li className='pl-2'>
+                  Total Points Scored:{wrestlerStats.totalPS}
+                </li>
+                <li className='pl-2'>
+                  Average Points Conceded: {wrestlerStats.avgPCPM}
+                </li>
+                <li className='pl-2'>
+                  Average Points Scored:{wrestlerStats.avgPSPM}
+                </li>
+                <li className='pl-2'>
+                  Matches Score First: {wrestlerStats.matchesScoreFirst}
+                </li>
+                <li className='pl-2'>
+                  Matches Score Last: {wrestlerStats.matchesScoreLast}
+                </li>
+                <li className='pl-2'>
+                  Point Scored/Conceded: {wrestlerStats.pspcRatio}
+                </li>
+                <li className='pl-2'>
+                  Score First (%): {wrestlerStats.scoreFirstPerc}
+                </li>
+                {/* <li>Opponents Beat: {wrestlerStats.opponentsBeat}</li> */}
+                {/* <li>opponentsLostTo: {wrestlerStats.opponentsLostTo}</li> */}
+                <li className='pl-2'>
+                  Score Last (%): {wrestlerStats.scorelastPerc}
+                </li>
+              </ul>
+            )}
+          </Card>
         </Grid>
         {isLoading ? (
           <CircularProgress />
@@ -563,7 +564,7 @@ const WrestlerProfile = () => {
             xs={9}
           >
             <Grid container xs={12}>
-              <Grid className='pt-3' item xs={11} sm={4}>
+              <Grid className='pt-3' item xs={12} sm={6} lg={4}>
                 <Card className='p-4 m-2'>
                   {" "}
                   {isLoading ? (
@@ -578,7 +579,7 @@ const WrestlerProfile = () => {
                 </Card>
               </Grid>
 
-              <Grid container xs={12} sm={4}>
+              <Grid container xs={12} sm={6} lg={4}>
                 <Card className='p-4 m-2'>
                   <h6> Points Scored</h6>
                   {isLoading ? (
@@ -595,7 +596,8 @@ const WrestlerProfile = () => {
               <Grid
                 container
                 xs={12}
-                sm={4}
+                sm={6}
+                lg={4}
                 style={{ height: "auto", width: "auto" }}
               >
                 <Card className='p-4 m-2'>
@@ -611,7 +613,7 @@ const WrestlerProfile = () => {
                   )}
                 </Card>
               </Grid>
-              <Grid container xs={12} sm={4}>
+              <Grid container xs={12} sm={6} lg={4}>
                 <Card className='p-4 m-2'>
                   <h6> Tags/Setups</h6>
                   {isLoading ? (
@@ -625,7 +627,7 @@ const WrestlerProfile = () => {
                   )}
                 </Card>
               </Grid>
-              <Grid container xs={12} sm={4}>
+              <Grid container xs={12} sm={6} lg={4}>
                 <Card className='p-4 m-2'>
                   <h6> Countered</h6>
                   {isLoading ? (
@@ -639,7 +641,7 @@ const WrestlerProfile = () => {
                   )}
                 </Card>
               </Grid>
-              <Grid container xs={12} sm={4}>
+              <Grid container xs={12} sm={6} lg={4}>
                 <Card className='p-4 m-2'>
                   <h6> Tags/Setups on points given up</h6>
                   {isLoading ? (
@@ -727,8 +729,8 @@ const WrestlerProfile = () => {
             })}
         </Grid>
       </Grid>
-      <Grid container xs={12} justify='flex-end' className='p-2'>
-        <Grid container xs={4} sm={4}>
+      <Grid container xs={12} className='p-2'>
+        <Grid container xs={6} lg={4}>
           <Card className='p-4 m-2'>
             {/* <h6> </h6> */}
             {isLoading ? (
@@ -742,7 +744,7 @@ const WrestlerProfile = () => {
             )}
           </Card>
         </Grid>{" "}
-        <Grid container xs={8} style={{ backgroundColor: "white" }}>
+        <Grid container xs={6} lg={8} style={{ backgroundColor: "white" }}>
           {isLoading ? <CircularProgress /> : <DataTable info={matchInfo} />}
         </Grid>
       </Grid>

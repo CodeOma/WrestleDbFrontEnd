@@ -52,7 +52,13 @@ const Header = ({ setToggleSideBar, toggleSideBar }) => {
           {links &&
             links.map((link, i) => (
               <Grid item className='pt-4' justir>
-                <Link to={link.to} key={i}>
+                <Link
+                  to={link.to}
+                  onClick={() => {
+                    setMenuOpen(false);
+                  }}
+                  key={i}
+                >
                   <Grid className='nav-link__text'>{link.title}</Grid>
                   {/* <Grid className='nav-link__background' /> */}
                 </Link>{" "}

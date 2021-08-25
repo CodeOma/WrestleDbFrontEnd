@@ -63,3 +63,19 @@ export const userDeleteTag = async id => {
     return e;
   }
 };
+export const userAutocompleteTag = async query => {
+  try {
+    if (query.length > 0) {
+      const token = await getIdToken();
+      console.log(query);
+      var url = `${API}/user/autosearch/tag/${query}`;
+      const fetch = await axios.get(url, {
+        headers: { authorization: `Bearer ${token}` },
+      });
+      const data = await fetch.data;
+      return data;
+    }
+  } catch (e) {
+    return e;
+  }
+};

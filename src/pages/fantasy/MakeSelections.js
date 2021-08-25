@@ -51,6 +51,8 @@ const MakeSelections = () => {
         <Button>Women's Freestyle</Button>
       </Grid>
       <Grid container xs={4} direction='column' className='px-2'>
+        <h5>Tournament</h5>
+
         <Card className='px-2'>
           <h6>Selections</h6>
 
@@ -68,80 +70,88 @@ const MakeSelections = () => {
           </ul>
         </Card>
       </Grid>
-      <Grid container xs={8}>
-        <Selector
-          options={teamOptions}
-          name='kg57'
-          label='57kg'
-          onChange={onSelectorChange}
-          state={selections}
-        />
-        <Selector
-          options={teamOptions}
-          name='kg61'
-          label='61kg'
-          onChange={onSelectorChange}
-          state={selections}
-        />
-        <Selector
-          options={teamOptions}
-          name='kg65'
-          label='65kg'
-          onChange={onSelectorChange}
-          state={selections}
-        />
-        <Selector
-          options={teamOptions}
-          name='kg70'
-          label='70kg'
-          onChange={onSelectorChange}
-          state={selections}
-        />
-        <Selector
-          options={teamOptions}
-          name='kg74'
-          label='74kg'
-          onChange={onSelectorChange}
-          state={selections}
-        />
-        <Selector
-          options={teamOptions}
-          name='kg79'
-          label='79kg'
-          onChange={onSelectorChange}
-          state={selections}
-        />
-        <Selector
-          options={teamOptions}
-          name='kg86'
-          label='86kg'
-          onChange={onSelectorChange}
-          state={selections}
-        />
-        <Selector
-          options={teamOptions}
-          name='kg92'
-          label='92kg'
-          onChange={onSelectorChange}
-          state={selections}
-        />
-        <Selector
-          options={teamOptions}
-          name='kg97'
-          label='97kg'
-          onChange={onSelectorChange}
-          state={selections}
-        />
-        <Selector
-          options={teamOptions}
-          name='kg125'
-          label='125kg'
-          onChange={onSelectorChange}
-          state={selections}
-        />
+      <Grid container justify='center' className='p-3' xs={8}>
+        <Card className='p-3'>
+          <h6>Choose Gold Predictions</h6>
+
+          <Grid container justify='center' className='p-1'>
+            <Selector
+              options={teamOptions}
+              name='kg57'
+              label='57kg'
+              onChange={onSelectorChange}
+              state={selections}
+            />
+            <Selector
+              options={teamOptions}
+              name='kg61'
+              label='61kg'
+              onChange={onSelectorChange}
+              state={selections}
+            />
+            <Selector
+              options={teamOptions}
+              name='kg65'
+              label='65kg'
+              onChange={onSelectorChange}
+              state={selections}
+            />
+            <Selector
+              options={teamOptions}
+              name='kg70'
+              label='70kg'
+              onChange={onSelectorChange}
+              state={selections}
+            />
+            <Selector
+              options={teamOptions}
+              name='kg74'
+              label='74kg'
+              onChange={onSelectorChange}
+              state={selections}
+            />
+            <Selector
+              options={teamOptions}
+              name='kg79'
+              label='79kg'
+              onChange={onSelectorChange}
+              state={selections}
+            />
+            <Selector
+              options={teamOptions}
+              name='kg86'
+              label='86kg'
+              onChange={onSelectorChange}
+              state={selections}
+            />
+            <Selector
+              options={teamOptions}
+              name='kg92'
+              label='92kg'
+              onChange={onSelectorChange}
+              state={selections}
+            />
+            <Selector
+              options={teamOptions}
+              name='kg97'
+              label='97kg'
+              onChange={onSelectorChange}
+              state={selections}
+            />
+            <Selector
+              options={teamOptions}
+              name='kg125'
+              label='125kg'
+              onChange={onSelectorChange}
+              state={selections}
+            />
+          </Grid>
+        </Card>
       </Grid>
-      <Grid contain direction='row' xs={12} justify='flex-end'>
-        <Button>Save</Button>
+      <Grid container direction='row' xs={12} justify='flex-end'>
+        <Button style={{ background: "white", borderRadius: "5px" }}>
+          Save
+        </Button>
       </Grid>
     </Grid>
   );

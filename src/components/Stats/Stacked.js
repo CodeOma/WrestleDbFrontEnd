@@ -127,7 +127,7 @@ const ExampleChart = ({ tableData }) => {
   //   myChart.update();
   // }, [tableData, myChart]);
   return (
-    <Grid className='w-100'>
+    <Grid container style={{ width: "100%" }}>
       {" "}
       <h6>Score/Conceded per td</h6>
       {/* <Grid container>
@@ -163,8 +163,8 @@ const ExampleChart = ({ tableData }) => {
         array={tableData}
         ref={chartRef}
         id='myChart'
-        width='100%'
-        height='70'
+        width='500'
+        height='500'
       />
     </Grid>
   );

@@ -27,7 +27,7 @@ import TechniqueDatabase from "./pages/TechniqueDatabase";
 import F404 from "./pages/F404";
 import MakeSelections from "./pages/fantasy/MakeSelections";
 import Fantasy from "./pages/fantasy/Fantasy";
-
+import TechniqueSearch from "./pages/wrestler/TechniqueSearch";
 const TheLayout = () => {
   const [toggleSideBar, setToggleSideBar] = useState(false);
 
@@ -63,6 +63,9 @@ const TheLayout = () => {
               </Route>
               <Route exact path='/techniques'>
                 <TechniqueDatabase />
+              </Route>
+              <Route exact path='/technique'>
+                <TechniqueSearch />
               </Route>
               {/* MATCHES */}
               <Route exact path='/match/edi'>

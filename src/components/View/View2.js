@@ -13,9 +13,7 @@ import { youtubeVideoId } from "../../helpers/formatting";
 import AutoComplete from "./AutoCompleteInput";
 import AutocompleteCheckbox from "./AutocompleteCheckbox";
 import { useParams } from "react-router-dom";
-const Editor = () => {
-  const { match_id } = useParams();
-
+const Editor = ({ matchId, techniqueTime }) => {
   const [videoTime, setVideoTime] = useState(0);
   const [wrestlerId, setWrestlerId] = useState("6042f3208e4ff31a532f7324");
 
@@ -173,11 +171,14 @@ const Editor = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const getData = await getMatch(match_id);
+      console.log(matchId);
+      const getData = await getMatch(matchId);
       setMatchData(getData.data);
+      setVideoTime(techniqueTime);
     };
+    console.log("YEEEEt");
     fetch();
-  }, [match_id]);
+  }, [matchId]);
   const tempname = () => {
     try {
       // console.log(matchData.scores);

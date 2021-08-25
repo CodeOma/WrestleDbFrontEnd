@@ -8,6 +8,7 @@ import {
   Button,
 } from "@material-ui/core";
 import VideoModal from "../components/components/VideoModal";
+import VideoModal2 from "../components/components/VideoModal2";
 
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
@@ -105,6 +106,30 @@ const Database = () => {
     setQuery(`http://localhost:5000/match/tournament/${id}`);
   };
 
+  const randomWrest = [
+    "60611a6ca482a996c290d38a",
+    "6042f3738e4ff31a532f749e",
+    "6042f2898e4ff31a532f717c",
+  ];
+  useEffect(() => {
+    const fetchInfo = async () => {
+      try {
+        const fetch = await getMatchByWrestler(
+          "60611a6ca482a996c290d38a",
+          selectedFilters,
+          page
+        );
+        setFetchedData(fetch.data.matches);
+        setFilterOptions(fetch.data.filters);
+        setWrestName(fetch.data.matches[0]?.teamName);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchInfo();
+  }, []);
+
   useEffect(() => {
     const set = async () => {
       if (searchTopic === "Teams") {
@@ -183,169 +208,198 @@ const Database = () => {
   }, [data, selectedFilters, page]);
 
   return (
-    <Grid className='m-2 mx-2' style={{ backgroundColor: "white" }}>
+    <Grid container>
       <Grid
-        // className='ml-4 mr-4'
         container
-        justify='center'
-        alignItems='flex-start'
+        xs={12}
         direction='row'
+        justify='space-between'
+        style={{
+          background: "#1d2a3c",
+          boxShadow: "0 8px 5px -8px rgba(148, 148, 148, 1)",
+        }}
+        className='p-4 section-text'
       >
-        <Grid direction='column' sm={3} container>
-          <Grid
-            direction='column'
-            className='d-flex'
-            container
-            className='pl-3 pr-4 pt-2'
-          >
-            <Grid className='pt-4'>
-              <Selector
-                valu={searchTopic}
-                onOptChange={setSearchTopic}
-                options={["Wrestlers", "Teams", "Tournaments"]}
-                label={"Search"}
-              />
-              <div>
-                <input
-                  value={search}
-                  placeholder={`Search by ${searchTopic}`}
-                  onChange={e => {
-                    setSearch(e.target.value);
-                    setIsOpen(true);
-                  }}
-                  style={{
-                    padding: "5px",
-
-                    marginTop: "10px",
-                    width: "100%",
-                  }}
+        <h2 className='pt-4 pl-4' style={{ color: "white" }}>
+          Matches
+        </h2>
+      </Grid>
+      <Grid className='m-2 mx-3' style={{ backgroundColor: "white" }}>
+        <Grid
+          // className='ml-4 mr-4'
+          container
+          justify='center'
+          alignItems='flex-start'
+          direction='row'
+        >
+          <Grid direction='column' sm={3} container>
+            <Grid
+              direction='column'
+              className='d-flex'
+              container
+              className='pl-3 pr-4 pt-2'
+            >
+              <Grid className='pt-4'>
+                <Selector
+                  valu={searchTopic}
+                  onOptChange={setSearchTopic}
+                  options={["Wrestlers", "Teams", "Tournaments"]}
+                  label={"Search"}
                 />
-                {renderResults()}
-              </div>
-              {/* <Selector options={[""]} label={"Weight Class"} /> */}
-            </Grid>
+                <div>
+                  <input
+                    value={search}
+                    placeholder={`Search by ${searchTopic}`}
+                    onChange={e => {
+                      setSearch(e.target.value);
+                      setIsOpen(true);
+                    }}
+                    style={{
+                      padding: "5px",
 
-            <Grid className='pt-4'>
-              {searchTopic !== "Tournaments" && (
+                      marginTop: "10px",
+                      width: "100%",
+                    }}
+                  />
+                  {renderResults()}
+                </div>
+                {/* <Selector options={[""]} label={"Weight Class"} /> */}
+              </Grid>
+
+              <Grid className='pt-4'>
+                {searchTopic !== "Tournaments" && (
+                  <Checkbox
+                    wrestName={wrestName}
+                    name='tournament'
+                    label='Tournament'
+                    data={filterOptions.tournament}
+                    selectedFilters={selectedFilters}
+                    setSelectedFilters={setSelectedFilters}
+                  />
+                )}
                 <Checkbox
                   wrestName={wrestName}
-                  name='tournament'
-                  label='Tournament'
-                  data={filterOptions.tournament}
+                  label='Weight Class'
+                  name='weightClass'
+                  selectedFilters={selectedFilters}
+                  data={filterOptions.weightClass}
+                  setSelectedFilters={setSelectedFilters}
+                />
+                <Checkbox
+                  wrestName={wrestName}
+                  name='round'
+                  label='Round'
+                  data={filterOptions.round}
                   selectedFilters={selectedFilters}
                   setSelectedFilters={setSelectedFilters}
                 />
-              )}
-              <Checkbox
-                wrestName={wrestName}
-                label='Weight Class'
-                name='weightClass'
-                selectedFilters={selectedFilters}
-                data={filterOptions.weightClass}
-                setSelectedFilters={setSelectedFilters}
-              />
-              <Checkbox
-                wrestName={wrestName}
-                name='round'
-                label='Round'
-                data={filterOptions.round}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
-              />
-              {searchTopic !== "Tournaments" && (
-                <>
-                  <Checkbox
-                    wrestName={wrestName}
-                    label='Opponent'
-                    name='opponent'
-                    data={filterOptions.opponent}
-                    selectedFilters={selectedFilters}
-                    setSelectedFilters={setSelectedFilters}
-                  />
-                  <Checkbox
-                    wrestName={wrestName}
-                    label='Win/Loss'
-                    name='winLoss'
-                    data={filterOptions.winLoss}
-                    selectedFilters={selectedFilters}
-                    setSelectedFilters={setSelectedFilters}
-                  />
-                </>
-              )}
-              <Checkbox
-                wrestName={wrestName}
-                name='result'
-                label='Result'
-                data={filterOptions.result}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
-              />
-            </Grid>
-
-            <Grid />
-          </Grid>
-        </Grid>
-
-        <Grid container sm={9}>
-          <Grid container sm={12} className='pt-3 px-1' alignItems='flex-start'>
-            {!fetchedData.length && (
-              <Grid container justify='center'>
-                <h4 style={{ color: "lightgrey" }}>No matches use Search</h4>
+                {searchTopic !== "Tournaments" && (
+                  <>
+                    <Checkbox
+                      wrestName={wrestName}
+                      label='Opponent'
+                      name='opponent'
+                      data={filterOptions.opponent}
+                      selectedFilters={selectedFilters}
+                      setSelectedFilters={setSelectedFilters}
+                    />
+                    <Checkbox
+                      wrestName={wrestName}
+                      label='Win/Loss'
+                      name='winLoss'
+                      data={filterOptions.winLoss}
+                      selectedFilters={selectedFilters}
+                      setSelectedFilters={setSelectedFilters}
+                    />
+                  </>
+                )}
+                <Checkbox
+                  wrestName={wrestName}
+                  name='result'
+                  label='Result'
+                  data={filterOptions.result}
+                  selectedFilters={selectedFilters}
+                  setSelectedFilters={setSelectedFilters}
+                />
               </Grid>
-            )}
 
-            {fetchedData &&
-              fetchedData.length >= 1 &&
-              fetchedData.map(match => {
-                return (
-                  <Card
-                    className='p-2'
-                    style={{ width: "33%", height: "330px" }}
-                  >
-                    <VideoModal
-                      type='img'
-                      link={`${match.url}?t=${match.videoTime}`}
-                    />{" "}
-                    <p>
-                      {match.result.winner} {match.result.victoryType}{" "}
-                      {match.result.loser}{" "}
-                      {match.result.winner === match.wrestler.fullName
-                        ? match?.wrestTotals || 0
-                        : match?.oppTotals || 0}
-                      -
-                      {match.result.loser === match.wrestler.fullName
-                        ? match?.wrestTotals || 0
-                        : match?.oppTotals || 0}
-                    </p>
-                    <p>
-                      {match.tournamentName}: {match.round}
-                    </p>
-                    <p></p>
-                    <p>{match.weightclass}</p>
-                  </Card>
-                );
-              })}
+              <Grid />
+            </Grid>
           </Grid>
-          {page > 0 && (
-            <Button
-              onClick={() => {
-                setPage(page - 1);
-              }}
+
+          <Grid container sm={9}>
+            <Grid
+              container
+              sm={12}
+              className='pt-3 px-1'
+              alignItems='flex-start'
             >
-              Prev
-            </Button>
-          )}
-          {fetchedData && fetchedData.length > 19 && (
-            <Button
-              onClick={() => {
-                setPage(page + 1);
-              }}
-            >
-              Next
-            </Button>
-          )}
+              {!fetchedData.length && (
+                <Grid container justify='center'>
+                  <h4 style={{ color: "lightgrey" }}>No matches use Search</h4>
+                </Grid>
+              )}
+
+              {fetchedData &&
+                fetchedData.length >= 1 &&
+                fetchedData.map(match => {
+                  return (
+                    <Grid
+                      container
+                      xs={6}
+                      sm={4}
+                      md={3}
+                      style={{ height: "21rem" }}
+                    >
+                      <Card className='p-2 m-1'>
+                        <VideoModal2
+                          matchId={match._id}
+                          techniqueTime={match.videoTime}
+                          type='img'
+                          link={`${match.url}?t=${match.videoTime}`}
+                        />{" "}
+                        <p>
+                          {match.result.winner} {match.result.victoryType}{" "}
+                          {match.result.loser}{" "}
+                          {match.result.winner === match.wrestler.fullName
+                            ? match?.wrestTotals || 0
+                            : match?.oppTotals || 0}
+                          -
+                          {match.result.loser === match.wrestler.fullName
+                            ? match?.wrestTotals || 0
+                            : match?.oppTotals || 0}
+                        </p>
+                        <p>
+                          {match.tournamentName}: {match.round}
+                        </p>
+                        <p></p>
+                        <p>{match.weightclass}</p>
+                      </Card>
+                    </Grid>
+                  );
+                })}
+            </Grid>
+            {page > 0 && (
+              <Button
+                onClick={() => {
+                  setPage(page - 1);
+                }}
+              >
+                Prev
+              </Button>
+            )}
+            {fetchedData && fetchedData.length > 19 && (
+              <Button
+                onClick={() => {
+                  setPage(page + 1);
+                }}
+              >
+                Next
+              </Button>
+            )}
+          </Grid>
         </Grid>
-      </Grid>
+      </Grid>{" "}
     </Grid>
   );
 };

@@ -216,23 +216,40 @@ const Database = () => {
   }, [data, selectedFilters, page]);
 
   return (
-    <Grid className='m-2 mx-2' style={{ backgroundColor: "white" }}>
+    <Grid container>
       <Grid
-        // className='px-3'
         container
-        justify='center'
-        alignItems='flex-start'
+        xs={12}
         direction='row'
+        justify='space-between'
+        style={{
+          background: "#1d2a3c",
+          boxShadow: "0 8px 5px -8px rgba(148, 148, 148, 1)",
+        }}
+        className='p-4 section-text'
       >
-        <Grid direction='column' xs={4} sm={3} container>
-          <Grid
-            direction='column'
-            className='d-flex'
-            container
-            className='pl-2 pr-2 pt-2'
-          >
-            <Grid className='pt-4'>
-              {/* <Selector
+        <h2 className='pt-4 pl-4' style={{ color: "white" }}>
+          Technique
+        </h2>
+      </Grid>
+
+      <Grid className='m-2 mx-3' style={{ backgroundColor: "white" }}>
+        <Grid
+          // className='px-3'
+          container
+          justify='center'
+          alignItems='flex-start'
+          direction='row'
+        >
+          <Grid direction='column' xs={4} sm={3} container>
+            <Grid
+              direction='column'
+              className='d-flex'
+              container
+              className='pl-2 pr-2 pt-2'
+            >
+              <Grid className='pt-4'>
+                {/* <Selector
                 valu={searchTopic}
                 onOptChange={setSearchTopic}
                 options={["Wrestlers", "Teams", "Tournaments"]}
@@ -255,10 +272,10 @@ const Database = () => {
                 />
                 {renderResults()}
               </div> */}
-            </Grid>
+              </Grid>
 
-            <Grid className='pt-4' style={{ width: "100%" }}>
-              {/* {searchTopic !== "Tournaments" && (
+              <Grid className='pt-4 mt-4' style={{ width: "100%" }}>
+                {/* {searchTopic !== "Tournaments" && (
                 <Checkbox
                   wrestName={wrestName}
                   name='tournament'
@@ -268,153 +285,165 @@ const Database = () => {
                   setSelectedFilters={setSelectedFilters}
                 />
               )} */}
-              <Checkbox
-                wrestName={wrestName}
-                name='takedown'
-                label='Takedown'
-                data={filterOptions?.takedown}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
-              />
-              <Checkbox
-                wrestName={wrestName}
-                name='setup'
-                label='Tags/ Setups'
-                data={filterOptions?.setup}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
-              />
+                <Checkbox
+                  wrestName={wrestName}
+                  name='takedown'
+                  label='Takedown'
+                  data={filterOptions?.takedown}
+                  selectedFilters={selectedFilters}
+                  setSelectedFilters={setSelectedFilters}
+                />
+                <Checkbox
+                  wrestName={wrestName}
+                  name='setup'
+                  label='Tags/ Setups'
+                  data={filterOptions?.setup}
+                  selectedFilters={selectedFilters}
+                  setSelectedFilters={setSelectedFilters}
+                />
 
-              <Checkbox
-                wrestName={wrestName}
-                name='offdef'
-                label='Offensive/ Defensive'
-                data={filterOptions?.offdef}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
-              />
-              <Checkbox
-                wrestName={wrestName}
-                name='wrestler'
-                label='Wrestler'
-                data={filterOptions?.wrestler}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
-              />
-              <Checkbox
-                wrestName={wrestName}
-                name='position'
-                label='Position'
-                data={filterOptions?.position}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
-              />
-              <Checkbox
-                wrestName={wrestName}
-                name='type'
-                label='Type'
-                data={filterOptions?.type}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
-              />
+                <Checkbox
+                  wrestName={wrestName}
+                  name='offdef'
+                  label='Offensive/ Defensive'
+                  data={filterOptions?.offdef}
+                  selectedFilters={selectedFilters}
+                  setSelectedFilters={setSelectedFilters}
+                />
+                <Checkbox
+                  wrestName={wrestName}
+                  name='wrestler'
+                  label='Wrestler'
+                  data={filterOptions?.wrestler}
+                  selectedFilters={selectedFilters}
+                  setSelectedFilters={setSelectedFilters}
+                />
+                <Checkbox
+                  wrestName={wrestName}
+                  name='position'
+                  label='Position'
+                  data={filterOptions?.position}
+                  selectedFilters={selectedFilters}
+                  setSelectedFilters={setSelectedFilters}
+                />
+                <Checkbox
+                  wrestName={wrestName}
+                  name='type'
+                  label='Type'
+                  data={filterOptions?.type}
+                  selectedFilters={selectedFilters}
+                  setSelectedFilters={setSelectedFilters}
+                />
 
-              <Checkbox
-                wrestName={wrestName}
-                name='points'
-                label='Points'
-                data={filterOptions?.points}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
-              />
-              <Checkbox
-                wrestName={wrestName}
-                label='Weight Class'
-                name='weightClass'
-                selectedFilters={selectedFilters}
-                data={filterOptions?.weightClass}
-                setSelectedFilters={setSelectedFilters}
-              />
-              <Checkbox
-                wrestName={wrestName}
-                name='round'
-                label='Round'
-                data={filterOptions?.round}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
-              />
-            </Grid>
-
-            <Grid />
-          </Grid>
-        </Grid>
-
-        <Grid container xs={8} sm={9}>
-          <h5 className='pt-3'>Techniques</h5>
-
-          <Grid container sm={12} className='pt-4' alignItems='flex-start'>
-            {!isLoaded && (
-              <Grid container justify='center'>
-                <h4 style={{ color: "lightgrey" }}>
-                  No clips, try changing the filters to find some techniques
-                </h4>
+                <Checkbox
+                  wrestName={wrestName}
+                  name='points'
+                  label='Points'
+                  data={filterOptions?.points}
+                  selectedFilters={selectedFilters}
+                  setSelectedFilters={setSelectedFilters}
+                />
+                <Checkbox
+                  wrestName={wrestName}
+                  label='Weight Class'
+                  name='weightClass'
+                  selectedFilters={selectedFilters}
+                  data={filterOptions?.weightClass}
+                  setSelectedFilters={setSelectedFilters}
+                />
+                <Checkbox
+                  wrestName={wrestName}
+                  name='round'
+                  label='Round'
+                  data={filterOptions?.round}
+                  selectedFilters={selectedFilters}
+                  setSelectedFilters={setSelectedFilters}
+                />
               </Grid>
-            )}
 
-            {fetchedData &&
-              fetchedData.map(match => {
-                return (
-                  <Grid container xs={6} sm={3}>
-                    <Card className='p-2'>
-                      <VideoModal
-                        type='img'
-                        link={`${match.url}?t=${match.videoTime}`}
-                      />{" "}
-                      <p style={{ fontSize: "0.8rem" }} className='mb-0'></p>
-                      {match.wrestler}: {match.takedown}
-                      <p style={{ fontSize: "0.8rem" }} className='mb-0'>
-                        {" "}
-                        {match.setup.map(setup => `${setup} `)}
-                      </p>
-                      {/* <p style={{ fontSize: "0.8rem" }} className='mb-0'>
+              <Grid />
+            </Grid>
+          </Grid>
+
+          <Grid container xs={8} sm={9}>
+            <Grid
+              container
+              sm={12}
+              className='pt-4 mt-2'
+              alignItems='flex-start'
+            >
+              {!isLoaded && !fetchedData.length && (
+                <Grid container justify='center'>
+                  <h4 style={{ color: "lightgrey" }}>
+                    No clips, try changing the filters to find some techniques
+                  </h4>
+                </Grid>
+              )}
+
+              {fetchedData &&
+                fetchedData.map(match => {
+                  return (
+                    <Grid
+                      container
+                      xs={6}
+                      sm={4}
+                      md={3}
+                      style={{ height: "20rem" }}
+                    >
+                      <Card className='p-2 m-1'>
+                        <VideoModal
+                          type='img'
+                          link={`${match.url}?t=${match.videoTime}`}
+                        />{" "}
+                        <p style={{ fontSize: "0.8rem" }} className='mb-0'></p>
+                        {match.wrestler}: {match.takedown}
+                        <p style={{ fontSize: "0.8rem" }} className='mb-0'>
+                          {" "}
+                          {match.setup.map(setup => `${setup} `)}
+                        </p>
+                        {/* <p style={{ fontSize: "0.8rem" }} className='mb-0'>
                         {" "}
                         {match.round === "round1" ? "Round 1" : "Round 2"},
                         Time: {timeFormatter(match.time)}{" "}
                       </p> */}
-                      <p style={{ fontSize: "0.8rem" }} className='mb-0'>
-                        {match.type}
-                      </p>
-                      <p style={{ fontSize: "0.8rem" }}>
-                        {" "}
-                        {match.offdef} Points: {match.points}
-                      </p>
-                      {/* <p></p>
+                        <p style={{ fontSize: "0.8rem" }} className='mb-0'>
+                          {match.type}
+                        </p>
+                        <p style={{ fontSize: "0.8rem" }}>
+                          {" "}
+                          {match.offdef} Points: {match.points}
+                        </p>
+                        {/* <p></p>
                     <p></p> */}
-                      {/* <p style={{ fontSize: "0.5rem" }} className='mb-0'>
+                        {/* <p style={{ fontSize: "0.5rem" }} className='mb-0'>
                       {match.weightclass}
                     </p> */}
-                    </Card>
-                  </Grid>
-                );
-              })}
+                      </Card>
+                    </Grid>
+                  );
+                })}
+            </Grid>
+            <Grid container xs={12} justify='flex-end'>
+              {page > 0 && (
+                <Button
+                  onClick={() => {
+                    setPage(page - 1);
+                  }}
+                >
+                  Prev
+                </Button>
+              )}
+              {fetchedData && fetchedData.length > 19 && (
+                <Button
+                  onClick={() => {
+                    setPage(page + 1);
+                  }}
+                >
+                  Next
+                </Button>
+              )}
+            </Grid>
           </Grid>
-          {page > 0 && (
-            <Button
-              onClick={() => {
-                setPage(page - 1);
-              }}
-            >
-              Prev
-            </Button>
-          )}
-          {fetchedData && fetchedData.length > 19 && (
-            <Button
-              onClick={() => {
-                setPage(page + 1);
-              }}
-            >
-              Next
-            </Button>
-          )}
         </Grid>
       </Grid>
     </Grid>

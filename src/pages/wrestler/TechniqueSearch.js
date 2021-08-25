@@ -9,19 +9,15 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Select from "../../components/Create/Selector";
-// import AutoComplete from "../../../components/Create/AutoCompleteInput";
 import AutoComplete from "../Autocomplete";
 import Selector from "../Selector";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import Alert from "../../components/components/Alert";
 import DeleteModal from "../../components/components/DeleteModal";
+import { userAutocompleteTag } from "../../controllers/manage/tag";
+import { userAutocompleteType } from "../../controllers/manage/type";
+import { userAutocompleteTakedown } from "../../controllers/manage/takedown";
 
-import {
-  userCreateWrestler,
-  userDeleteWrestler,
-  userUpdateWrestler,
-  userFetchWrestler,
-} from "../../controllers/manage/wrestler";
 import {
   userAutocompleteTeam,
   userFetchTeam,
@@ -30,29 +26,19 @@ import { Link, useParams } from "react-router-dom";
 import { AutocompleteWrestler } from "../../controllers/search";
 import { getWrestlersList } from "../../controllers/controller";
 
-const TeamSearch = () => {
+const ProfileSearch = () => {
   const [mode, setMode] = useState("list");
   const [wrestlersList, setWrestlersList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [wrestler, setWrestler] = useState({
-    fullName: "",
-    team: "",
-    weightClass: "",
-  });
+  const [search, setSearch] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [refresh, setRefresh] = useState(false);
-
+  const [searchType, setSearchType] = useState("technique");
   const [teamOptions, setTeamOptions] = useState([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [filteredList, setFilteredList] = useState([]);
-  const showDeleteModal = () => {};
-  const onSelectorChange = e => {
-    setWrestler({
-      ...wrestler,
-      [e.target.name]: e.target.value,
-    });
-  };
+
   useEffect(() => {
     const timer = setTimeout(() => setError(""), 3000);
 
@@ -79,48 +65,22 @@ const TeamSearch = () => {
   //     console.log(e);
   //   }
   // };
-  const handleDelete = async id => {
-    const deleted = await userDeleteWrestler(id);
 
-    if (deleted.data.n === 0) {
-      setError(`Couldn't delete. Cannot delete defaults`);
-    } else if (deleted.statusText === "OK") {
-      setSuccess("Deleted Succesfully!");
-    }
-
-    setRefresh(!refresh);
-    setIsEdit(false);
-    setWrestler({
-      team: "",
-      fullName: "",
-      lastName: "",
-      owner: "",
-      _id: "",
-      private: true,
-    });
-  };
-  // useEffect(() => {
-  //   const fetchTeam = async () => {
-  //     const wrestlersList = await userFetchTeam();
-  //     console.log(wrestlersList.data);
-  //     const newArray = wrestlersList.data.map(team => {
-  //       return { title: team.teamName, id: team._id };
-  //     });
-  //     setTeamOptions(newArray);
-  //   };
-  //   fetchTeam();
-  // }, [refresh]);
-  // useEffect(() => {
-  //   fetch();
-  // }, [refresh]);
   useEffect(() => {
-    const getWrestlers = async () => {
-      const set = await AutocompleteWrestler(wrestler.fullName);
-      set ? setFilteredList(set) : setFilteredList([]);
-      console.log(filteredList);
+    const getData = async () => {
+      if (searchType === "technique") {
+        const set = await userAutocompleteTakedown(search);
+        if (set) setFilteredList(set);
+      } else if (searchType === "type") {
+        const set = await userAutocompleteType(search);
+        if (set) setFilteredList(set);
+      } else if (searchType === "setup/tag") {
+        const set = await userAutocompleteTag(search);
+        if (set) setFilteredList(set);
+      }
     };
-    getWrestlers();
-  }, [wrestler]);
+    getData();
+  }, [search]);
   return (
     <div style={{ background: "#f7fcfc" }}>
       <Grid className='p-4' aria-labelledby='form-dialog-title'>
@@ -135,15 +95,42 @@ const TeamSearch = () => {
                 direction='column'
                 className='py-4'
               >
-                <h5>Wrestlers</h5>
+                <Grid xs={12}>
+                  <Button
+                    onClick={() => setSearchType("technique")}
+                    style={
+                      searchType === "technique"
+                        ? { background: "lightgrey" }
+                        : {}
+                    }
+                  >
+                    Takedown
+                  </Button>{" "}
+                  <Button
+                    onClick={() => setSearchType("type")}
+                    style={
+                      searchType === "type" ? { background: "lightgrey" } : {}
+                    }
+                  >
+                    Type
+                  </Button>
+                  <Button
+                    onClick={() => setSearchType("setup/tag")}
+                    style={
+                      searchType === "setup/tag"
+                        ? { background: "lightgrey" }
+                        : {}
+                    }
+                  >
+                    Setup/Tags
+                  </Button>
+                </Grid>{" "}
                 <TextField
                   className='w-75'
                   id='outlined-helperText'
                   label=' '
-                  value={wrestler.fullName}
-                  onChange={e =>
-                    setWrestler({ ...wrestler, fullName: e.target.value })
-                  }
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
                   helperText='Search'
                 />
               </Grid>{" "}
@@ -197,7 +184,7 @@ const TeamSearch = () => {
                   {!filteredList.length && (
                     <Grid container justify='center'>
                       <h4 style={{ color: "lightgrey" }}>
-                        No wrestlers use Search
+                        No {searchType} use Search
                       </h4>
                     </Grid>
                   )}
@@ -230,4 +217,4 @@ const TeamSearch = () => {
   );
 };
 
-export default TeamSearch;
+export default ProfileSearch;

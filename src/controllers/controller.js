@@ -81,13 +81,13 @@ export const getStatCategories = () => {
     .catch(err => console.log(err));
 };
 
-export const getMatch = matchId => {
-  return axios
-    .get(`${API}/match/${matchId}`)
-    .then(response => {
-      return response.json();
-    })
-    .catch(err => console.log(err));
+export const getMatch = async matchId => {
+  try {
+    const data = axios.get(`${API}/match/${matchId}`);
+    return data;
+  } catch (e) {
+    return e;
+  }
 };
 
 //////Getting Matches By/////////////
