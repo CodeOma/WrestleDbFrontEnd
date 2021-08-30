@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 
 import { Grid, Button, Card } from "@material-ui/core";
 import Timestamp from "./Timestamp";
-import { getWrestlerById } from "../../controllers/controller";
+import { getWrestlerById } from "../../../controllers/controller";
 
 const TimestampList = ({
   setTime,

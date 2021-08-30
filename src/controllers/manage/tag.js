@@ -48,7 +48,7 @@ export const userFetchTagById = async id => {
     });
     return data;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userDeleteTag = async id => {

@@ -27,7 +27,6 @@ import {
   AutocompleteTeam,
 } from "../controllers/search";
 import { youtubeVideoId } from "../helpers/formatting";
-// import { useGlobalContext } from "../context/context";
 
 const Selector = ({ options, label, onOptChange, valu }) => {
   const styles = {

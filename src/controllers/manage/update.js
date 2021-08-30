@@ -11,22 +11,21 @@ export const userUpdateMatch = async match => {
     const update = await axios.put(`${API}/user/match/${match._id}`, match, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userCreateMatch = async match => {
   try {
     const token = await getIdToken();
 
-    console.log(match._id);
     const update = await axios.put(`${API}/user/match}`, match, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userCreateWrestler = async wrestler => {
@@ -37,9 +36,9 @@ export const userCreateWrestler = async wrestler => {
     const update = await axios.put(`${API}/user/wrestler`, wrestler, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 
@@ -51,9 +50,9 @@ export const userCreateTournament = async tournament => {
     const update = await axios.put(`${API}/user/tournament`, tournament, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 
@@ -64,9 +63,9 @@ export const userCreateType = async type => {
     const update = await axios.put(`${API}/user/type`, type, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 
@@ -77,9 +76,9 @@ export const userCreatePosition = async type => {
     const update = await axios.put(`${API}/user/position`, type, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userCreateTeam = async type => {
@@ -89,9 +88,9 @@ export const userCreateTeam = async type => {
     const update = await axios.put(`${API}/user/team`, type, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userCreateTakedown = async type => {
@@ -100,8 +99,8 @@ export const userCreateTakedown = async type => {
     const update = await axios.put(`${API}/user/takedown`, type, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };

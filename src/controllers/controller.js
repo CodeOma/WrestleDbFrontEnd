@@ -31,26 +31,18 @@ export const getWrestlerById = id => {
   try {
     const data = axios.get(`${API}/wrestler/${id}`, {});
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
-};
-export const getMatches = sortBy => {
-  return axios
-    .get(`${API}/matches?sortBy=${sortBy}&order=desc&limit=6`)
-    .then(response => {
-      return response.json();
-    })
-    .catch(err => console.log(err));
 };
 
 export const getTournaments = () => {
-  return axios
-    .get(`${API}/tournament`)
-    .then(response => {
-      return response.json();
-    })
-    .catch(err => console.log(err));
+  try {
+    const data = axios.get(`${API}/tournament`, {});
+    return data;
+  } catch (e) {
+    return e;
+  }
 };
 
 export const getTeams = async () => {
@@ -61,24 +53,13 @@ export const getTeams = async () => {
     return e;
   }
 };
-export const getWrestlersList = () => {
-  return axios
-    .get(`${API}/wrestlers`)
-    .then(response => {
-      console.log(response);
-      return response.json();
-    })
-    .catch(err => console.log(err));
-};
-
-export const getStatCategories = () => {
-  return fetch(`${API}/stat/categories`, {
-    method: "GET",
-  })
-    .then(response => {
-      return response.json();
-    })
-    .catch(err => console.log(err));
+export const getWrestlersList = async () => {
+  try {
+    const data = axios.get(`${API}/wrestlers`);
+    return data;
+  } catch (e) {
+    return e;
+  }
 };
 
 export const getMatch = async matchId => {
@@ -101,8 +82,8 @@ export const getMatchByWrestler = async (wrestlerId, filters, skip, limit) => {
       params: { filters, skip: skipNum },
     });
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 export const getMatchByTournament = async (id, filters, skip, limit) => {
@@ -115,11 +96,11 @@ export const getMatchByTournament = async (id, filters, skip, limit) => {
       params: { filters, skip: skipNum },
     });
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
-///added await hopefully doesnt break
+
 export const getMatchByTeam = async (team, filters, skip, limit) => {
   try {
     let skipNum = 0;
@@ -130,19 +111,10 @@ export const getMatchByTeam = async (team, filters, skip, limit) => {
       params: { filters, skip: skipNum },
     });
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
-///////////////////////////////////////
-export const listRelated = wrestlerId => {
-  return fetch(`${API}/match/${wrestlerId}`)
-    .then(response => {
-      return response.json();
-    })
-    .catch(err => console.log(err));
-};
-/////////////////////////////////
 
 /////////Get top stats///////////
 //////////////////////////////////
@@ -203,18 +175,18 @@ export const getAllTechniques = async (
 export const updateMatch = async match => {
   try {
     const update = await axios.put(`${API}/match/${match._id}`, match);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 
 export const createWrestler = async wrestler => {
   try {
     const update = await axios.put(`${API}/wrestler`, wrestler);
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log("THERE was an error");
-    console.log(e);
+    return e;
   }
 };
 
@@ -222,9 +194,8 @@ export const createTournament = async tournament => {
   console.log(tournament);
   try {
     const update = await axios.put(`${API}/tournament`, tournament);
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log("THERE was an error");
-    console.log(e);
+    return e;
   }
 };

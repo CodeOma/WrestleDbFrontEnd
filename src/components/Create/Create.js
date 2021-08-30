@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Grid, Button, FormHelperText, TextField } from "@material-ui/core";
 import Select from "./Selector";
 
-import Video from "../Editor/Video";
+import Video from "./Video/Video";
 import Modal from "./CreateModal";
 import Selector from "../../pages/Selector";
 import Alert from "../components/Alert";
 
 import uniqid, { time } from "uniqid";
 import SaveIcon from "@material-ui/icons/Save";
-import AutocompleteCheckbox from "../Editor/AutocompleteCheckbox2";
+import AutocompleteCheckbox from "./AutocompleteCheckbox";
 import { userFetchWrestlerById } from "../../controllers/manage/wrestler";
 import { userFetchTakedown } from "../../controllers/manage/takedown";
 

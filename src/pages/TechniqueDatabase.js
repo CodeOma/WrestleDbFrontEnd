@@ -28,7 +28,6 @@ import {
 } from "../controllers/search";
 import { useAuth } from "../context/AuthContext";
 import { youtubeVideoId, timeFormatter } from "../helpers/formatting";
-// import { useGlobalContext } from "../context/context";
 
 const Selector = ({ options, label, onOptChange, valu }) => {
   const styles = {

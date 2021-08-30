@@ -25,8 +25,6 @@ import {
   AutocompleteTeam,
 } from "../controllers/search";
 import { youtubeVideoId } from "../helpers/formatting";
-// import { useGlobalContext } from "../context/context";
-
 const Selector = ({ options, label, onOptChange, valu }) => {
   const styles = {
     formControl: {
@@ -315,6 +313,7 @@ const Database = () => {
                       src={`https://img.youtube.com/vi/${youtubeVideoId(
                         match.url
                       )}/0.jpg`}
+                      alt=''
                     ></img>
                     <p>
                       {match.result.winner} {match.result.victoryType}{" "}

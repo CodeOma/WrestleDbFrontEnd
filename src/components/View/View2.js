@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Grid, Button, FormHelperText, Card } from "@material-ui/core";
-import { useGlobalContext } from "../../context/context";
 import Video from "./Video";
 import axios from "axios";
 import {

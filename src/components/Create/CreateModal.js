@@ -13,7 +13,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Select from "./Selector";
 
-import AutoComplete from "./AutoCompleteInput";
+import AutoComplete from "./AutoCompleteInputModal";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Alert from "../components/Alert";
 const useStyles = makeStyles(theme => ({

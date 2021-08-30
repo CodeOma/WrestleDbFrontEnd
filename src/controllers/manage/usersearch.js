@@ -13,7 +13,6 @@ export const userAutocompleteMatch = async query => {
         headers: { authorization: `Bearer ${token}` },
       });
       const data = await fetch.data;
-      console.log(data);
 
       return data;
       //console.log(this.state.suggestion);
@@ -21,7 +20,7 @@ export const userAutocompleteMatch = async query => {
       //return resdata;
     }
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 
@@ -36,7 +35,6 @@ export const userAutocompleteWrestler = async query => {
         headers: { authorization: `Bearer ${token}` },
       });
       const data = await fetch.data;
-      console.log(data);
 
       return data;
       //console.log(this.state.suggestion);
@@ -44,7 +42,7 @@ export const userAutocompleteWrestler = async query => {
       //return resdata;
     }
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 
@@ -61,7 +59,7 @@ export const userAutocompleteTeam = async query => {
       return data;
     }
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 
@@ -82,6 +80,6 @@ export const userAutocompleteTournament = async query => {
       //return resdata;
     }
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };

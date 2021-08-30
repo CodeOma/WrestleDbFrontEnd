@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Button, Card } from "@material-ui/core";
-import { useGlobalContext } from "../../context/context";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";

@@ -10,9 +10,9 @@ export const userCreateCategory = async category => {
     const update = await axios.post(`${API}/user/category`, category, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userUpdateCategory = async category => {
@@ -22,9 +22,9 @@ export const userUpdateCategory = async category => {
     const update = await axios.put(`${API}/user/category`, category, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 export const userFetchCategory = async () => {
@@ -46,8 +46,8 @@ export const userDeleteCategory = async category => {
     const update = await axios.delete(`${API}/user/category/${category._id}`, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(update);
+    return update;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };

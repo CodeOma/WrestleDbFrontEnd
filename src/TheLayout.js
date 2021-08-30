@@ -15,7 +15,6 @@ import WrestlerDB from "./pages/WrestlerDatabase";
 import WrestlerProfile from "./pages/wrestler/wrestlerProfile";
 import ProfileSearch from "./pages/wrestler/ProfileSearch";
 
-// import { AppProvider } from "../context/context";
 import GeneralStats from "./pages/stats/GeneralStats";
 import {
   BrowserRouter as Router,

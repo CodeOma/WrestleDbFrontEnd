@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 
 import { Grid, Button, Card } from "@material-ui/core";
 import Timestamp from "./Timestamp";
-import { useGlobalContext } from "../../context/context";
 
 const TimestampList = ({ setTime, match, setMatchEdit, render }) => {
   const [timestamps, setTimestamps] = useState([]);

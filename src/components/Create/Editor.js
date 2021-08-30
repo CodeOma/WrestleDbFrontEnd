@@ -7,12 +7,11 @@ import {
   Card,
 } from "@material-ui/core";
 import Select from "./Selector";
-// import { useGlobalContext } from "../../context/context";
-import Video from "../Editor/Video";
+import Video from "./Video/Video";
 import Modal from "./CreateModal";
 import Selector from "../../pages/Selector";
 import Alert from "../components/Alert";
-import AutoComplete from "../Editor/AutoCompleteInput";
+import AutoComplete from "./AutoCompleteInput";
 
 import {
   getMatch,
@@ -22,7 +21,7 @@ import {
 } from "../../controllers/controller";
 import uniqid, { time } from "uniqid";
 import SaveIcon from "@material-ui/icons/Save";
-import AutocompleteCheckbox from "../Editor/AutocompleteCheckbox2";
+import AutocompleteCheckbox from "./AutocompleteCheckbox";
 import { userFetchWrestlerById } from "../../controllers/manage/wrestler";
 import { userFetchTakedown } from "../../controllers/manage/takedown";
 
@@ -30,12 +29,8 @@ import { userFetchType } from "../../controllers/manage/type";
 import { userFetchPosition } from "../../controllers/manage/position";
 import { userFetchCategory } from "../../controllers/manage/category";
 import { userFetchTag } from "../../controllers/manage/tag";
-import {
-  userCreateMatch,
-  userUpdateMatch,
-} from "../../controllers/manage/match";
+import { userUpdateMatch } from "../../controllers/manage/match";
 
-import { getWrestlerById } from "../../controllers/controller";
 import { youtubeVideoId } from "../../helpers/formatting";
 
 const Editor = () => {

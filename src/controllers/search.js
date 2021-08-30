@@ -7,7 +7,6 @@ export const AutocompleteMatch = async query => {
       var url = `${API}/autosearch/match/${query}`;
       const fetch = await axios.get(url);
       const data = await fetch.data;
-      console.log(data);
 
       return data;
       //console.log(this.state.suggestion);
@@ -15,7 +14,7 @@ export const AutocompleteMatch = async query => {
       //return resdata;
     }
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 
@@ -26,7 +25,6 @@ export const AutocompleteWrestler = async query => {
       var url = `${API}/autosearch/wrestler/${query}`;
       const fetch = await axios.get(url);
       const data = await fetch.data;
-      console.log(data);
 
       return data;
       //console.log(this.state.suggestion);
@@ -34,7 +32,7 @@ export const AutocompleteWrestler = async query => {
       //return resdata;
     }
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 
@@ -47,7 +45,7 @@ export const AutocompleteTeam = async query => {
       return data;
     }
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
 
@@ -63,6 +61,6 @@ export const AutocompleteTournament = async query => {
       //return resdata;
     }
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };

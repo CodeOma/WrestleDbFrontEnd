@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Button, Card } from "@material-ui/core";
-import { useGlobalContext } from "../../context/context";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import { userFetchTakedownById } from "../../controllers/manage/takedown";
-import { userFetchTagById } from "../../controllers/manage/tag";
+import { userFetchTakedownById } from "../../../controllers/manage/takedown";
+import { userFetchTagById } from "../../../controllers/manage/tag";
 
 const Timestamp = ({
   vidTime,

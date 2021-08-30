@@ -22,8 +22,8 @@ export const getAllTechniquesByUser = async (
     });
 
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 export const getTeamsByUser = async () => {
@@ -34,8 +34,8 @@ export const getTeamsByUser = async () => {
     });
 
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 export const getTagsByUser = async () => {
@@ -46,8 +46,8 @@ export const getTagsByUser = async () => {
     });
 
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 export const getTypeByUser = async () => {
@@ -58,8 +58,8 @@ export const getTypeByUser = async () => {
     });
 
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 export const getTakedownsByUser = async () => {
@@ -70,8 +70,8 @@ export const getTakedownsByUser = async () => {
     });
 
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 export const getPositionsByUser = async () => {
@@ -82,8 +82,8 @@ export const getPositionsByUser = async () => {
     });
 
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 
@@ -96,8 +96,8 @@ export const getUserGeneralStats = async () => {
     });
     console.log(data);
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
 
@@ -109,7 +109,7 @@ export const individualUserProfileStats = async id => {
     });
     console.log(data);
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    return e;
   }
 };
