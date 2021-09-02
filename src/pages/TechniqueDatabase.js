@@ -232,7 +232,10 @@ const Database = () => {
         </h2>
       </Grid>
 
-      <Grid className='m-2 mx-3' style={{ backgroundColor: "white" }}>
+      <Grid
+        className='m-2 mx-3'
+        style={{ backgroundColor: "white", width: "100%" }}
+      >
         <Grid
           // className='px-3'
           container

@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 const Footer = () => {
   return (
-    <footer style={{ background: "white", width: "100%", paddingTop: "10" }}>
+    <footer style={{ background: "white", width: "90%", paddingTop: "10" }}>
       <Grid xs={12} className='w-100'>
         <Grid
           xs={12}

@@ -113,11 +113,7 @@ const Database = () => {
   useEffect(() => {
     const fetchInfo = async () => {
       try {
-        const fetch = await getMatchByWrestler(
-          "60611a6ca482a996c290d38a",
-          selectedFilters,
-          page
-        );
+        const fetch = await getMatchByWrestler("", selectedFilters, page);
         setFetchedData(fetch.data.matches);
         setFilterOptions(fetch.data.filters);
         setWrestName(fetch.data.matches[0]?.teamName);
@@ -223,7 +219,10 @@ const Database = () => {
           Matches
         </h2>
       </Grid>
-      <Grid className='m-2 mx-3' style={{ backgroundColor: "white" }}>
+      <Grid
+        className='m-2 mx-3'
+        style={{ backgroundColor: "white", width: "100%" }}
+      >
         <Grid
           // className='ml-4 mr-4'
           container
