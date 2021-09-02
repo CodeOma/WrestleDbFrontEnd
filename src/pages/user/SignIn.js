@@ -80,7 +80,7 @@ export default function SignIn() {
     return () => clearTimeout(timeout);
   }, [error]);
   return (
-    <Grid container justify='center' style={{ backgroundColor: "#ebedef" }}>
+    <Grid container justify='center'>
       <Grid
         justify='center'
         container

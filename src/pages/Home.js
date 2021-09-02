@@ -14,14 +14,13 @@ const Home = () => {
   const [tagGraph, setTagGraph] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-
   return (
     <Grid container xs={12} direction='row'>
       {/* <h1>Home Page</h1> */}
       <HeroBanner />
-      <Features />
+
       <Services />
-      
+      <Features />
       {/* <Grid container xs={8}>
         <Grid container justify='center'>
           {" "}

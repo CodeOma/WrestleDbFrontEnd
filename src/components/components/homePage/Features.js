@@ -1,15 +1,19 @@
 import React from "react";
 import "../../../assets/styles.css";
+import analyse from "../../../assets/images/analysis-691.png";
+
 import { Grid } from "@material-ui/core";
 function Features() {
   return (
     <Grid container className='p-4 features' direction='row'>
       <Grid container xs={6} className='p-4'>
-        SOME PICTURE
+        <Grid xs={12} style={{ width: "75%", height: "75%", zIndex: "1" }}>
+          <img src={analyse} alt='PIC' width='100%' />
+        </Grid>
       </Grid>
       <Grid container xs={6} className='p-4'>
         <Grid className='section-text'>
-          <Grid className='section-text__title'>Features dnaskdlasdma</Grid>
+          <Grid className='section-text__title'>Features</Grid>
 
           <Grid className='row'>
             <Grid className='feature-box col-50'>
@@ -25,7 +29,7 @@ function Features() {
             <Grid className='feature-box col-50'>
               <Grid className='section-text__title-small'>Statistics</Grid>
               <Grid className='section-text__body'>
-                Some info on stats
+                Stats on most utilized technique
                 {/* Get Statistics from the top wrestlers. Get stats on your team or
                 athletes{" "} */}
               </Grid>
@@ -34,9 +38,9 @@ function Features() {
 
           <Grid className='row'>
             <Grid className='feature-box col-50'>
-              <Grid className='section-text__title-small'>Something cool</Grid>
+              <Grid className='section-text__title-small'>Database</Grid>
               <Grid className='section-text__body'>
-                Aorem psum olorsit amet ectetur adipiscing elit, sed dov.
+                Watch clips and filter different scores{" "}
               </Grid>
             </Grid>
 

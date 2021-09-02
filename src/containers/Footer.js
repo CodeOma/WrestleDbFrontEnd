@@ -1,37 +1,41 @@
 import React from "react";
 import "../assets/footer.css";
 import { Grid } from "@material-ui/core";
+import { Link } from "react-router-dom";
 const Footer = () => {
   return (
-    <footer style={{ background: "white" }}>
-      <Grid className='container'>
-        <Grid className='row'>
+    <footer style={{ background: "white", width: "100%", paddingTop: "10" }}>
+      <Grid xs={12} className='w-100'>
+        <Grid
+          xs={12}
+          className='w-100'
+          container
+          direction='row'
+          justify='space-evenly'
+        >
           <Grid xs={4}>
             <Grid className='footer-text__title'>Wrestling Database</Grid>
-            <Grid className='footer-text__body'>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do
-              eiusmod tempor incididunt ut labore.
-            </Grid>
+            <Grid className='footer-text__body'>Project</Grid>
           </Grid>
-          <Grid xs={4}>
+          <Grid item xs={4}>
             <Grid className='footer-text__title'>Quick links</Grid>
             <ul className='footer-list'>
               <li>
-                <a href='#home'>About</a>
+                <Link to='/'>Home</Link>
               </li>
               <li>
-                <a href='#features'>Features</a>
+                <Link to='/techniques'>Database</Link>
               </li>
 
               <li>
-                <a href='#download'>Statistics</a>
+                <Link to='/stats'>Stats</Link>
               </li>
             </ul>
           </Grid>
           <Grid xs={4}>
-            <Grid className='footer-text__title'>Something</Grid>
+            <Grid className='footer-text__title'>Help </Grid>
             <Grid className='footer-text__body'>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do
+              If you would like to help let me know{" "}
             </Grid>
             <Grid className='footer-input'>
               <input type='text' name='email' placeholder='Email id' />
@@ -41,7 +45,7 @@ const Footer = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid className='copyright'>Write something here</Grid>
+        <Grid className='copyright'></Grid>
       </Grid>
     </footer>
   );

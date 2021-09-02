@@ -157,10 +157,13 @@ const GeneralStats = () => {
 
         <Grid container xs={4} justify='center' className='px-1'>
           {" "}
-          <Link to='/team' className='w-100'>
+          <Link
+            // to='/team'
+            className='w-100'
+          >
             <Card className='w-75 py-4 px-1 my-2'>
               <Grid className='w-100' container direction='column'>
-                <h4>By Team</h4>
+                <h4>By Team (not available)</h4>
               </Grid>
             </Card>{" "}
           </Link>
@@ -168,10 +171,13 @@ const GeneralStats = () => {
 
         <Grid container xs={4} justify='center' className='px-1'>
           {" "}
-          <Link to='/technique' className='w-100'>
+          <Link
+            //  to='/technique'
+            className='w-100'
+          >
             <Card className='w-75 py-4 px-1 my-2 '>
               <Grid className='w-100' container direction='column'>
-                <h4>By Technique</h4>
+                <h4>By Technique (not available)</h4>
               </Grid>
             </Card>{" "}
           </Link>

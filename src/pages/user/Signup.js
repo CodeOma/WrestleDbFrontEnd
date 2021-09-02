@@ -96,7 +96,7 @@ export default function SignUp() {
     <Grid
       container
       justify='center'
-      style={{ backgroundColor: "#ebedef", maxHeight: "1" }}
+      // style={{ backgroundColor: "#ebedef", height: "100%" }}
     >
       <Grid
         justify='center'

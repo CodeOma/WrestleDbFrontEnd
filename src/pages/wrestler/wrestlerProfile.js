@@ -494,7 +494,7 @@ const WrestlerProfile = () => {
           justify='flex-start'
           alignContent='flex-start'
           className='mt-2 section-text__body p-2'
-          xs={3}
+          xs={4}
           lg={3}
           style={{ borderRadius: "10px", width: "100%" }}
         >
@@ -561,7 +561,7 @@ const WrestlerProfile = () => {
             direction='row'
             // justify='center'
             // alignContent='center'
-            xs={9}
+            xs={8}
           >
             <Grid container xs={12}>
               <Grid className='pt-3' item xs={12} sm={6} lg={4}>
