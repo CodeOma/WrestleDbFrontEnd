@@ -125,7 +125,7 @@ const ProfileSearch = () => {
     <div style={{ background: "#f7fcfc" }}>
       <Grid className='p-4' aria-labelledby='form-dialog-title'>
         <Grid container direction='row' justify='center'>
-          <Grid xs={6} sm={7}>
+          <Grid xs={10} sm={7}>
             <Card>
               {" "}
               <Grid
@@ -190,8 +190,8 @@ const ProfileSearch = () => {
               <Grid container justify='center' sm={12} className='px-1'>
                 <Grid
                   container
-                  sm={12}
-                  className='py-3 px-1'
+                  xs={12}
+                  className='py-3 px-1 w-100'
                   justify='space-evenly'
                 >
                   {!filteredList.length && (
@@ -206,7 +206,12 @@ const ProfileSearch = () => {
                     filteredList.length >= 1 &&
                     filteredList.map(wrest => {
                       return (
-                        <Grid container className='p-2' xs={4}>
+                        <Grid
+                          container
+                          className='p-2'
+                          xs={4}
+                          style={{ display: "block" }}
+                        >
                           <Link to={`/wrestlers/${wrest.id}`}>
                             <Card className='p-2'>
                               <p>{wrest.title}</p>

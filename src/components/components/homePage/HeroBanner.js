@@ -8,7 +8,7 @@ function HeroBanner() {
   return (
     <Grid container className='p-4 herobanner' direction='row'>
       <Grid container xs={6} className='p-4'>
-        <Grid className='home-text'>
+        <Grid className='home-text' style={{ zIndex: "1" }}>
           {/* <Grid className='section-text__subtitle'>App landing page</Grid> */}
           <Grid className='pt-4 section-text__title-big'>
             Technique Database and Stats{" "}
@@ -23,11 +23,7 @@ function HeroBanner() {
         </Grid>
       </Grid>
       <Grid container xs={6} className='p-4' style={{ width: "50%" }}>
-        <Grid
-          xs={12}
-          className='w-75'
-          style={{ width: "75%", height: "75%", zIndex: "1" }}
-        >
+        <Grid xs={12} className='w-75' style={{ width: "75%", height: "75%" }}>
           <img src={piechart} alt='Pie chart' width='100%' />
         </Grid>
       </Grid>

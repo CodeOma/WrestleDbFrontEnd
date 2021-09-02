@@ -5,13 +5,13 @@ import analyse from "../../../assets/images/analysis-691.png";
 import { Grid } from "@material-ui/core";
 function Features() {
   return (
-    <Grid container className='p-4 features' direction='row'>
-      <Grid container xs={6} className='p-4'>
+    <Grid container xs={12} className='p-4 features' direction='row'>
+      <Grid container sm={6} xs={4} className='p-4'>
         <Grid xs={12} style={{ width: "75%", height: "75%", zIndex: "1" }}>
           <img src={analyse} alt='PIC' width='100%' />
         </Grid>
       </Grid>
-      <Grid container xs={6} className='p-4'>
+      <Grid container xs={8} sm={6} className='p-4'>
         <Grid className='section-text'>
           <Grid className='section-text__title'>Features</Grid>
 
