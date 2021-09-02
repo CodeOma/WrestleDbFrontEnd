@@ -35,7 +35,8 @@ const Footer = () => {
           <Grid xs={4}>
             <Grid className='footer-text__title'>Help </Grid>
             <Grid className='footer-text__body'>
-              If you would like to help let me know{" "}
+              If you would like to contact me, please reach out on twitter
+              @Wrest224
             </Grid>
             <Grid className='footer-input'>
               <input type='text' name='email' placeholder='Email id' />
