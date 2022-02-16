@@ -1,3 +1,15 @@
+This project is to help get stats on the sport of wrestling. I orginally created it to help me improve in my wrestling by getting
+    statistics on my matches. I improved upon it to get matches from the
+    top international wrestlers. You can search takedowns and techniques
+    with different filters. You can get individual statistics on the
+    different athletes. Users can create custom tags, wrestlers and
+    takedowns. Users can choose to keep their matches public or private.
+    I worked on this project while learning from the beggining so there is a lot of code
+  that needs to refactored and updates to follow best practices.
+
+Backend:
+https://github.com/CodeOma/WrestleDbBackEnd
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
